@@ -1,12 +1,12 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./containers/App";
+import "./index.css";
 
-function App() {
-  return (
-    <div>
-      <h2>Welcome to React App</h2>
-      <h3>Date : {new Date().toDateString()}</h3>
-    </div>
-  );
-}
-
-export default App;
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("app")
+);
