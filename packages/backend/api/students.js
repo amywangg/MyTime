@@ -10,15 +10,25 @@ router.get("/", (req, res) => {
 
 router.post("/signup", (req, res) => {
   queries
-    .createUser(
+    .createStudent(
       req.body.email,
       req.body.password,
-      req.body.firstName,
-      req.body.lastName
+      req.body.first_name,
+      req.body.middle_name,
+      req.body.last_name,
+      req.body.student_id,
+      req.body.school,
+      req.body.date_of_birth
     )
     .then((user) => {
       res.json(user[0]);
     });
+});
+
+router.post("/login", (req, res) => {
+  queries.login(req.body.email, req.body.password).then((user) => {
+    res.json(user[0]);
+  });
 });
 
 module.exports = router;

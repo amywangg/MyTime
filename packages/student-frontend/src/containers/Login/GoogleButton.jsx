@@ -12,12 +12,11 @@ const GoogleButton = () => {
       buttonText="Login"
       render={(renderProps) => (
         <button
-          type="submit"
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-secondaryButton focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondaryButton"
           onClick={renderProps.onClick}
+          style={{ marginTop: 0 }}
         >
-          <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
-          Sign up with Google
+          Log in with Google
         </button>
       )}
       onSuccess={responseGoogle}

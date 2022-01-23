@@ -3,71 +3,33 @@ const argon = require("argon2");
 const auth = require("../../middleware/auth");
 
 module.exports = {
-  getAll(table) {
-    return table == "users"
-      ? knex.table("users").select("id", "username")
-      : knex(table);
-  },
-
-  getAllComments(id) {
-    return knex
-      .select([
-        "comments.id",
-        "comments.post_id",
-        "comments.body",
-        "users.username",
-      ])
-      .from("comments")
-      .innerJoin("users", "users.id", "=", "comments.user_id")
-      .where("comments.post_id", "=", id)
-      .orderBy("comments.id", "asc");
-  },
-
-  getAllPosts() {
-    return knex
-      .select([
-        "posts.id",
-        "posts.user_id",
-        "posts.title",
-        "posts.body",
-        "users.username",
-      ])
-      .from("posts")
-      .innerJoin("users", "users.id", "=", "posts.user_id")
-      .orderBy("posts.id", "desc");
-  },
-
-  getOne(table, id) {
-    return table == "users"
-      ? knex.table("users").select("id", "username").first()
-      : knex(table).where("id", id).first();
-  },
-
-  getPostByUser(id) {
-    return knex.table("posts").where("user_id", id);
-  },
-
-  async createUser(username, email, password) {
+  async createStudent(
+    email,
+    password,
+    first_name,
+    middle_name,
+    last_name,
+    student_id,
+    school,
+    date_of_birth
+  ) {
     try {
       let password_hash = await argon.hash(password);
-      return knex("users").returning(["username", "email"]).insert({
-        username: username,
-        email: email,
-        password_hash: password_hash,
-      });
+      return knex("students")
+        .returning(["first_name", "email"])
+        .insert({
+          email: email,
+          password_hash: password_hash,
+          first_name: first_name,
+          middle_name: middle_name || "",
+          last_name: last_name,
+          student_id: student_id,
+          school: school,
+          date_of_birth: date_of_birth,
+        });
     } catch (error) {
       process.exit(1);
     }
-  },
-
-  async createPost(id, title, body) {
-    return knex("posts").insert({ body: body, title: title, user_id: id });
-  },
-
-  createComment(postId, userId, body) {
-    return knex("comments")
-      .returning(["body"])
-      .insert({ post_id: postId, user_id: userId, body: body });
   },
 
   async login(username, password) {
