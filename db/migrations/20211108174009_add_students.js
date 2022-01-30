@@ -18,7 +18,11 @@ exports.up = async function (knex) {
 
       table.string("school");
 
+      table.integer("student_id");
+
       table.integer("grade");
+
+      table.date("date_of_birth");
 
       table.timestamp("created_at").notNullable().defaultTo(knex.fn.now());
 
@@ -34,5 +38,5 @@ exports.up = async function (knex) {
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTable("student");
+  return knex.schema.dropTable("students");
 };

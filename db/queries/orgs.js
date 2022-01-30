@@ -1,6 +1,6 @@
 const knex = require("../knex");
 const argon = require("argon2");
-const auth = require("../../middleware/auth");
+const auth = require("../../middlewares/auth");
 
 module.exports = {
   async createStudent(
@@ -19,7 +19,7 @@ module.exports = {
         .returning(["first_name", "email"])
         .insert({
           email: email,
-          password_hash: password_hash,
+          password: password_hash,
           first_name: first_name,
           middle_name: middle_name || "",
           last_name: last_name,

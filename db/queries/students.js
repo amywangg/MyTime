@@ -1,57 +1,37 @@
-const express = require("express");
-const router = express.Router();
-const postsRouter = express.Router({ mergeParams: true });
-const queries = require("../db/queries/general");
-const auth = require("../middleware/auth");
-router.use("/:id/posts", postsRouter);
+const knex = require("../knex");
+const argon = require("argon2");
 
-router.get("/", (req, res) => {
-  queries.getAll("students").then((students) => {
-    res.json(students);
-  });
-});
+module.exports = {
+  async createStudent(body) {
+    try {
+      let password_hash = await argon.hash(body.password);
+      return knex("students")
+        .returning(["first_name", "email"])
+        .insert({
+          email: body.email,
+          password: password_hash,
+          first_name: body.first_name,
+          middle_name: body.middle_name || "",
+          last_name: body.last_name,
+          student_id: body.student_id,
+          school: body.school,
+          date_of_birth: body.date_of_birth,
+        });
+    } catch (error) {
+      return error;
+    }
+  },
 
-router.get("/:id", (req, res) => {
-  queries.getOne("students", req.params.id).then((student) => {
-    res.json(student);
-  });
-});
+  async login(email, password) {
+    let getStudent = await knex("students").where("email", email);
+    let student = getStudent[0];
 
-postsRouter.get("/", (req, res) => {
-  queries.getPostBystudent(req.params.id).then((posts) => {
-    res.json(posts);
-  });
-});
-
-router.post("/", (req, res) => {
-  queries
-    .createstudent(req.body.studentname, req.body.email, req.body.password)
-    .then((student) => {
-      res.json(student[0]);
-    });
-});
-
-router.post("/login", (req, res) => {
-  if (req.body.studentname == "" || req.body.password == "") {
-    res.status(401).send({ error: "Wrong studentname or password" });
-  } else {
-    queries
-      .login(req.body.studentname, req.body.password)
-      .then((student) => {
-        res.json(auth.getToken(student.id, student.studentname, student.email));
-      })
-      .catch((error) => {
-        res.status(401).send({ error: error.message });
-      });
-  }
-});
-
-router.post("/profile", (req, res) => {
-  queries
-    .getToken(req.header("Authorization").replace("Bearer: ", ""))
-    .then((data) => {
-      res.json(data);
-    });
-});
-
-module.exports = router;
+    try {
+      if (await argon.verify(student.password, password)) {
+        return student;
+      }
+    } catch (e) {
+      return e;
+    }
+  },
+};
