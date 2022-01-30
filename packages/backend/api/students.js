@@ -1,31 +1,91 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
-const queries = require("../db/queries/auth");
+const redis_client = require("../middleware/redis");
+const queries = require("../db/queries/students");
+const {
+  generateAccessToken,
+  verifyToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} = require("../middleware/auth");
 
-router.get("/", (req, res) => {
-  queries.getAll("students").then((users) => {
-    res.json(users);
-  });
-});
-
-router.post("/signup", (req, res) => {
+router.post("/register", (req, res, next) => {
   queries
-    .createStudent(
-      req.body.email,
-      req.body.password,
-      req.body.first_name,
-      req.body.middle_name,
-      req.body.last_name,
-      req.body.student_id,
-      req.body.school,
-      req.body.date_of_birth
-    )
-    .then((user) => {
-      res.json(user[0]);
+    .createStudent(req.body)
+    .then((student) => {
+      res.json(student[0]);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
     });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res, next) => {
+  queries
+    .login(req.body.email, req.body.password)
+    .then(async (student) => {
+      const access_token = generateAccessToken(student.email);
+      const refresh_token = await generateRefreshToken(student.email);
+
+      return res.json({
+        status: true,
+        message: "login success",
+        data: { access_token, refresh_token },
+      });
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post(
+  "/token",
+  async (req, res, next) => {
+    if (req.body.token === null) {
+      return res
+        .status(401)
+        .json({ status: false, message: "Invalid request." });
+    }
+    const isVerified = await verifyRefreshToken(req.body.token);
+    if (isVerified) {
+      req.data = isVerified;
+      next();
+    } else {
+      res.status(401).json({
+        status: false,
+        message: "Invalid request. Token is not same in store.",
+      });
+    }
+  },
+  // generate new access token based on refresh
+  async (req, res) => {
+    const email = req.data;
+    const access_token = jwt.sign(
+      { email: email },
+      process.env.JWT_ACCESS_SECRET,
+      { expiresIn: process.env.JWT_ACCESS_TIME }
+    );
+    const refresh_token = await generateRefreshToken(email);
+    return res.json({
+      status: true,
+      message: "success",
+      data: { access_token, refresh_token },
+    });
+  }
+);
+
+router.get("/logout", verifyToken, async (req, res, next) => {
+  const student_email = req.email;
+  const token = req.token;
+  // remove the refresh token
+  await redis_client.del(student_email.toString());
+  // blacklist current access token
+  await redis_client.set("BL_" + student_email.toString(), token);
+  return res.json({ status: true, message: "success." });
+});
+
+router.post("/profile", (req, res, next) => {
   queries.login(req.body.email, req.body.password).then((user) => {
     res.json(user[0]);
   });

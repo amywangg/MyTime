@@ -1,15 +1,5 @@
 version: "3.9"
 services:
-  # backend:
-  #   image: amywangg/mytime-backend
-  #   ports:
-  #     - 80:3001
-  #   command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:password@db:5432/mytime
-  #     - PORT=3001
   db:
     image: postgres
     restart: always
@@ -20,7 +10,29 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=mytime
   redis:
-    image: redis
+    image: redis:latest
     container_name: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
+    expose:
+      - 6379
+    restart:
+      always
+  # backend:
+  #   image: backend
+  #   ports:
+  #     - 3001:3001
+  #   command: ["./wait-for-it.sh", "db:5432", "--", "npm", 'start']
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   environment:
+  #     - DB_HOST= db
+  #     - REDIS_HOST= redis
+  #     - DATABASE_URL=postgres://postgres:password@db:5432/mytime
+  #     - PORT=3001
+  #   volumes:
+  #     - ./api:/usr/app/
+  #     - /usr/app/node_modules
+  #   networks:
+  #     - webnet
