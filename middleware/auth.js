@@ -9,9 +9,6 @@ module.exports = {
     });
   },
   async generateRefreshToken(email) {
-    console.log("trial2", redis_client);
-    console.log(await redis_client.get("key"));
-
     const refresh_token = jwt.sign(
       { email: email },
       process.env.JWT_REFRESH_SECRET,
@@ -20,8 +17,6 @@ module.exports = {
       }
     );
     await redis_client.get(email.toString(), async (err, data) => {
-      console.log(email.toString());
-      console.log("hi" + data);
       if (err) throw err;
     });
     await redis_client.set(

@@ -10,7 +10,6 @@ let redis_client = null;
 
   await redis_client.set("key", "Successfully Connected to Redis ✨");
   console.log(await redis_client.get("key"));
-  console.log("trial1", redis_client);
 })();
 
 module.exports = redis_client;

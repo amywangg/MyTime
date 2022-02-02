@@ -6,7 +6,7 @@ module.exports = {
     try {
       let password_hash = await argon.hash(body.password);
       return knex("students")
-        .returning(["first_name", "email"])
+        .returning(["first_name", "last_name", "email"])
         .insert({
           email: body.email,
           password: password_hash,
@@ -23,7 +23,9 @@ module.exports = {
   },
 
   async login(email, password) {
-    let getStudent = await knex("students").where("email", email);
+    let getStudent = await knex("students")
+      .select(["first_name", "last_name", "email", "password"])
+      .where("email", email);
     let student = getStudent[0];
 
     try {
@@ -32,6 +34,18 @@ module.exports = {
       }
     } catch (e) {
       return e;
+    }
+  },
+
+  async getStudent(email) {
+    try {
+      let getStudent = await knex("students")
+        .select(["first_name", "last_name", "email"])
+        .where("email", email);
+      let student = getStudent[0];
+      return student;
+    } catch (err) {
+      return err;
     }
   },
 };
