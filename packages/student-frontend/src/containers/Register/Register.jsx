@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import PasswordChecklist from "react-password-checklist";
 import GoogleButton from "./GoogleButton";
+import { AuthContext } from "../../context/AuthContext";
 
 function Register() {
+  const { register: registerContext, error } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-  const [signup, setSignup] = useState({});
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
 
-  const onSubmit = (data) =>
-    setSignup({
+  const onSubmit = (data) => {
+    console.log("i am email ", data);
+    registerContext({
       email: data.email,
       first_name: data.first_name,
       middle_name: data.middle_name || "",
       last_name: data.last_name,
+      password: password,
+      student_id: 1,
+      school: "test",
+      date_of_birth: "01/14/1999",
     });
+  };
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -43,8 +50,6 @@ function Register() {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-8 space-y-6 gap-3"
-          action="#"
-          method="POST"
         >
           <div className="rounded-md shadow-sm grid gap-2">
             <input
@@ -121,30 +126,7 @@ function Register() {
                   />
                 </div>
               )}
-            </div>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-primary focus:ring-secondary border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-primary hover:text-secondary"
-              >
-                Forgot your password?
-              </a>
+              {error && <div className="text-red-300">E-mail in use</div>}
             </div>
           </div>
           <button

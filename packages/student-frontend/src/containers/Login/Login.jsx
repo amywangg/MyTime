@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import PasswordChecklist from "react-password-checklist";
 import GoogleButton from "./GoogleButton";
+import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
+  const { login, error } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-  const [login, setLogin] = useState({});
 
   const onSubmit = (data) =>
-    setLogin({
+    login({
       email: data.email,
       password: data.password,
     });
@@ -93,7 +93,7 @@ function Login() {
             type="submit"
             className="relative w-full justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
           >
-            Sign up
+            Sign in
           </button>
           <div
             className="or-divider"

@@ -11,10 +11,14 @@ const {
 } = require("../middleware/auth");
 
 router.post("/register", (req, res, next) => {
+  console.log(req.body);
   queries
     .createStudent(req.body)
-    .then((student) => {
-      res.json(student[0]);
+    .then(async (student) => {
+      const access_token = generateAccessToken(student[0].email);
+      const refresh_token = await generateRefreshToken(student[0].email);
+      console.log(access_token);
+      res.json({ ...{ access_token, refresh_token }, ...student[0] });
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
@@ -27,11 +31,16 @@ router.post("/login", async (req, res, next) => {
     .then(async (student) => {
       const access_token = generateAccessToken(student.email);
       const refresh_token = await generateRefreshToken(student.email);
-
       return res.json({
         status: true,
         message: "login success",
-        data: { access_token, refresh_token },
+        access_token,
+        refresh_token,
+        student: {
+          email: student.email,
+          first_name: student.first_name,
+          last_name: student.last_name,
+        },
       });
     })
     .catch((error) => {
@@ -42,12 +51,12 @@ router.post("/login", async (req, res, next) => {
 router.post(
   "/token",
   async (req, res, next) => {
-    if (req.body.token === null) {
+    if (req.body.refresh_token === null) {
       return res
         .status(401)
         .json({ status: false, message: "Invalid request." });
     }
-    const isVerified = await verifyRefreshToken(req.body.token);
+    const isVerified = await verifyRefreshToken(req.body.refresh_token);
     if (isVerified) {
       req.data = isVerified;
       next();
@@ -85,9 +94,9 @@ router.get("/logout", verifyToken, async (req, res, next) => {
   return res.json({ status: true, message: "success." });
 });
 
-router.post("/profile", (req, res, next) => {
-  queries.login(req.body.email, req.body.password).then((user) => {
-    res.json(user[0]);
+router.post("/profile", verifyToken, (req, res, next) => {
+  queries.getStudent(req.email).then((user) => {
+    return res.json(user);
   });
 });
 
