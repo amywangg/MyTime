@@ -11,13 +11,11 @@ const {
 } = require("../middleware/auth");
 
 router.post("/register", (req, res, next) => {
-  console.log(req.body);
   queries
     .createStudent(req.body)
     .then(async (student) => {
       const access_token = generateAccessToken(student[0].email);
       const refresh_token = await generateRefreshToken(student[0].email);
-      console.log(access_token);
       res.json({ ...{ access_token, refresh_token }, ...student[0] });
     })
     .catch((error) => {
@@ -70,16 +68,11 @@ router.post(
   // generate new access token based on refresh
   async (req, res) => {
     const email = req.data;
-    const access_token = jwt.sign(
-      { email: email },
-      process.env.JWT_ACCESS_SECRET,
-      { expiresIn: process.env.JWT_ACCESS_TIME }
-    );
-    const refresh_token = await generateRefreshToken(email);
+    const access_token = generateAccessToken(email);
     return res.json({
       status: true,
       message: "success",
-      data: { access_token, refresh_token },
+      access_token,
     });
   }
 );
