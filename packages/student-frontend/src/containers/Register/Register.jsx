@@ -5,14 +5,14 @@ import GoogleButton from "./GoogleButton";
 import { AuthContext } from "../../context/AuthContext";
 
 function Register() {
+  const [registrationInfo, setRegistrationInfo] = useState();
   const { register: registerContext, error } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
 
   const onSubmit = (data) => {
-    console.log("i am email ", data);
-    registerContext({
+    setRegistrationInfo({
       email: data.email,
       first_name: data.first_name,
       middle_name: data.middle_name || "",
@@ -22,6 +22,7 @@ function Register() {
       school: "test",
       date_of_birth: "01/14/1999",
     });
+    // registerContext();
   };
 
   return (

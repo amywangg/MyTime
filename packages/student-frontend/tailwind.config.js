@@ -1,6 +1,10 @@
 module.exports = {
   mode: "jit",
-  purge: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}"],
+  purge: [
+    "./public/**/*.html",
+    "./src/**/*.{js,jsx,ts,tsx,vue}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -16,5 +20,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("tw-elements/dist/plugin")],
 };

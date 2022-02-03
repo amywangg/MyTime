@@ -19,7 +19,6 @@ function getUser() {
 }
 
 function setUser(user) {
-  console.log("setUser", user);
   localStorage.setItem("student", JSON.stringify(user));
 }
 

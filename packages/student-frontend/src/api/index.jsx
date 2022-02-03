@@ -20,7 +20,6 @@ api.interceptors.request.use(
         config.headers["Authorization"] = "Bearer " + access_token;
       }
     }
-
     return config;
   },
   (error) => {
@@ -35,27 +34,32 @@ api.interceptors.response.use(
   function (error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && originalRequest.url === "token") {
-      console.log("i am rejecting");
-      router.push("/login");
+      TokenService.setUser(null);
       return Promise.reject(error);
     }
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      return axios
+      return api
         .post("token", {
           refresh_token: TokenService.getLocalRefreshToken(),
         })
         .then((res) => {
-          if (res.status === 201) {
+          console.log(res);
+          if (res.status === 200) {
+            console.log(res.data.access_token);
             // 1) put token to LocalStorage
-            TokenService.setLocalAccessToken(res.data.access_token);
-
+            TokenService.updateLocalAccessToken(res.data.access_token);
             // 2) Change Authorization header
-            axios.defaults.headers.common["Authorization"] =
+            api.defaults.headers.common["Authorization"] =
               "Bearer " + TokenService.getLocalAccessToken();
             // 3) return originalRequest object with Axios.
-            return axios(originalRequest);
+            return api(originalRequest);
           }
+        })
+        .catch((err) => {
+          localStorage.removeItem("student-access-token");
+          localStorage.removeItem("student-refresh-token");
+          TokenService.setUser(null);
         });
     }
   }
