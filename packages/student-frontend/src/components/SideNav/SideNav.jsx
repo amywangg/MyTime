@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 function SideNav() {
   const { handleLogout, error } = useContext(AuthContext);
   return (
-    <div className="w-[30vw] h-full shadow-md bg-white px-1 absolute">
+    <div className="w-[25vw] h-full shadow-md bg-white px-1 absolute">
       <ul className="relative">
         <li className="relative">
           <a

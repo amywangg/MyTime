@@ -44,9 +44,7 @@ api.interceptors.response.use(
           refresh_token: TokenService.getLocalRefreshToken(),
         })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
-            console.log(res.data.access_token);
             // 1) put token to LocalStorage
             TokenService.updateLocalAccessToken(res.data.access_token);
             // 2) Change Authorization header

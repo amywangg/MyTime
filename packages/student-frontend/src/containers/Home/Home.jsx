@@ -1,15 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import SideNav from "../SideNav";
+import Page from "../../components/Page";
 
-function Home() {
+function Home({ children }) {
   const { handleLogout, error } = useContext(AuthContext);
 
-  return (
-    <div className="bg-red-500 text-white">
-      <SideNav />
-    </div>
-  );
+  return <Page>I AM TEST</Page>;
 }
 
 Home.propTypes = {};

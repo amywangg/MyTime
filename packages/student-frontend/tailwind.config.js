@@ -14,6 +14,7 @@ module.exports = {
         text: "#000000",
         subText: "#7D7C7C",
         secondaryButton: "#2e3646",
+        bg: "#ebf8e9",
       },
     },
   },

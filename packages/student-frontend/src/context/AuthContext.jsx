@@ -58,15 +58,9 @@ export const AuthContextProvider = ({ children }) => {
           email: res.data.email,
         };
         setCurrentUser(student);
-        window.localStorage.setItem("student", student);
-        window.localStorage.setItem(
-          "student-access-token",
-          res.data.access_token
-        );
-        window.localStorage.setItem(
-          "student-refresh-token",
-          res.data.refresh_token
-        );
+        TokenService.setUser(student);
+        TokenService.updateLocalAccessToken(res.data.access_token);
+        TokenService.updateLocalRefreshToken(res.data.refresh_token);
         navigate("/");
       })
       .catch((err) => setError("Email in use"));
