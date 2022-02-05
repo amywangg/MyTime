@@ -93,4 +93,62 @@ router.post("/profile", verifyToken, (req, res, next) => {
   });
 });
 
+
+// vivs edits
+router.post("/dashboard", (req, res, next) => {
+  queries
+    .studentStats(req.student_id)
+    .then(async (student) => {
+      console.log("route_name",student);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/dashboard", (req, res, next) => {
+  queries
+    .studentJobs(req.student_id)
+    .then(async (student_job) => {
+      console.log("route_name",student_job);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+// i'm adding in some more info for the profile from the query i wrote; you can take out if u want
+router.post("/profile", (req, res, next) => {
+  queries
+    .studentStats(req.student_id)
+    .then(async (student) => {
+      console.log("route_name",student);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/applications", (req, res, next) => {
+  queries
+    .studentJobs(req.student_id)
+    .then(async (student_job) => {
+      console.log("route_name",student_job);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/schedule", (req, res, next) => {
+  queries
+    .studentJobs(req.student_id)
+    .then(async (student_job) => {
+      console.log("route_name",student_job);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
 module.exports = router;
