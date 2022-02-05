@@ -150,5 +150,5 @@ router.post("/schedule", (req, res, next) => {
       res.status(401).send({ error: error.message });
     });
 });
-
+// still need to add in getPosting query; didn't know how to do it bc of the path (each job has its own path right)
 module.exports = router;

@@ -65,6 +65,7 @@ module.exports = {
 
   // this returns all the info for student-job interactions
   // missing a column here for getting hte hours from the job; consider adding a column in the jobs table
+  // should return more than one result; might need to change line 78
   async studentJobs(student_id) {
     try {
       let studentJobs = await knex.select("orgs.name", "postings.title","orgs.website","student_job.status","jobs.start_time")
@@ -89,6 +90,7 @@ module.exports = {
       .leftJoin("jobs","postings.id","jobs.posting_id")
       .leftJoin("orgs","orgs.id","postings.org_id")
       .leftJoin("student_job","student_job.posting_id","postings.id")
+      .where("postings.id",posting_id)
       ;
       let posting = getPosting[0];
       return posting;
