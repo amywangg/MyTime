@@ -12,6 +12,7 @@ function Register() {
   const [passwordAgain, setPasswordAgain] = useState("");
 
   const onSubmit = (data) => {
+    console.log("hi");
     setRegistrationInfo({
       email: data.email,
       first_name: data.first_name,
@@ -28,9 +29,9 @@ function Register() {
       middle_name: data.middle_name || "",
       last_name: data.last_name,
       password: password,
-      student_id: 1,
-      school: "test",
-      date_of_birth: "01/14/1999",
+      student_id: data.student_id || 1,
+      school: data.school || "test",
+      date_of_birth: data.date_of_birth || "01/14/1999",
     });
   };
 
@@ -102,6 +103,22 @@ function Register() {
               type="datetime"
               placeholder="Date of Birth"
               className="input-basic"
+            />
+            <input
+              {...register("student_id")}
+              id="student-id"
+              name="student-id"
+              required
+              className="input-basic"
+              placeholder="Student ID"
+            />
+            <input
+              {...register("school")}
+              id="school"
+              name="school"
+              required
+              className="input-basic"
+              placeholder="Name of School"
             />
             <div className="-space-y-px mt-2">
               <input

@@ -5,7 +5,11 @@ import Page from "../../components/Page";
 function Home({ children }) {
   const { handleLogout, error } = useContext(AuthContext);
 
-  return <Page>I AM TEST</Page>;
+  return (
+    <Page title="Dashboard">
+      <h1>HELLO</h1>
+    </Page>
+  );
 }
 
 Home.propTypes = {};

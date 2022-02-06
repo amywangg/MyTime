@@ -1,41 +1,134 @@
 import React, { useContext } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 function SideNav() {
-  const { handleLogout, error } = useContext(AuthContext);
+  const [path, setPath] = useState("");
+  useEffect(() => {
+    setPath(window.location.pathname);
+  });
+  const { handleLogout, authLoading, currentUser } = useContext(AuthContext);
   return (
-    <div className="w-[25vw] h-full shadow-md bg-white px-1 absolute">
-      <ul className="relative">
-        <li className="relative">
-          <a
-            className="flex items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
-            href="#!"
-            data-mdb-ripple="true"
-            data-mdb-ripple-color="dark"
-          >
-            Sidenav link 1
-          </a>
-        </li>
-        <li className="relative">
-          <a
-            className="flex items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
-            href="#!"
-            data-mdb-ripple="true"
-            data-mdb-ripple-color="dark"
-          >
-            Sidenav link 2
-          </a>
-        </li>
-        <li className="relative">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="inline-block px-6 py-2.5 bg-primary text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-secondary hover:shadow-lg focus:bg-secondary focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
+    <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white px-1 absolute">
+      {/* {currentUser?.profile_pic ? (
+          <img
+            src={
+              currentUser?.profile_pic !== NaN ? currentUser?.profile_pic : null
+            }
+            className="rounded-full w-32"
+            alt="Avatar"
+          />
+        ) : ( */}
+      {!authLoading && (
+        <div>
+          <div className="flex justify-center mt-8">
+            <div className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
+              {currentUser?.first_name[0] + currentUser?.last_name[0]}
+            </div>
+          </div>
+          <div className="ml-[40px] mt-[10px]">
+            <p className="text-[12px] font-semibold mb-[5px]">
+              {currentUser?.first_name + " " + currentUser?.last_name}
+            </p>
+            <p className="text-[12px] text-subText flex-wrap">
+              {currentUser?.school}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* )} */}
+
+      <div className="ml-[40px] mt-[40px]">
+        <h1 className="mb-2">PORTFOLIO</h1>
+        <ul className="relative">
+          <li className="relative">
+            <a
+              className={`${
+                path === "/"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-subText"
+              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
+              href="/"
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="dark"
+            >
+              Dashboard
+            </a>
+          </li>
+          <li className="relative">
+            <a
+              className={`${
+                path === "/profile"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-subText"
+              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
+              href="/profile"
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="dark"
+            >
+              Profile
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className="ml-[40px] mt-[40px]">
+        <h1 className="mb-2">VOLUNTEER</h1>
+        <ul className="relative">
+          <li className="relative">
+            <a
+              className={`${
+                path === "/browse"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-subText"
+              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
+              href="/browse"
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="dark"
+            >
+              Browse
+            </a>
+          </li>
+          <li className="relative">
+            <a
+              className={`${
+                path === "/applications"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-subText"
+              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
+              href="/applications"
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="dark"
+            >
+              My Applications
+            </a>
+          </li>
+          <li className="relative">
+            <a
+              className={`${
+                path === "/schedule"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-subText"
+              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
+              href="/schedule"
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="dark"
+            >
+              Schedule
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className="absolute bottom-16 ml-[40px]">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="inline-block px-6 py-2.5 bg-primary text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-secondary hover:shadow-lg focus:bg-secondary focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

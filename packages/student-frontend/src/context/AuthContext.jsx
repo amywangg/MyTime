@@ -20,12 +20,14 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   const checkLogin = async () => {
+    setAuthLoading(true);
     const token = TokenService.getLocalAccessToken();
     if (token !== "undefined" && token !== null) {
       await api.post("profile", { email: currentUser?.email }).then((res) => {
         setCurrentUser(res.data);
         TokenService.setUser(res.data);
       });
+      setAuthLoading(false);
     } else {
       setAuthLoading(false);
       setCurrentUser(null);
