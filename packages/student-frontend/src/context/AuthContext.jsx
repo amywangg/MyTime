@@ -7,7 +7,7 @@ import TokenService from "../services/TokenService";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState();
   const [error, setError] = useState(null);
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
     setAuthLoading(true);
     const token = TokenService.getLocalAccessToken();
     if (token !== "undefined" && token !== null) {
+      setCurrentUser(TokenService.getUser());
       await api.post("profile", { email: currentUser?.email }).then((res) => {
         setCurrentUser(res.data);
         TokenService.setUser(res.data);

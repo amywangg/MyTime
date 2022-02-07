@@ -5,10 +5,11 @@ import { AuthContext } from "../../context/AuthContext";
 
 function SideNav() {
   const [path, setPath] = useState("");
+  const { handleLogout, authLoading, currentUser } = useContext(AuthContext);
+
   useEffect(() => {
     setPath(window.location.pathname);
   });
-  const { handleLogout, authLoading, currentUser } = useContext(AuthContext);
   return (
     <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white px-1 absolute">
       {/* {currentUser?.profile_pic ? (
@@ -24,15 +25,17 @@ function SideNav() {
         <div>
           <div className="flex justify-center mt-8">
             <div className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
-              {currentUser?.first_name[0] + currentUser?.last_name[0]}
+              {currentUser !== undefined &&
+                currentUser?.first_name[0] + currentUser?.last_name[0]}
             </div>
           </div>
           <div className="ml-[40px] mt-[10px]">
             <p className="text-[12px] font-semibold mb-[5px]">
-              {currentUser?.first_name + " " + currentUser?.last_name}
+              {currentUser !== undefined &&
+                currentUser?.first_name + " " + currentUser?.last_name}
             </p>
             <p className="text-[12px] text-subText flex-wrap">
-              {currentUser?.school}
+              {currentUser !== undefined && currentUser?.school}
             </p>
           </div>
         </div>

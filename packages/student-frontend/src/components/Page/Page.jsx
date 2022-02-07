@@ -7,9 +7,9 @@ function Page({ children, title }) {
       <div className="flex w-[25vw] max-w-[250px]">
         <SideNav />
       </div>
-      <div className="flex-grow bg-bg px-12 py-6">
+      <div className="flex flex-col flex-grow bg-bg px-16 py-6 pb-12">
         {title && <p className="text-2xl font-medium mb-[20px]">{title}</p>}
-        {children}
+        <div className="flex flex-col flex-grow">{children}</div>
       </div>
     </div>
   );

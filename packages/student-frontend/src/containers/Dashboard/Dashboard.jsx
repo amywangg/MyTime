@@ -1,17 +1,20 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Page from "../../components/Page";
+import Progress from "./Progress";
+import Jobs from "./Jobs";
 
-function Home({ children }) {
+function Dashboard() {
   const { handleLogout, error } = useContext(AuthContext);
 
   return (
     <Page title="Dashboard">
-      <h1>HELLO</h1>
+      <Progress />
+      <Jobs />
     </Page>
   );
 }
 
-Home.propTypes = {};
+Dashboard.propTypes = {};
 
-export default Home;
+export default Dashboard;

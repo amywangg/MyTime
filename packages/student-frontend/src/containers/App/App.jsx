@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "../Home";
+import Dashboard from "../Dashboard";
 import Login from "../Login";
 import Register from "../Register";
 import Applications from "../Applications";
 import Schedule from "../Schedule";
 import Browse from "../Browse";
 import Profile from "../Profile";
-import { AuthContext, AuthContextProvider } from "../../context/AuthContext";
+import { AuthContextProvider } from "../../context/AuthContext";
 import TokenService from "../../services/TokenService";
 
 function PrivateOutlet({ Component }) {
@@ -19,7 +19,7 @@ export function App() {
   return (
     <AuthContextProvider>
       <Routes>
-        <Route path="/" element={<PrivateOutlet Component={<Home />} />} />
+        <Route path="/" element={<PrivateOutlet Component={<Dashboard />} />} />
         <Route
           path="/applications"
           element={<PrivateOutlet Component={<Applications />} />}
