@@ -18,6 +18,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // routes
 app.use("/", require("./api/index"));
 app.use("/students", require("./api/students"));
+app.use("/orgs", require("./api/orgs"));
+app.use("/schools", require("./api/schools"));
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT} 👻`);

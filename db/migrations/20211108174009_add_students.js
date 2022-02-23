@@ -20,7 +20,7 @@ exports.up = async function (knex) {
 
       table.integer("student_id");
 
-      table.integer("grade");
+      table.integer("location");
 
       table.date("date_of_birth");
 

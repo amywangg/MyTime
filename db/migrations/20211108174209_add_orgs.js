@@ -10,11 +10,15 @@ exports.up = async function (knex) {
 
       table.boolean("verified").defaultTo(false);
 
+      table.string("password");
+
+      table.string("location");
+
       table.string("description");
 
       table.string("website");
 
-      table.integer("phone_number");
+      table.string("phone_number");
 
       table.string("image");
     });

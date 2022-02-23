@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const redis_client = require("../middleware/redis");
-const queries = require("../db/queries/orgs");
+const queries = require("../db/queries/schools");
 const {
   generateAccessToken,
   verifyToken,
@@ -11,11 +11,11 @@ const {
 
 router.post("/register", (req, res, next) => {
   queries
-    .createOrg(req.body)
-    .then(async (org) => {
-      const access_token = generateAccessToken(org[0].email);
-      const refresh_token = await generateRefreshToken(org[0].email);
-      res.json({ ...{ access_token, refresh_token }, ...org[0] });
+    .createSchool(req.body)
+    .then(async (school) => {
+      const access_token = generateAccessToken(school[0].email);
+      const refresh_token = await generateRefreshToken(school[0].email);
+      res.json({ ...{ access_token, refresh_token }, ...school[0] });
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
@@ -25,17 +25,17 @@ router.post("/register", (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   queries
     .login(req.body.email, req.body.password)
-    .then(async (org) => {
-      const access_token = generateAccessToken(org.email);
-      const refresh_token = await generateRefreshToken(org.email);
+    .then(async (school) => {
+      const access_token = generateAccessToken(school.email);
+      const refresh_token = await generateRefreshToken(school.email);
       return res.json({
         status: true,
         message: "login success",
         access_token,
         refresh_token,
-        org: {
-          email: org.email,
-          name: org.name,
+        school: {
+          email: school.email,
+          name: school.name,
         },
       });
     })
@@ -76,18 +76,18 @@ router.post(
 );
 
 router.get("/logout", verifyToken, async (req, res, next) => {
-  const org_email = req.email;
+  const school_email = req.email;
   const token = req.token;
   // remove the refresh token
-  await redis_client.del(org_email.toString());
+  await redis_client.del(school_email.toString());
   // blacklist current access token
-  await redis_client.set("BL_" + org_email.toString(), token);
+  await redis_client.set("BL_" + school_email.toString(), token);
   return res.json({ status: true, message: "success." });
 });
 
 router.post("/profile", verifyToken, (req, res, next) => {
   queries
-    .getOrg(req.email)
+    .getSchool(req.email)
     .then((user) => {
       return res.json(user);
     })
@@ -95,30 +95,5 @@ router.post("/profile", verifyToken, (req, res, next) => {
       res.status(401).send({ error: error.message });
     });
 });
-
-// vivs edits
-router.post("/partnerships", (req, res, next) => {
-  queries
-    .getOrg(req.org_id)
-    .then(async (org) => {
-      console.log("route_name", org);
-    })
-    .catch((error) => {
-      res.status(401).send({ error: error.message });
-    });
-});
-
-router.post("/mypostings", (req, res, next) => {
-  queries
-    .orgJobs(req.org_id)
-    .then(async (postings) => {
-      console.log("route_name", postings);
-    })
-    .catch((error) => {
-      res.status(401).send({ error: error.message });
-    });
-});
-
-// still need to add in getOrgPosting query; didn't know how to do it bc of the path (each job has its own path right)
 
 module.exports = router;
