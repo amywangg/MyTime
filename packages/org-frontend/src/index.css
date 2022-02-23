@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input-basic {
+    @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm;
+  }
+}
+
+.or-divider {
+  display: flex;
+  height: 10;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+}
+.or-divider:after,
+.or-divider:before {
+  content: "";
+  height: 2px;
+  background-color: #9994;
+  flex: 1;
+  width: 100%;
+  margin: 0;
+}
