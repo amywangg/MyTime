@@ -2,9 +2,9 @@ exports.up = async function (knex) {
   const exists = await knex.schema.hasTable("schools");
   if (!exists) {
     return knex.schema.createTable("schools", function (table) {
-      table.increments("schoolId").primary();
+      table.increments("id").primary();
 
-      table.string("email");
+      table.string("email").unique();
 
       table.string("password");
 

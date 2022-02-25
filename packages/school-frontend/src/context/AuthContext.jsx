@@ -56,6 +56,8 @@ export const AuthContextProvider = ({ children }) => {
       .then((res) => {
         setError(null);
         const school = {
+          id: res.data.id,
+          location: res.data.location,
           name: res.data.name,
           email: res.data.email,
         };

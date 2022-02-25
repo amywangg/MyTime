@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { OrgContext, OrgContextProvider } from "../../context/OrgContext";
 import Page from "../../components/Page";
 import NoJobs from "../../components/NoJobs";
+import Tabs from "../../components/Tabs";
+import Loading from "../../components/Loading";
+import Orgs from "./Orgs";
 
 function Dashboard() {
-  const { handleLogout, error } = useContext(AuthContext);
-  const [tab, setTab] = useState("partners");
+  const [tab, setTab] = useState("Partners");
+  const { orgs, orgLoading, updateOrgSchool } = useContext(OrgContext);
 
   return (
     <Page title="Partnerships">
@@ -16,46 +19,22 @@ function Dashboard() {
         <p className="text-subText text-xs flex-wrap mb-4">
           Take a look at the places your students can make an impact on
         </p>
-        <ul className="flex flex-wrap -mb-px h-16">
-          <li className="mr-2">
-            <button
-              onClick={() => setTab("partners")}
-              className={`${
-                tab === "partners"
-                  ? "text-primary border-primary"
-                  : "text-subText border-transparent"
-              } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-            >
-              Partners
-            </button>
-          </li>
-          <li className="mr-2">
-            <button
-              onClick={() => setTab("pending")}
-              className={`${
-                tab === "pending"
-                  ? "text-primary border-primary"
-                  : "text-subText border-transparent"
-              } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-              aria-current="page"
-            >
-              Pending
-            </button>
-          </li>
-          <li className="mr-2">
-            <button
-              onClick={() => setTab("rejected")}
-              className={`${
-                tab === "rejected"
-                  ? "text-primary border-primary"
-                  : "text-subText border-transparent"
-              } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-            >
-              Rejected
-            </button>
-          </li>
-        </ul>
-        <NoJobs />
+        <Tabs
+          tab={tab}
+          setTab={setTab}
+          tabs={["Partners", "Pending", "Rejected"]}
+        />
+        {orgLoading ? (
+          <div className="w-full h-full flex justify-center items-center">
+            <Loading />
+          </div>
+        ) : !orgs || orgs.length === 0 ? (
+          <NoJobs />
+        ) : (
+          orgs && (
+            <Orgs tab={tab} orgs={orgs} updateOrgSchool={updateOrgSchool} />
+          )
+        )}
       </div>
     </Page>
   );

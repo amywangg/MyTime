@@ -1,14 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "regenerator-runtime";
-import { getOrg } from "../../../backend/db/queries/orgs";
-import api from "../api";
 import TokenService from "../services/TokenService";
+import api from "../api";
 
 export const OrgContext = createContext();
 
 export const OrgContextProvider = ({ children }) => {
-  const [orgs, setOrgs] = useState();
+  const [orgs, setOrgs] = useState([]);
   const [error, setError] = useState(null);
   const [orgLoading, setOrgLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,36 +15,62 @@ export const OrgContextProvider = ({ children }) => {
   useEffect(() => {
     const path = window.location.pathname;
     if (path === "/") {
-      getOrgs();
+      setOrgLoading(true);
+      getOrgs().then((res) => {
+        setOrgs(res);
+        setOrgLoading(false);
+      });
     }
   }, []);
 
   const getOrgs = async () => {
-    setOrgLoading(true);
-    await api.get("orgs", { location: currentUser?.location }).then((res) => {
-      setOrgs(res.data);
-    });
-    setOrgLoading(false);
+    const school = TokenService.getUser();
+    return await api
+      .post("orgs", { id: school?.id })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const getOrgById = async (id) => {
     navigate(`org/${id}`);
     setOrgLoading(true);
-    await api.get("orgs", { location: currentUser?.location }).then((res) => {
+    await api.post("orgs", { location: orgs?.id }).then((res) => {
       setOrgs(res.data);
     });
     setOrgLoading(false);
   };
 
+  const updateOrgSchool = async (org_id, status) => {
+    const school = TokenService.getUser();
+    return await api
+      .post("orgs/update", { school_id: school?.id, org_id, status })
+      .then((res) => {
+        return res.data;
+      })
+      .then(() => {
+        setOrgLoading(true);
+        getOrgs().then((res) => {
+          setOrgs(res);
+          setOrgLoading(false);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const stateValues = {
-    currentUser,
-    setCurrentUser,
-    checkLogin,
-    setAuthLoading,
-    authLoading,
-    handleLogout,
-    login,
-    register,
+    orgs,
+    setOrgs,
+    getOrgs,
+    getOrgById,
+    setOrgLoading,
+    updateOrgSchool,
+    orgLoading,
     error,
   };
 

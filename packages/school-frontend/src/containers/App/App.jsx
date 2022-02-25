@@ -5,6 +5,7 @@ import Login from "../Login";
 import Register from "../Register";
 import Profile from "../Profile";
 import { AuthContextProvider } from "../../context/AuthContext";
+import { OrgContextProvider } from "../../context/OrgContext";
 import TokenService from "../../services/TokenService";
 
 function PrivateOutlet({ Component }) {
@@ -16,7 +17,19 @@ export function App() {
   return (
     <AuthContextProvider>
       <Routes>
-        <Route path="/" element={<PrivateOutlet Component={<Dashboard />} />} />
+        <Route
+          path="/"
+          element={
+            <PrivateOutlet
+              Component={
+                <OrgContextProvider>
+                  <Dashboard />
+                </OrgContextProvider>
+              }
+            />
+          }
+        />
+
         <Route
           path="/profile"
           element={<PrivateOutlet Component={<Profile />} />}

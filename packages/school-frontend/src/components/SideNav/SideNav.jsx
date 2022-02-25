@@ -33,9 +33,9 @@ function SideNav() {
             ) : (
               <div className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
                 {currentUser !== undefined &&
-                  currentUser?.name.split(" ")[0][0] +
-                    currentUser?.name.split(" ")[1][0] +
-                    currentUser?.name.split(" ")[2][0]}
+                  currentUser.name.split(" ").map((x) => {
+                    return x[0];
+                  })}
               </div>
             )}
           </div>
@@ -44,7 +44,7 @@ function SideNav() {
               {currentUser !== undefined && currentUser?.name}
             </p>
             <p className="text-[12px] text-subText flex-wrap">
-              {currentUser !== undefined && currentUser?.school}
+              {currentUser !== undefined && currentUser?.location}, ON
             </p>
           </div>
         </div>

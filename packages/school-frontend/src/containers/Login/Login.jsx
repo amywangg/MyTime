@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import GoogleButton from "./GoogleButton";
 import { AuthContext } from "../../context/AuthContext";
+import school from "../../assets/school.jpeg";
 
 function Login() {
   const { login, error } = useContext(AuthContext);
@@ -14,7 +15,13 @@ function Login() {
     });
 
   return (
-    <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div
+      className="h-[100%] flex items-center justify-center pb-32 px-4 sm:px-6 lg:px-8 bg-cover"
+      style={{
+        backgroundImage: `linear-gradient(rgba(235,248,233, 0.9), rgba(0, 0, 0, 0.4)), url(${school})`,
+      }}
+    >
+      {/* <img className="absolute opacity-20 left-0 top-0 w-full h-full" src={school}/> */}
       <div className="max-w-md w-full space-y-8">
         <div>
           {/* TODO: LOGO HERE */}
@@ -95,7 +102,7 @@ function Login() {
           >
             Sign in
           </button>
-          <div
+          {/* <div
             className="or-divider"
             style={{ marginTop: 15, marginBottom: 15 }}
           >
@@ -106,7 +113,7 @@ function Login() {
               or
             </p>
           </div>
-          <GoogleButton />
+          <GoogleButton /> */}
         </form>
       </div>
     </div>
