@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Listing from "../../components/Listing/Listing";
 import NoJobs from "../../components/NoJobs";
 import partnership from "../../assets/partnership.png";
+import { useNavigate } from "react-router-dom";
 
 function PartnerAction({ onClick }) {
   return (
@@ -50,12 +51,12 @@ function RejectedAction({ onReconsiderClick }) {
 }
 
 function Orgs({ tab, orgs, updateOrgSchool }) {
-  const onReconsiderClick = () => {
-    updateOrgSchool();
+  const navigate = useNavigate();
+
+  const onOrgClick = (id) => {
+    navigate(`/org/${id}`);
   };
-  const onRejectClick = () => {
-    updateOrgSchool();
-  };
+
   const filteredOrgs =
     tab === "Partners"
       ? orgs.filter((org) => org.status === "verified")
@@ -71,6 +72,7 @@ function Orgs({ tab, orgs, updateOrgSchool }) {
             item={org}
             key={i}
             br={i !== filteredOrgs.length - 1}
+            onClick={() => onOrgClick(org.id)}
             action={
               tab === "Pending" ? (
                 <PendingAction

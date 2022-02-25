@@ -14,7 +14,7 @@ export const OrgContextProvider = ({ children }) => {
 
   useEffect(() => {
     const path = window.location.pathname;
-    if (path === "/") {
+    if (path === "/" || path.includes("org")) {
       setOrgLoading(true);
       getOrgs().then((res) => {
         setOrgs(res);

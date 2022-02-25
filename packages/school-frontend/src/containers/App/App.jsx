@@ -7,6 +7,7 @@ import Profile from "../Profile";
 import { AuthContextProvider } from "../../context/AuthContext";
 import { OrgContextProvider } from "../../context/OrgContext";
 import TokenService from "../../services/TokenService";
+import OrgProfile from "../OrgProfile";
 
 function PrivateOutlet({ Component }) {
   const currentUser = TokenService.getUser();
@@ -29,7 +30,18 @@ export function App() {
             />
           }
         />
-
+        <Route
+          path="/org/:id"
+          element={
+            <PrivateOutlet
+              Component={
+                <OrgContextProvider>
+                  <OrgProfile />
+                </OrgContextProvider>
+              }
+            />
+          }
+        />
         <Route
           path="/profile"
           element={<PrivateOutlet Component={<Profile />} />}

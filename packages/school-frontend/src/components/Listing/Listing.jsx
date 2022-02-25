@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 
-function Listing({ item, action, br, index, props }) {
+function Listing({ item, action, br, index, onClick, props }) {
   return (
-    <div className={`flex h-16 mb-4 ${br && "border-b-[1px] border-gray-600"}`}>
+    <div
+      className={`flex h-16 mb-2 p-2 ${
+        br && "border-b-[1px] border-gray-600"
+      } hover:bg-gray-400 hover:bg-opacity-20 hover:rounded-sm`}
+    >
       {item.image ? (
         <img className="w-12 h-12" src={item.image} alt="org_img" />
       ) : (
@@ -15,7 +19,11 @@ function Listing({ item, action, br, index, props }) {
           })}
         </div>
       )}
-      <div className="block ml-4 flex-grow" key={item.name + index + "hi"}>
+      <div
+        className="block ml-4 flex-grow cursor-pointer"
+        key={item.name + index + "hi"}
+        onClick={onClick}
+      >
         <p className="font-semibold text-sm">{item.name}</p>
         <p className="text-sm">{item.location}, ON</p>
       </div>
