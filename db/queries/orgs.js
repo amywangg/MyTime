@@ -5,7 +5,7 @@ module.exports = {
   async createOrg(body) {
     try {
       let password_hash = await argon.hash(body.password);
-      return knex("orgs").returning(["name", "email"]).insert({
+      let org = await knex("orgs").returning(["name", "email"]).insert({
         name: body.name,
         email: body.email,
         password: password_hash,
@@ -15,6 +15,15 @@ module.exports = {
         description: "",
         image: "",
       });
+      let getSchools = await knex("schools").where("location", body.location);
+      getSchools.map(async (school) => {
+        await knex("org_school").insert({
+          school_id: school.id,
+          org_id: org[0].id,
+          status: "",
+        });
+      });
+      return org;
     } catch (error) {
       console.log(error);
       process.exit(1);

@@ -36,6 +36,8 @@ router.post("/login", async (req, res, next) => {
         school: {
           email: school.email,
           name: school.name,
+          location: school.location,
+          id: school.id,
         },
       });
     })
@@ -88,6 +90,28 @@ router.get("/logout", verifyToken, async (req, res, next) => {
 router.post("/profile", verifyToken, (req, res, next) => {
   queries
     .getSchool(req.email)
+    .then((user) => {
+      return res.json(user);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/orgs", verifyToken, (req, res, next) => {
+  queries
+    .getOrgs(req.body.id)
+    .then((user) => {
+      return res.json(user);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/orgs/update", verifyToken, (req, res, next) => {
+  queries
+    .updateOrgStatus(req.body.org_id, req.body.school_id, req.body.status)
     .then((user) => {
       return res.json(user);
     })
