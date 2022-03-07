@@ -51,6 +51,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const register = async (student) => {
+    console.log(student);
     await api
       .post("register", student)
       .then((res) => {

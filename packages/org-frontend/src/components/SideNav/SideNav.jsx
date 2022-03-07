@@ -10,37 +10,37 @@ function SideNav() {
   useEffect(() => {
     setPath(window.location.pathname);
   });
+
   return (
     <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white px-1 absolute">
-      {/* {currentUser?.profile_pic ? (
-          <img
-            src={
-              currentUser?.profile_pic !== NaN ? currentUser?.profile_pic : null
-            }
-            className="rounded-full w-32"
-            alt="Avatar"
-          />
-        ) : ( */}
       {!authLoading && (
         <div>
           <div className="flex justify-center mt-8">
-            <div className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
-              {currentUser !== undefined &&
-                currentUser?.name[0] + currentUser.name[1]}
-            </div>
+            {currentUser?.image ? (
+              <img
+                className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full"
+                src={currentUser.image}
+                alt="avatar"
+              />
+            ) : (
+              <div className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
+                {currentUser !== undefined &&
+                  currentUser.name.split(" ").map((x) => {
+                    return x[0];
+                  })}
+              </div>
+            )}
           </div>
           <div className="ml-[40px] mt-[10px]">
             <p className="text-[12px] font-semibold mb-[5px]">
               {currentUser !== undefined && currentUser?.name}
             </p>
             <p className="text-[12px] text-subText flex-wrap">
-              {currentUser !== undefined && currentUser?.location}
+              {currentUser !== undefined && currentUser?.location}, ON
             </p>
           </div>
         </div>
       )}
-
-      {/* )} */}
 
       <div className="ml-[40px] mt-[40px]">
         <h1 className="mb-2">PORTFOLIO</h1>

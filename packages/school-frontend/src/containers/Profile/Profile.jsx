@@ -35,7 +35,7 @@ function Profile() {
       <div className="relative bg-white rounded-lg flex flex-col p-8 mt-20 w-full flex-grow">
         {currentUser?.image ? (
           <img
-            className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase border-4 border-white"
+            className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full bg-white text-xl text-white uppercase border-4 border-white"
             src={currentUser?.image}
             alt="avatar"
           />
@@ -126,11 +126,17 @@ function Profile() {
               onChange={(e) => handleEdit("description", e.target.value)}
             />
           ) : profile?.description || currentUser?.description ? (
-            <p className="mb-10 resize-none block mt-3 w-full px-3 py-1.5 text-base font-normal overflow-auto">
-              {profile?.description
-                ? profile.description
-                : currentUser !== undefined && currentUser?.description}
-            </p>
+            <textarea
+              onClick={() => setEdit("description")}
+              className="h-[80%] border-0 flex-grow mb-4 resize-none overflow-auto block mt-3 w-full px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border-solid transition ease-in-out border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+              id="exampleFormControlTextarea1"
+              value={
+                profile?.description
+                  ? profile.description
+                  : currentUser !== undefined && currentUser?.description
+              }
+              onChange={(e) => handleEdit("description", e.target.value)}
+            />
           ) : (
             <div className="flex flex-col justify-center items-center h-[100%] text-center">
               <p className="text-center">

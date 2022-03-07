@@ -4,6 +4,10 @@ import Page from "../../components/Page";
 import Progress from "./Partnerships";
 import JobSummary from "./JobSummary";
 import Partnerships from "./Partnerships";
+import {
+  SchoolContext,
+  SchoolContextProvider,
+} from "../../context/SchoolContext";
 
 function Dashboard() {
   const { handleLogout, error } = useContext(AuthContext);
@@ -11,7 +15,9 @@ function Dashboard() {
   return (
     <Page title="Dashboard">
       <JobSummary />
-      <Partnerships />
+      <SchoolContextProvider>
+        <Partnerships />
+      </SchoolContextProvider>
     </Page>
   );
 }

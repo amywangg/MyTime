@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const redis_client = require("../middleware/redis");
 const queries = require("../db/queries/orgs");
+const postingQueries = require("../db/queries/postings");
 const {
   generateAccessToken,
   verifyToken,
@@ -34,8 +35,11 @@ router.post("/login", async (req, res, next) => {
         access_token,
         refresh_token,
         org: {
+          id: org.id,
           email: org.email,
           name: org.name,
+          image: org.image,
+          location: org.location,
         },
       });
     })
@@ -96,24 +100,44 @@ router.post("/profile", verifyToken, (req, res, next) => {
     });
 });
 
-// vivs edits
-router.post("/partnerships", (req, res, next) => {
+router.post("/profile/update", verifyToken, (req, res, next) => {
   queries
-    .getOrg(req.org_id)
-    .then(async (org) => {
-      console.log("route_name", org);
+    .updateOrg(req.body)
+    .then((user) => {
+      return res.json(user[0]);
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
     });
 });
 
-router.post("/mypostings", (req, res, next) => {
+router.post("/schools", verifyToken, (req, res, next) => {
   queries
-    .orgJobs(req.org_id)
-    .then(async (postings) => {
-      console.log("route_name", postings);
+    .getSchools(req.body.id)
+    .then((user) => {
+      return res.json(user);
     })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings", (req, res, next) => {
+  postingQueries
+    .getOrgPostings(req.body.id)
+    .then((postings) => {
+      return res.json(postings);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings/create", (req, res, next) => {
+  console.log(req.body);
+  postingQueries
+    .createPosting(req.body.org_id, req.body.posting)
+    .then((posting) => res.send(posting))
     .catch((error) => {
       res.status(401).send({ error: error.message });
     });

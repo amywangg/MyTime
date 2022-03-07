@@ -12,15 +12,6 @@ function SideNav() {
   });
   return (
     <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white px-1 absolute">
-      {/* {currentUser?.profile_pic ? (
-          <img
-            src={
-              currentUser?.profile_pic !== NaN ? currentUser?.profile_pic : null
-            }
-            className="rounded-full w-32"
-            alt="Avatar"
-          />
-        ) : ( */}
       {!authLoading && (
         <div>
           <div className="flex justify-center mt-8">

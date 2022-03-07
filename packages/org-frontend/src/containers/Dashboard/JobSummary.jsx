@@ -1,59 +1,29 @@
 import React, { useState } from "react";
 import NoJobs from "../../components/NoJobs";
 
-function Jobs() {
+function JobSummary() {
   const [tab, setTab] = useState("completed");
 
   return (
-    <div className="bg-white rounded-lg flex flex-col p-8 w-full mb-10">
-      <p className="inline-block font-medium text-xl mb-2">Your Jobs</p>
+    <div className="bg-white rounded-lg flex flex-col p-8 w-full mb-10 h-1/3 overflow-auto">
+      <p className="inline-block font-medium text-xl mb-2">Upcoming Jobs</p>
       <p className="text-subText text-xs flex-wrap mb-4">
-        Look back at all the hard work you put in
+        Check up on what's coming next
       </p>
-      <ul className="flex flex-wrap -mb-px h-16">
-        <li className="mr-2">
-          <button
-            onClick={() => setTab("upcoming")}
-            className={`${
-              tab === "upcoming"
-                ? "text-primary border-primary"
-                : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-          >
-            Upcoming
-          </button>
-        </li>
-        <li className="mr-2">
-          <button
-            onClick={() => setTab("pending")}
-            className={`${
-              tab === "pending"
-                ? "text-primary border-primary"
-                : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-            aria-current="page"
-          >
-            Pending
-          </button>
-        </li>
-        <li className="mr-2">
-          <button
-            onClick={() => setTab("cancelled")}
-            className={`${
-              tab === "cancelled"
-                ? "text-primary border-primary"
-                : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-          >
-            Cancelled
-          </button>
-        </li>
-      </ul>
-      <NoJobs />
+      <div className="h-full flex place-items-center justify-center">
+        <p className="inline-block align-middle text-center">
+          No jobs yet!
+          <br /> Go to{" "}
+          <a className="text-primary" href="/postings/create">
+            create posting
+          </a>{" "}
+          to get started
+        </p>
+      </div>
     </div>
   );
 }
 
-Jobs.propTypes = {};
+JobSummary.propTypes = {};
 
-export default Jobs;
+export default JobSummary;

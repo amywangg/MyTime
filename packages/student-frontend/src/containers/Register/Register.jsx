@@ -5,7 +5,6 @@ import GoogleButton from "./GoogleButton";
 import { AuthContext } from "../../context/AuthContext";
 
 function Register() {
-  const [registrationInfo, setRegistrationInfo] = useState();
   const { register: registerContext, error } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const [password, setPassword] = useState("");
@@ -13,16 +12,6 @@ function Register() {
 
   const onSubmit = (data) => {
     console.log("hi");
-    setRegistrationInfo({
-      email: data.email,
-      first_name: data.first_name,
-      middle_name: data.middle_name || "",
-      last_name: data.last_name,
-      password: password,
-      student_id: 1,
-      school: "test",
-      date_of_birth: "01/14/1999",
-    });
     registerContext({
       email: data.email,
       first_name: data.first_name,

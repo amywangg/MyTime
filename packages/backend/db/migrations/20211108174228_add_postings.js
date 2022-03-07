@@ -8,18 +8,21 @@ exports.up = async function (knex) {
 
       table.string("description");
 
+      table.string("location");
+
       table
         .integer("org_id")
         .unsigned()
         .references("orgs.id")
-        .unique()
         .onDelete("CASCADE");
+
+      table.string("status").notNullable().defaultTo("open");
+
+      table.timestamp("date").notNullable();
 
       table.timestamp("created_at").notNullable().defaultTo(knex.fn.now());
 
-      table.timestamp("expires_at").notNullable();
-
-      table.string("posting_type");
+      table.timestamp("expires_at");
     });
   }
 };

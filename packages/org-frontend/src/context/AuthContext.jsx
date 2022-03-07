@@ -9,13 +9,17 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [error, setError] = useState(null);
-  const [authLoading, setAuthLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const path = window.location.pathname;
     if (path !== "/login" && path !== "/register") {
-      checkLogin();
+      checkLogin().then((res) => {
+        setCurrentUser(res.data);
+        TokenService.setUser(res.data);
+        setAuthLoading(false);
+      });
     }
   }, []);
 
@@ -23,13 +27,12 @@ export const AuthContextProvider = ({ children }) => {
     setAuthLoading(true);
     const token = TokenService.getLocalAccessToken();
     if (token !== "undefined" && token !== null) {
-      console.log(TokenService.getUser());
       setCurrentUser(TokenService.getUser());
-      await api.post("profile", { email: currentUser?.email }).then((res) => {
-        setCurrentUser(res.data);
-        TokenService.setUser(res.data);
-      });
-      setAuthLoading(false);
+      return await api
+        .post("profile", { email: currentUser?.email })
+        .then((res) => {
+          return res;
+        });
     } else {
       setAuthLoading(false);
       setCurrentUser(null);
@@ -38,6 +41,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const login = async (org) => {
+    setAuthLoading(true);
     await api
       .post("login", org)
       .then((res) => {
@@ -47,6 +51,7 @@ export const AuthContextProvider = ({ children }) => {
         TokenService.setUser(res.data.org);
         setCurrentUser(res.data.org);
         navigate("/");
+        setAuthLoading(false);
       })
       .catch((err) => setError("Incorrect Credentials"));
   };
@@ -56,20 +61,27 @@ export const AuthContextProvider = ({ children }) => {
       .post("register", org)
       .then((res) => {
         setError(null);
-        const org = {
-          name: res.data.name,
-          email: res.data.email,
-        };
-        console.log(res.data);
-        setCurrentUser(org);
-        TokenService.setUser(org);
+        TokenService.setUser(res.data.org);
+        setCurrentUser(res.data.org);
         TokenService.updateLocalAccessToken(res.data.access_token);
         TokenService.updateLocalRefreshToken(res.data.refresh_token);
         navigate("/");
       })
       .catch((err) => setError("Email in use"));
   };
-
+  const updateProfile = async (org) => {
+    await api
+      .post("profile/update", org)
+      .then((res) => {
+        setAuthLoading(true);
+        setError(null);
+        TokenService.setUser(res.data);
+        setCurrentUser(res.data);
+        navigate("/");
+        setAuthLoading(false);
+      })
+      .catch((err) => setError("Invalid Fields"));
+  };
   const handleLogout = () => {
     TokenService.removeUser();
     setCurrentUser(null);
@@ -78,6 +90,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const stateValues = {
     currentUser,
+    updateProfile,
     setCurrentUser,
     checkLogin,
     setAuthLoading,

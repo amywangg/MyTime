@@ -11,11 +11,15 @@ exports.up = async function (knex) {
         .unique()
         .onDelete("CASCADE");
 
-      table.timestamp("start_time");
+      table.string("start_time");
 
-      table.timestamp("end_time");
+      table.string("end_time");
 
-      table.integer("number_of_applicants");
+      table.integer("openings");
+
+      table.integer("applicants");
+
+      table.string("status").notNullable().defaultTo("open");
     });
   }
 };
