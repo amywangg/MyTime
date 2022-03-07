@@ -5,9 +5,9 @@ exports.up = async function (knex) {
       table.increments("id").primary();
 
       table
-        .integer("posting_id")
+        .integer("job_id")
         .unsigned()
-        .references("postings.id")
+        .references("jobs.id")
         .unique()
         .onDelete("CASCADE");
 
@@ -19,6 +19,8 @@ exports.up = async function (knex) {
         .onDelete("CASCADE");
 
       table.string("status");
+
+      table.string("saved").defaultTo(false);
     });
   }
 };
