@@ -52,6 +52,7 @@ function CreatePostings() {
       });
       setTimeout(() => {
         setMessage(null);
+        navigate("/postings");
         window.location.reload();
       }, [2000]);
       setMessage("Successfully added");
@@ -74,6 +75,14 @@ function CreatePostings() {
   };
   return (
     <Page title={"Create Posting"}>
+      <div>
+        <button
+          className="absolute top-10 right-12 text-sm font-semibold text-gray-700"
+          onClick={() => navigate("/postings")}
+        >
+          {"< "}Go back
+        </button>
+      </div>
       {message && (
         <Toast
           message={message}
@@ -195,7 +204,7 @@ function CreatePostings() {
         <div className="flex justify-end ">
           <button
             className="font-semibold mr-5 text-sm text-gray-500 hover:text-black"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/postings")}
           >
             {"<"} Go Back
           </button>

@@ -13,6 +13,8 @@ import TokenService from "../../services/TokenService";
 import CreatePostings from "../CreatePostings";
 import { PostingContextProvider } from "../../context/PostingContext";
 import { SchoolContextProvider } from "../../context/SchoolContext";
+import Posting from "../Posting/Posting";
+import EditPosting from "../EditPosting";
 
 function PrivateOutlet({ Component }) {
   const currentUser = TokenService.getUser();
@@ -43,6 +45,30 @@ export function App() {
               Component={
                 <PostingContextProvider>
                   <Postings />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
+          path="/postings/:id"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Posting />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
+          path="/postings/:id/edit"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <EditPosting />
                 </PostingContextProvider>
               }
             />

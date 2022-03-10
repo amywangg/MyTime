@@ -62,7 +62,7 @@ function SideNav() {
           <li className="relative">
             <a
               className={`${
-                path === "/profile"
+                path.includes("profile")
                   ? "text-primary border-b-2 border-primary"
                   : "text-subText"
               } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
@@ -81,7 +81,7 @@ function SideNav() {
           <li className="relative">
             <a
               className={`${
-                path === "/postings"
+                path.includes("/postings")
                   ? "text-primary border-b-2 border-primary"
                   : "text-subText"
               } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}

@@ -47,10 +47,9 @@ export const PostingContextProvider = ({ children }) => {
       });
   };
 
-  const updatePostingSchool = async (posting_id, status) => {
-    const school = TokenService.getUser();
+  const updatePosting = async (posting) => {
     return await api
-      .post("postings/update", { school_id: school?.id, posting_id, status })
+      .post("postings/update", posting)
       .then((res) => {
         return res.data;
       })
@@ -72,7 +71,7 @@ export const PostingContextProvider = ({ children }) => {
     getPostings,
     createPosting,
     setPostingLoading,
-    updatePostingSchool,
+    updatePosting,
     postingLoading,
     error,
   };
