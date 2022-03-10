@@ -8,7 +8,6 @@ exports.up = async function (knex) {
         .integer("posting_id")
         .unsigned()
         .references("postings.id")
-        .unique()
         .onDelete("CASCADE");
 
       table.string("start_time");

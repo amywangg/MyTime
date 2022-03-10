@@ -68,6 +68,7 @@ module.exports = {
                   "students.last_name",
                   "students.email",
                   "students.school",
+                  "student_job.status",
                 ])
                 .from("student_job")
                 .join("students", "student_job.student_id", "=", "students.id")
@@ -77,7 +78,7 @@ module.exports = {
           );
           return {
             ...posting,
-            applicants: applicants,
+            applicants: applicants[0],
             timeslots: timeslots,
           };
         })
