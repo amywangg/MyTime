@@ -16,7 +16,7 @@ router.post("/register", (req, res, next) => {
     .then(async (org) => {
       const access_token = generateAccessToken(org[0].email);
       const refresh_token = await generateRefreshToken(org[0].email);
-      res.json({ ...{ access_token, refresh_token }, ...org[0] });
+      res.json({ ...{ access_token, refresh_token }, ...{ org: org[0] } });
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
@@ -134,7 +134,6 @@ router.post("/postings", (req, res, next) => {
 });
 
 router.post("/postings/create", (req, res, next) => {
-  console.log(req.body);
   postingQueries
     .createPosting(req.body.org_id, req.body.posting)
     .then((posting) => res.send(posting))
@@ -143,6 +142,13 @@ router.post("/postings/create", (req, res, next) => {
     });
 });
 
-// still need to add in getOrgPosting query; didn't know how to do it bc of the path (each job has its own path right)
+router.post("/postings/update", (req, res, next) => {
+  postingQueries
+    .updatePosting(req.body)
+    .then((posting) => res.sendStatus(200).send(posting))
+    .catch((error) => {
+      res.sendStatus(401).send({ error: error.message });
+    });
+});
 
 module.exports = router;

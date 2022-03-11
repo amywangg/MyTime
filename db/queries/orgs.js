@@ -48,6 +48,7 @@ module.exports = {
         "location",
         "website",
         "location",
+        "phone_number",
         "id",
         "image",
       ])

@@ -90,24 +90,46 @@ module.exports = {
     }
   },
 
-  async updatePosting(body) {
-    let org = await knex("orgs")
-      .returning([
-        "name",
-        "email",
-        "location",
-        "website",
-        "location",
-        "id",
-        "image",
-      ])
-      .where({ id: body.id })
-      .update({
-        phone_number: body.phone_number,
-        website: body.website,
-        location: body.location,
-        description: body.description,
+  async updatePosting(posting) {
+    expires_at = new Date(posting.date);
+    expires_at = expires_at.setDate(expires_at.getDate() + 30);
+    try {
+      let obj = await knex("postings")
+        .where({ id: posting.id })
+        .update({
+          title: posting.title,
+          description: posting.description,
+          location: posting.location,
+          date: posting.date,
+          expires_at: new Date(expires_at),
+        });
+      await knex("jobs").del().where({ posting_id: posting.id });
+      posting.timeslots.map(async (time, index) => {
+        let start_time =
+          time.start_time.hours +
+          ":" +
+          time.start_time.minutes +
+          " " +
+          time.start_time.ampm;
+        let end_time =
+          time.end_time.hours +
+          ":" +
+          time.end_time.minutes +
+          " " +
+          time.end_time.ampm;
+
+        await knex("jobs").insert({
+          posting_id: posting.id,
+          start_time,
+          end_time,
+          openings: time.openings,
+          applicants: 0,
+        });
       });
-    return org;
+      return obj;
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
   },
 };
