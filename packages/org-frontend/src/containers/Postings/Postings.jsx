@@ -10,21 +10,19 @@ import { AuthContext } from "../../context/AuthContext";
 
 function OpenAction({ applicants, onClick, index, appHover, setAppHover }) {
   return (
-    <div className="flex py-4 mr-2">
-      <div className="">
-        <span
-          onMouseOver={() => setAppHover(index)}
-          onMouseLeave={() => setAppHover(null)}
-          className="relative hover:cursor-pointer inline-block text-[10px] py-1 px-1.5 leading-none font-semibold text-center whitespace-nowrap align-middle bg-red-600 text-white rounded mr-4"
-        >
-          7
-          {appHover === index && (
-            <span className="absolute rounded-sm py-1 px-2 z-10 left-[-100px] bottom-0 mt-4 inline-block bg-gray-600">
-              7 new applicants
-            </span>
-          )}
-        </span>
-      </div>
+    <div className="flex mr-2 justify-center align-middle">
+      <span
+        onMouseOver={() => setAppHover(index)}
+        onMouseLeave={() => setAppHover(null)}
+        className="relative mt-3.5 flex justify-center items-center h-5 w-5 hover:cursor-pointer text-[10px] font-semibold text-center bg-red-500 text-white rounded mr-4"
+      >
+        7
+        {appHover === index && (
+          <span className="absolute rounded-md py-1 px-2 z-10 left-[-110px] bottom-0 mt-4 inline-block bg-gray-600">
+            7 new applicants
+          </span>
+        )}
+      </span>
 
       <button
         className="text-gray-600 hover:text-primary underline text-[13px]"
@@ -52,7 +50,6 @@ function Postings() {
       setFilteredPostings(
         postings.filter((posting) => posting.status === status)
       );
-      console.log(postings);
     }
   }, [postingLoading, tab]);
 
@@ -62,7 +59,7 @@ function Postings() {
 
   return (
     <Page title="My Postings">
-      <div className="relative bg-white rounded-lg flex flex-col p-6 w-full flex-grow">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-6 w-full flex-grow">
         <div className="flex justify-between mb-2">
           <p className="text-subText text-sm mb-4">
             Manage your postings here - new or old

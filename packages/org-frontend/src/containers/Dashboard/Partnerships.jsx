@@ -34,8 +34,10 @@ function Partnerships() {
   }, [schoolLoading]);
 
   return (
-    <div className="bg-white rounded-lg flex flex-col p-8 w-full flex-grow pt-8 overflow-auto">
-      <p className="inline-block font-medium text-xl mb-2">Your Partnerships</p>
+    <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow pt-8 overflow-auto">
+      <p className="inline-block font-semibold text-xl mb-2">
+        Your Partnerships
+      </p>
       <p className="text-subText text-xs flex-wrap mb-4">
         Here are the schools who have verified you!
       </p>

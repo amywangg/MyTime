@@ -9,7 +9,7 @@ function PartnerAction({ onClick }) {
     <div className="flex py-4 mr-2">
       <img className="h-5 w-5 mr-4" src={partnership} alt="partnership" />
       <button
-        className="text-gray-600 underline text-xs mb-2"
+        className="text-gray-600 underline font-semibold hover:text-red-400 text-xs mb-2"
         onClick={onClick}
       >
         Remove
@@ -22,13 +22,13 @@ function PendingAction({ onAcceptClick, onRejectClick }) {
   return (
     <div className="flex py-4 mr-2">
       <button
-        className="text-primary underline text-xs mb-4 mr-4"
+        className="text-primary underline font-semibold hover:text-secondary text-xs mb-4 mr-4"
         onClick={onAcceptClick}
       >
         Accept
       </button>
       <button
-        className="text-gray-600 underline text-xs mb-4"
+        className="text-gray-600 underline font-semibold hover:text-red-400 text-xs mb-4"
         onClick={onRejectClick}
       >
         Reject
@@ -41,7 +41,7 @@ function RejectedAction({ onReconsiderClick }) {
   return (
     <div className="flex py-4 mr-2">
       <button
-        className="text-primary underline text-xs mb-4 mr-4"
+        className="text-primary underline font-semibold hover:text-secondary text-xs mb-4 mr-4"
         onClick={onReconsiderClick}
       >
         Reconsider
@@ -65,7 +65,7 @@ function Orgs({ tab, orgs, updateOrgSchool }) {
       : orgs.filter((org) => org.status === "rejected");
   // const filteredOrgs = orgs.filter((org) => org.verified === false);
   return (
-    <div className="bg-white rounded-lg flex flex-col p-2 w-full flex-grow pt-8 overflow-auto">
+    <div className="bg-white rounded-xl shadow-md flex flex-col p-2 w-full flex-grow pt-8 overflow-auto">
       {filteredOrgs.length !== 0 ? (
         filteredOrgs.map((org, i) => (
           <Listing

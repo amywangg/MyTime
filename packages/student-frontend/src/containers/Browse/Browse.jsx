@@ -9,7 +9,7 @@ function Browse() {
 
   return (
     <Page title="Make a difference today">
-      <div className="relative bg-white rounded-lg flex flex-col p-5 h-26 w-full mb-8 mt-3">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-5 h-26 w-full mb-8 mt-3">
         <p>
           Hi {currentUser !== undefined && currentUser?.first_name}, where would
           you like to give back today?
@@ -39,7 +39,7 @@ function Browse() {
         </div>
       </div>
 
-      <div className="relative bg-white rounded-lg flex flex-col p-6 w-full flex-grow">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-6 w-full flex-grow">
         <p className="text-xl">Explore</p>
         <p className="text-xs text-subText mt-1">
           Browse the newest opportunities

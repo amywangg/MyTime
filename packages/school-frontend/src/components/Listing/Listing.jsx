@@ -3,15 +3,13 @@ import React, { useState } from "react";
 function Listing({ item, action, br, index, onClick, props }) {
   return (
     <div
-      className={`flex h-16 mb-2 p-2 ${
-        br && "border-b-[1px] border-gray-600"
-      } hover:bg-gray-400 hover:bg-opacity-20 hover:rounded-sm`}
+      className={`flex h h-16 mb-2 p-2 hover:bg-gray-400 hover:bg-opacity-20 bg-[#F8F8FF] rounded-lg`}
     >
       {item.image ? (
-        <img className="w-12 h-12" src={item.image} alt="org_img" />
+        <img className="w-12 h-12 rounded-md" src={item.image} alt="org_img" />
       ) : (
         <div
-          className="w-12 h-12 bg-primary text-white"
+          className="w-12 h-12 bg-primary flex justify-center items-center text-white rounded-md font-semibold"
           key={item.name + "two"}
         >
           {item.name.split(" ").map((x) => {
@@ -20,7 +18,7 @@ function Listing({ item, action, br, index, onClick, props }) {
         </div>
       )}
       <div
-        className="block ml-4 flex-grow cursor-pointer"
+        className="flex flex-col ml-4 flex-grow cursor-pointer justify-center"
         key={item.name + index + "hi"}
         onClick={onClick}
       >

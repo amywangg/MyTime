@@ -191,7 +191,7 @@ function Register() {
               or
             </p>
           </div>
-          <GoogleButton />
+          {/* <GoogleButton /> */}
         </form>
       </div>
     </div>

@@ -28,7 +28,7 @@ function Profile() {
 
   return (
     <Page>
-      <div className="relative bg-white rounded-lg flex flex-col p-8 mt-20 w-full flex-grow">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-8 mt-20 w-full flex-grow">
         <div className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase border-4 border-white">
           {currentUser !== undefined &&
             currentUser?.first_name[0] + currentUser?.last_name[0]}

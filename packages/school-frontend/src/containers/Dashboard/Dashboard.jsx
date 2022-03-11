@@ -12,8 +12,8 @@ function Dashboard() {
 
   return (
     <Page title="Partnerships">
-      <div className="bg-white rounded-lg flex flex-col p-8 w-full flex-grow">
-        <p className="inline-block font-medium text-xl mb-2">
+      <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow">
+        <p className="inline-block font-semibold text-xl mb-2">
           Your Organizations
         </p>
         <p className="text-subText text-xs flex-wrap mb-4">

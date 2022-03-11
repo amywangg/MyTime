@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { AiOutlineHome } from "react-icons/ai";
 
 function SideNav() {
+  const navigate = useNavigate();
   const [path, setPath] = useState("");
   const { handleLogout, authLoading, currentUser } = useContext(AuthContext);
 
@@ -12,107 +13,110 @@ function SideNav() {
   });
 
   return (
-    <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white px-1 absolute">
-      {!authLoading && (
-        <div>
-          <div className="flex justify-center mt-8">
-            {currentUser?.image ? (
-              <img
-                className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full"
-                src={currentUser.image}
-                alt="avatar"
-              />
-            ) : (
-              <div className="m-1 mr-2 w-24 h-24 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
-                {currentUser !== undefined &&
-                  currentUser.name.split(" ").map((x) => {
-                    return x[0];
-                  })}
-              </div>
-            )}
-          </div>
-          <div className="ml-[40px] mt-[10px]">
-            <p className="text-[12px] font-semibold mb-[5px]">
-              {currentUser !== undefined && currentUser?.name}
-            </p>
-            <p className="text-[12px] text-subText flex-wrap">
-              {currentUser !== undefined && currentUser?.location}, ON
-            </p>
-          </div>
-        </div>
-      )}
-
-      <div className="ml-[40px] mt-[40px]">
-        <h1 className="mb-2">PORTFOLIO</h1>
-        <ul className="relative">
-          <li className="relative">
-            <a
-              className={`${
-                path === "/"
-                  ? "text-primary border-b-2 border-primary"
-                  : "text-subText"
-              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
-              href="/"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="dark"
-            >
+    <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white absolute rounded-tr-2xl rounded-br-2xl">
+      <div className="w-full h-12 text-center align-middle">
+        <p className="text-3xl font-semibold mt-10">My Time</p>
+      </div>
+      <div className="mx-4 mt-[40px] border-b-2 border-gray-200 pb-4">
+        <p className="text-sm font-semibold text-gray-500 mb-2">Portfolio</p>
+        <ul className="relative mt-2">
+          <li
+            className={`${
+              path === "/" ? "bg-nav font-semibold" : "font-medium hover:bg-nav"
+            } relative flex py-2 px-4 items-end rounded-lg  hover:cursor-pointer hover:shadow-md mb-2`}
+            onClick={() => navigate("/")}
+          >
+            <AiOutlineHome
+              size={"16px"}
+              color="rgb(107, 114, 128)"
+              style={{ marginBottom: "3px", marginLeft: "-2px" }}
+            />
+            <p className="ml-3 flex items-center text-sm overflow-hidden whitespace-nowrap transition duration-300 ease-in-out">
               Dashboard
-            </a>
+            </p>
           </li>
-          <li className="relative">
-            <a
-              className={`${
-                path.includes("profile")
-                  ? "text-primary border-b-2 border-primary"
-                  : "text-subText"
-              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
-              href="/profile"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="dark"
-            >
+          <li
+            className={`${
+              path === "/profile"
+                ? "bg-nav font-semibold"
+                : "font-medium hover:bg-nav"
+            } relative flex py-2 px-4 items-baseline rounded-lg  hover:cursor-pointer hover:shadow-md`}
+            onClick={() => navigate("/profile")}
+          >
+            <i className="fa-regular fa-user text-sm text-gray-500" />
+            <p className="ml-3 flex items-center text-sm overflow-hidden whitespace-nowrap transition duration-300 ease-in-out">
               Profile
-            </a>
+            </p>
           </li>
         </ul>
+        {/* AiOutlineHome */}
       </div>
-      <div className="ml-[40px] mt-[40px]">
-        <h1 className="mb-2">VOLUNTEER</h1>
-        <ul className="relative">
-          <li className="relative">
-            <a
-              className={`${
-                path.includes("/postings")
-                  ? "text-primary border-b-2 border-primary"
-                  : "text-subText"
-              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
-              href="/postings"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="dark"
-            >
+      <div className="mx-4 mt-[20px]">
+        <p className="text-sm font-semibold text-gray-500 mb-2">Volunteer</p>
+        <ul className="relative mt-2">
+          <li
+            className={`${
+              path.includes("/postings")
+                ? "bg-nav font-semibold"
+                : "font-medium hover:bg-nav"
+            } relative flex py-2 px-4  items-baseline rounded-lg  hover:cursor-pointer hover:shadow-md mb-2`}
+            onClick={() => navigate("/postings")}
+          >
+            <i className="fa-regular fa-clipboard text-sm text-gray-500" />
+            <p className="ml-3 flex items-center text-sm overflow-hidden whitespace-nowrap transition duration-300 ease-in-out">
               My Postings
-            </a>
+            </p>
           </li>
-          <li className="relative">
-            <a
-              className={`${
-                path === "/schedule"
-                  ? "text-primary border-b-2 border-primary"
-                  : "text-subText"
-              } flex items-center text-sm py-2 px-[2px] h-[30px] mb-1  overflow-hidden text-ellipsis whitespace-nowrap hover:border-b-2 hover:border-primary hover:text-primary transition duration-300 ease-in-out`}
-              href="/schedule"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="dark"
-            >
+          <li
+            className={`${
+              path === "/schedule"
+                ? "bg-nav font-semibold"
+                : "font-medium hover:bg-nav"
+            } relative flex py-2 px-4 items-baseline rounded-lg  hover:cursor-pointer hover:shadow-md`}
+            onClick={() => navigate("/schedule")}
+          >
+            <i className="fa-regular fa-calendar text-sm text-gray-500" />
+            <p className="ml-3 flex items-center text-sm overflow-hidden whitespace-nowrap transition duration-300 ease-in-out">
               Schedule
-            </a>
+            </p>
           </li>
         </ul>
       </div>
-      <div className="absolute bottom-16 ml-[40px]">
+
+      <div className="absolute bottom-0 mx-auto text-center w-full">
+        <div className="border-t-[2px] border-b-[2px] border-gray-200 w-full">
+          {!authLoading && currentUser && (
+            <div className="px-2 py-3 rounded-bl-xl rounded-br-xl">
+              <div className="flex justify-start">
+                {currentUser?.image ? (
+                  <img
+                    className="m-1 mr-2 w-11 h-11 relative flex justify-center items-center rounded-full shadow-md"
+                    src={currentUser.image}
+                    alt="avatar"
+                  />
+                ) : (
+                  <div className="m-1 mr-2 shadow-md w-11 h-11 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
+                    {currentUser !== undefined &&
+                      currentUser.name.split(" ").map((x) => {
+                        return x[0];
+                      })}
+                  </div>
+                )}
+                <div className="flex flex-col justify-center text-left">
+                  <p className="text-[12px] font-semibold">
+                    {currentUser !== undefined && currentUser?.name}
+                  </p>
+                  <p className="text-[12px] text-subText flex-wrap ml-[1px]">
+                    {currentUser !== undefined && currentUser?.location}, ON
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         <button
-          type="button"
+          className="font-semibold hover:bg-nav relative w-full py-2 px-4 items-baseline rounded-lg  hover:cursor-pointer hover:shadow-md"
           onClick={handleLogout}
-          className="inline-block px-6 py-2.5 bg-primary text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-secondary hover:shadow-lg focus:bg-secondary focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
         >
           Logout
         </button>

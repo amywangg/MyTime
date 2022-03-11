@@ -31,7 +31,7 @@ function OrgProfile({ props }) {
           {"< "}Go back
         </button>
       </div>
-      <div className="relative bg-white rounded-lg flex flex-col p-8 mt-20 w-full flex-grow">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-8 mt-20 w-full flex-grow">
         {orgLoading ? (
           <Loading />
         ) : (

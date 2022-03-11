@@ -6,7 +6,7 @@ function Applications() {
   const [tab, setTab] = useState("applied");
   return (
     <Page title="My Applications">
-      <div className="bg-white rounded-lg flex flex-col p-8 w-full flex-grow">
+      <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow">
         <div className="flex justify-between">
           <ul className="flex flex-wrap -mb-px h-16">
             <li className="mr-2">
@@ -16,7 +16,7 @@ function Applications() {
                   tab === "applied"
                     ? "text-primary border-primary"
                     : "text-subText border-transparent"
-                } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
+                } inline-block py-[2px] px-4 text-sm font-semibold text-center border-b-2 hover:text-primary hover:border-primary`}
               >
                 Applied
               </button>
@@ -28,7 +28,7 @@ function Applications() {
                   tab === "saved"
                     ? "text-primary border-primary"
                     : "text-subText border-transparent"
-                } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
+                } inline-block py-[2px] px-4 text-sm font-semibold text-center border-b-2 hover:text-primary hover:border-primary`}
                 aria-current="page"
               >
                 Saved
@@ -39,7 +39,7 @@ function Applications() {
           <ul className="flex flex-wrap -mb-px h-16">
             <li>
               <button
-                className="text-subText flex py-[2px] px-4 text-sm font-medium text-center hover:text-primary hover:border-primary"
+                className="text-subText flex py-[2px] px-4 text-sm font-semibold text-center hover:text-primary hover:border-primary"
                 aria-current="page"
               >
                 Sort by

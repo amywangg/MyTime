@@ -14,19 +14,23 @@ import Loading from "../../components/Loading";
 function EditPosting() {
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
+  const [originalTimeslots, setOriginalTimeslots] = useState(0);
   const [timeslots, setTimeslots] = useState(null);
-  const [startDate, setStartDate] = useState(new Date());
-  const [addTimeslots, setAddTimeslots] = useState(false);
-  const { createPosting } = useContext(PostingContext);
+  const [startDate, setStartDate] = useState();
+  const [posting, setPosting] = useState();
   const { register, handleSubmit } = useForm();
-  const { postings, postingLoading } = useContext(PostingContext);
+  const { postings, postingLoading, updatePosting } =
+    useContext(PostingContext);
   let { id } = useParams();
 
   useEffect(() => {
     if (!postingLoading) {
-      const postTimeslots = postings.filter(
-        (post) => post.id === parseInt(id)
-      )[0]?.timeslots;
+      const postingObj = postings.filter((post) => post.id === parseInt(id))[0];
+      const postTimeslots = postingObj?.timeslots;
+      setOriginalTimeslots(postingObj?.timeslots.length);
+      setStartDate(new Date(postingObj?.date));
+      setPosting(postingObj);
+
       let newTime = postTimeslots?.map((time) => {
         var hours = Number(time.start_time.match(/^(\d+)/)[1]);
         var minutes = Number(time.start_time.match(/:(\d+)/)[1]);
@@ -38,49 +42,44 @@ function EditPosting() {
         time.end_time = { hours, minutes, ampm };
         return time;
       });
-      console.log(newTime);
       setTimeslots(newTime);
     }
   }, [postingLoading]);
 
   const onSubmit = (data) => {
+    const newTimeslots = timeslots.filter(
+      (time, i) => i === 0 || time.openings !== ""
+    );
+    setTimeslots(newTimeslots);
+    console.log(posting);
     if (
-      data.name &&
-      data.location &&
-      data.description &&
+      posting.title &&
+      posting.location &&
+      posting.description &&
       timeslots[0]?.openings &&
       startDate
     ) {
-      createPosting({
-        title: data.name,
-        location: data.location,
-        description: data.description,
+      updatePosting({
+        id: posting.id,
+        title: posting.title,
+        location: posting.location,
+        description: posting.description,
         timeslots: timeslots,
         date: startDate,
+        original_timeslots: originalTimeslots,
       });
       setTimeout(() => {
         setMessage(null);
-        navigate("/postings");
+        navigate(`/postings/${id}`);
         window.location.reload();
       }, [2000]);
-      setMessage("Successfully added");
+      setMessage("Successfully updated");
     } else {
       setMessage("Error Missing required fields");
       setTimeout(() => {
         setMessage(null);
       }, [2000]);
     }
-  };
-
-  const handleOpeningChange = (value) => {
-    if (value > 20) {
-      value = 20;
-    }
-    let items = [...timeslots];
-    let item = { ...timeslots[0] };
-    item.openings = value;
-    items[0] = item;
-    setTimeslots(items);
   };
 
   return (
@@ -100,24 +99,20 @@ function EditPosting() {
           type={message.includes("Error") ? "error" : "success"}
         />
       )}
-      <div className="relative bg-white rounded-lg flex flex-col p-6 w-full flex-grow">
+      <div className="bg-white rounded-xl shadow-md flex flex-col p-6 w-full flex-1 min-h-0">
         {postingLoading || !timeslots ? (
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
           </div>
         ) : (
-          <div className="relative bg-white rounded-lg flex flex-col w-full flex-grow">
-            {addTimeslots && timeslots.length > 0 && (
-              <AddTimeslots
-                timeslots={timeslots}
-                setTimeslots={setTimeslots}
-                setShowModal={setAddTimeslots}
-              />
-            )}
+          <>
             <div className="flex justify-between mb-4">
-              <p>Job Title *</p>
+              <p className="text-sm font-semibold text-gray-600">Job Title *</p>
               <input
-                {...register("name")}
+                value={posting.title}
+                onChange={(e) =>
+                  setPosting({ ...posting, title: e.target.value })
+                }
                 id="name"
                 name="name"
                 required
@@ -125,9 +120,12 @@ function EditPosting() {
               />
             </div>
             <div className="flex justify-between mb-4">
-              <p>Address *</p>
+              <p className="text-sm font-semibold text-gray-600">Address *</p>
               <input
-                {...register("location")}
+                value={posting.location}
+                onChange={(e) =>
+                  setPosting({ ...posting, location: e.target.value })
+                }
                 id="location"
                 name="location"
                 required
@@ -135,7 +133,7 @@ function EditPosting() {
               />
             </div>
             <div className="flex justify-between mb-4">
-              <p>Date *</p>
+              <p className="text-sm font-semibold text-gray-600">Date *</p>
               <div className="w-4/5">
                 <DatePicker
                   required
@@ -145,80 +143,34 @@ function EditPosting() {
                 />
               </div>
             </div>
-            <div className="flex mb-4 justify-between">
-              <p>Start/End Time *</p>
-              <div className="w-4/5 flex">
-                <TimePicker
-                  required
-                  time={timeslots}
-                  setTime={setTimeslots}
-                  field="start_time"
-                  index={0}
-                />
-                <p className="text-xl mt-1 mx-5">-</p>
-                <TimePicker
-                  required
-                  time={timeslots}
-                  setTime={setTimeslots}
-                  field="end_time"
-                  index={0}
-                />
-              </div>
-            </div>
-            <div className="flex justify-between mb-4">
-              <p># of Openings *</p>
-              <div className="w-4/5 flex">
-                <input
-                  onChange={(e) => handleOpeningChange(e.target.value)}
-                  id="openings"
-                  name="openings"
-                  type="number"
-                  min="1"
-                  max="20"
-                  value={timeslots[0]?.openings}
-                  required
-                  className="w-[80%] px-2 appearance-none h-8 relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                />
-                <button
-                  className="rounded-lg border-[1px] ml-4 h-[30px] border-primary text-primary px-3 text-xs py-0 hover:bg-primary hover:text-white whitespace-nowrap"
-                  onClick={() => {
-                    setAddTimeslots(true);
-                    if (timeslots.length === 1) {
-                      setTimeslots([
-                        ...timeslots,
-                        {
-                          startTime: {
-                            hours: "8",
-                            minutes: "00",
-                            ampm: "am",
-                          },
-                          endTime: {
-                            hours: "5",
-                            minutes: "00",
-                            ampm: "pm",
-                          },
-                          openings: "",
-                        },
-                      ]);
-                    }
-                  }}
-                >
-                  {timeslots.length > 1 ? "View Additional" : "+"} Timeslots
-                </button>
-              </div>
-            </div>
-
             <div className="flex justify-between flex-grow">
-              <p>Description *</p>
+              <p className="text-sm font-semibold text-gray-600">
+                Description *
+              </p>
               <textarea
                 required
-                {...register("description")}
+                value={posting.description}
+                onChange={(e) =>
+                  setPosting({ ...posting, description: e.target.value })
+                }
                 className="w-4/5 mb-4 resize-none  block mt-2 overflow-auto px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border-solid transition ease-in-out border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 id="exampleFormControlTextarea1"
                 placeholder="Add a description"
               />
             </div>
-          </div>
+            <p className="text-l font-semibold mb-2">Timeslots</p>
+            <AddTimeslots timeslots={timeslots} setTimeslots={setTimeslots} />
+            <div className="flex justify-end mt-2">
+              <button
+                type="button"
+                className="inline-block px-6 py-2.5 bg-red-400 mr-2 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-500 hover:shadow-lg focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
+                onClick={() => window.location.reload()}
+              >
+                Reset
+              </button>
+              <Button onClick={handleSubmit(onSubmit)} label="Update" />
+            </div>
+          </>
         )}
       </div>
     </Page>

@@ -8,9 +8,11 @@ import location from "../../assets/location.png";
 import web from "../../assets/web.png";
 import phone from "../../assets/phone.png";
 import Button from "../../components/Button/Button";
+import Toast from "../../components/Toast";
 
 function Profile() {
   const [edit, setEdit] = useState();
+  const [message, setMessage] = useState(null);
   const [profile, setProfile] = useState({
     email: null,
     website: null,
@@ -21,7 +23,6 @@ function Profile() {
   const { currentUser, updateProfile } = useContext(AuthContext);
 
   const handleEdit = (field, text) => {
-    const temp = Object.assign({}, currentUser);
     setProfile((prevState) => ({
       ...prevState,
       [field]: text,
@@ -35,12 +36,25 @@ function Profile() {
       website: profile.website || currentUser?.website,
       location: profile.location || currentUser?.location,
       description: profile.description || currentUser?.description,
+      phone_number: profile.phone_number || currentUser?.phone_number,
     });
+    setTimeout(() => {
+      setMessage(null);
+      // window.location.reload();
+    }, [2000]);
+    setMessage("Successfully Updated");
   };
 
   return (
     <Page>
-      <div className="relative bg-white rounded-lg flex flex-col py-8 px-10 mt-20 w-full flex-grow">
+      {message && (
+        <Toast
+          message={message}
+          setMessage={setMessage}
+          type={message.includes("Error") ? "error" : "success"}
+        />
+      )}
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col py-8 px-10 mt-20 w-full flex-grow">
         {currentUser?.image ? (
           <img
             className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full bg-white text-xl text-white uppercase border-4 border-white"

@@ -151,18 +151,8 @@ function Register() {
           >
             Sign up
           </button>
-          <div
-            className="or-divider"
-            style={{ marginTop: 15, marginBottom: 15 }}
-          >
-            <p
-              className="font-bold text-gray-500 rounded-full bg-gray-50 flex items-center justify-center text-sm"
-              style={{ height: 10, width: 50 }}
-            >
-              or
-            </p>
-          </div>
-          <GoogleButton />
+
+          {/* <GoogleButton /> */}
         </form>
       </div>
     </div>

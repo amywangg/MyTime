@@ -2,7 +2,7 @@ import React from "react";
 
 function Partnerships() {
   return (
-    <div className="bg-white rounded-lg flex flex-col p-8 w-full mt-10">
+    <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full mt-10">
       <p className="inline-block font-medium text-xl mb-2">Your Progress</p>
       <p className="text-subText text-xs flex-wrap mb-4">
         As per the Ontario Ministry of Education, each student must complete 40

@@ -51,7 +51,7 @@ function Posting({ props }) {
             })}
         </div>
       )}
-      <div className="relative bg-white rounded-lg flex flex-col p-8 mt-12 w-full flex-grow no-scrollbar overflow-auto">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-8 mt-12 w-full flex-grow no-scrollbar overflow-auto">
         {postingLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
@@ -67,7 +67,7 @@ function Posting({ props }) {
               Edit
             </button>
             <div className="mt-12">
-              <p className="text-2xl font-medium">
+              <p className="text-2xl font-semibold">
                 {posting !== undefined && posting?.title}
               </p>
             </div>
@@ -120,10 +120,10 @@ function Posting({ props }) {
                 />
               )}
               <div className="flex-grow items-center justify-center mt-6">
-                <p className="text-lg">Applicants</p>
+                <p className="text-lg font-semibold">Applicants</p>
 
                 {posting?.applicants.length === 0 ? (
-                  <div className="mt-10">
+                  <div className="mt-10 flex-grow">
                     <NoJobs
                       message1="No Applicants Yet!"
                       message2="Check back later"

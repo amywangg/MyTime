@@ -15,6 +15,7 @@ export const PostingContextProvider = ({ children }) => {
   useEffect(() => {
     const path = window.location.pathname;
     if (path === "/" || path.includes("postings")) {
+      console.log("here");
       setPostingLoading(true);
       getPostings().then((res) => {
         setPostings(res);

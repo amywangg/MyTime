@@ -6,7 +6,7 @@ function Applications() {
   const [tab, setTab] = useState("applied");
   return (
     <Page title="My Applications">
-      <div className="bg-white rounded-lg flex flex-col p-8 w-full flex-grow">
+      <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow">
         <div className="flex justify-between">
           <ul className="flex flex-wrap -mb-px h-16">
             <li className="mr-2">

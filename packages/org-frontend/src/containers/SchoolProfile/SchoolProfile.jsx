@@ -29,13 +29,13 @@ function SchoolProfile({ props }) {
           {"< "}Go back
         </button>
       </div>
-      <div className="relative bg-white rounded-lg flex flex-col p-8 mt-20 w-full flex-grow">
+      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-8 mt-20 w-full flex-grow">
         {schoolLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
           </div>
         ) : (
-          <div>
+          <div className="w-full h-full flex-grow flex flex-col">
             {school?.image ? (
               <img
                 className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full uppercase border-4 border-white bg-white"
@@ -73,7 +73,7 @@ function SchoolProfile({ props }) {
                 {school !== undefined && school?.location + ", ON"}
               </p>
             </div>
-            <div className="flex-grow h-[100%] overflow-y-auto items-center justify-center">
+            <div className="flex-grow overflow-auto no-scrollbar items-center justify-center">
               {school?.description ? (
                 <p>
                   {school?.description

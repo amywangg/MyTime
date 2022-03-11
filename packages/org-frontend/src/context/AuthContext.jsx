@@ -77,7 +77,6 @@ export const AuthContextProvider = ({ children }) => {
         setError(null);
         TokenService.setUser(res.data);
         setCurrentUser(res.data);
-        navigate("/");
         setAuthLoading(false);
       })
       .catch((err) => setError("Invalid Fields"));

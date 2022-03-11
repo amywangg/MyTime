@@ -11,7 +11,7 @@ function Tabs({ tab, setTab, tabs }) {
               tab === x
                 ? "text-primary border-primary"
                 : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
+            } inline-block py-[2px] px-4 text-sm font-semibold text-center border-b-2 hover:text-primary hover:border-primary`}
           >
             {x}
           </button>

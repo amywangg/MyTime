@@ -16,6 +16,7 @@ module.exports = {
         subText: "#7D7C7C",
         secondaryButton: "#2e3646",
         bg: "#ebf8e9",
+        nav: "#EBF6EB",
       },
     },
   },
