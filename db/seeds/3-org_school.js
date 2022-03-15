@@ -10,7 +10,7 @@ exports.seed = async function (knex) {
         {
           org_id: 1,
           school_id: 1,
-          status: "",
+          status: "verified",
         },
         {
           org_id: 2,
