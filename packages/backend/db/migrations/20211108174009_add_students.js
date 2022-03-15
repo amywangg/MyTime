@@ -16,11 +16,13 @@ exports.up = async function (knex) {
 
       table.string("password");
 
+      table.integer("school_id");
+
       table.string("school");
 
       table.integer("student_id");
 
-      table.integer("location");
+      table.string("description");
 
       table.date("date_of_birth");
 

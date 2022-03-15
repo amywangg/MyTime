@@ -7,11 +7,6 @@
     @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm;
   }
 }
-@layer base {
-  html {
-    font-family: Proxima Nova, system-ui, sans-serif;
-  }
-}
 .or-divider {
   display: flex;
   height: 10;

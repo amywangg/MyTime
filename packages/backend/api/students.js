@@ -35,6 +35,9 @@ router.post("/login", async (req, res, next) => {
         access_token,
         refresh_token,
         student: {
+          id: student.id,
+          school: student.school,
+          school_id: student.school_id,
           email: student.email,
           first_name: student.first_name,
           last_name: student.last_name,
@@ -93,24 +96,65 @@ router.post("/profile", verifyToken, (req, res, next) => {
   });
 });
 
-
-// vivs edits
-router.post("/dashboard", (req, res, next) => {
+router.post("/profile/update", verifyToken, (req, res, next) => {
   queries
-    .studentStats(req.student_id)
-    .then(async (student) => {
-      console.log("route_name",student);
+    .updateStudent(req.body)
+    .then((user) => {
+      return res.json(user[0]);
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
     });
 });
 
+router.get("/schools", (req, res, next) => {
+  queries.getSchools().then((user) => {
+    return res.json(user);
+  });
+});
+
 router.post("/dashboard", (req, res, next) => {
   queries
-    .studentJobs(req.student_id)
-    .then(async (student_job) => {
-      console.log("route_name",student_job);
+    .studentStats(req.student_id)
+    .then(async (student) => {
+      return res.json(student);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings", (req, res, next) => {
+  queries
+    .getPostings(req.body.school_id, req.body.id)
+    .then(async (postings) => {
+      return res.json(postings);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings/save", (req, res, next) => {
+  queries
+    .savePosting(req.body.posting_id, req.body.student_id, req.body.saved)
+    .then(async () => {
+      return res.status(200).send({ message: "Success" });
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings/update", (req, res, next) => {
+  queries
+    .updatePostingStatus(
+      req.body.posting_id,
+      req.body.student_id,
+      req.body.timeslots
+    )
+    .then(async () => {
+      return res.status(200).send({ message: "Success" });
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
@@ -122,7 +166,7 @@ router.post("/profile", (req, res, next) => {
   queries
     .studentStats(req.student_id)
     .then(async (student) => {
-      console.log("route_name",student);
+      console.log("route_name", student);
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
@@ -133,7 +177,7 @@ router.post("/applications", (req, res, next) => {
   queries
     .studentJobs(req.student_id)
     .then(async (student_job) => {
-      console.log("route_name",student_job);
+      console.log("route_name", student_job);
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });
@@ -144,7 +188,7 @@ router.post("/schedule", (req, res, next) => {
   queries
     .studentJobs(req.student_id)
     .then(async (student_job) => {
-      console.log("route_name",student_job);
+      console.log("route_name", student_job);
     })
     .catch((error) => {
       res.status(401).send({ error: error.message });

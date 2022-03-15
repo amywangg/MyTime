@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import mytime from "../../assets/mytime.png";
 
 function SideNav() {
   const navigate = useNavigate();
@@ -13,9 +14,11 @@ function SideNav() {
 
   return (
     <div className="w-[25vw] max-w-[250px] h-full shadow-md bg-white absolute rounded-tr-2xl rounded-br-2xl">
-      <div className="w-full h-12 text-center align-middle">
-        <p className="text-3xl font-semibold mt-10">My Time</p>
-      </div>
+      <img
+        className="ml-6 mb-10 mt-10 max-w-[100%] w-32"
+        src={mytime}
+        alt="logo"
+      />
       <div className="mx-4 mt-[60px] pb-4">
         <p className="text-sm font-semibold text-gray-500 mb-2">Portfolio</p>
         <ul className="relative mt-2">

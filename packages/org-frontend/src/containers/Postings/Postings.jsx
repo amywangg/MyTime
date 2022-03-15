@@ -11,21 +11,22 @@ import { AuthContext } from "../../context/AuthContext";
 function OpenAction({ applicants, onClick, index, appHover, setAppHover }) {
   return (
     <div className="flex mr-2 justify-center align-middle">
-      <span
-        onMouseOver={() => setAppHover(index)}
-        onMouseLeave={() => setAppHover(null)}
-        className="relative mt-3.5 flex justify-center items-center h-5 w-5 hover:cursor-pointer text-[10px] font-semibold text-center bg-red-500 text-white rounded mr-4"
-      >
-        7
-        {appHover === index && (
-          <span className="absolute rounded-md py-1 px-2 z-10 left-[-110px] bottom-0 mt-4 inline-block bg-gray-600">
-            7 new applicants
-          </span>
-        )}
-      </span>
-
+      {applicants ? (
+        <span
+          onMouseOver={() => setAppHover(index)}
+          onMouseLeave={() => setAppHover(null)}
+          className="relative mt-3.5 flex justify-center items-center h-5 w-5 hover:cursor-pointer text-[10px] font-semibold text-center bg-red-500 text-white rounded mr-4"
+        >
+          7
+          {appHover === index && (
+            <span className="absolute rounded-md py-1 px-2 z-10 left-[-110px] bottom-0 mt-4 inline-block bg-gray-600">
+              7 new applicants
+            </span>
+          )}
+        </span>
+      ) : null}
       <button
-        className="text-gray-600 hover:text-primary underline text-[13px]"
+        className="text-gray-600 hover:text-primary underline text-[13px] font-semibold"
         onClick={onClick}
       >
         View
@@ -96,7 +97,7 @@ function Postings() {
                 onClick={() => onPostingClick(posting.id)}
                 action={
                   <OpenAction
-                    applicants={posting.applicants.length}
+                    applicants={posting.applicants?.length}
                     onClick={() => onPostingClick(posting.id)}
                     index={i}
                     setAppHover={setAppHover}

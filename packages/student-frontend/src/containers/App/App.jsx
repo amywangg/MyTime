@@ -9,6 +9,9 @@ import Browse from "../Browse";
 import Profile from "../Profile";
 import { AuthContextProvider } from "../../context/AuthContext";
 import TokenService from "../../services/TokenService";
+import { PostingContextProvider } from "../../context/PostingContext";
+import Posting from "../Posting";
+import Search from "../Search/Search";
 
 function PrivateOutlet({ Component }) {
   const currentUser = TokenService.getUser();
@@ -19,14 +22,41 @@ export function App() {
   return (
     <AuthContextProvider>
       <Routes>
-        <Route path="/" element={<PrivateOutlet Component={<Dashboard />} />} />
+        <Route
+          path="/"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Dashboard />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
         <Route
           path="/applications"
-          element={<PrivateOutlet Component={<Applications />} />}
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Applications />
+                </PostingContextProvider>
+              }
+            />
+          }
         />
         <Route
           path="/browse"
-          element={<PrivateOutlet Component={<Browse />} />}
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Browse />
+                </PostingContextProvider>
+              }
+            />
+          }
         />
         <Route
           path="/profile"
@@ -34,7 +64,39 @@ export function App() {
         />
         <Route
           path="/schedule"
-          element={<PrivateOutlet Component={<Schedule />} />}
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Schedule />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
+          path="browse/postings/:id"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Posting />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
+          path="browse/search/:params"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Search />
+                </PostingContextProvider>
+              }
+            />
+          }
         />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

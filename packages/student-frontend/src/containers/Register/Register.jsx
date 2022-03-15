@@ -1,31 +1,58 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import PasswordChecklist from "react-password-checklist";
-import GoogleButton from "./GoogleButton";
 import { AuthContext } from "../../context/AuthContext";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import api from "../../api";
 function Register() {
-  const { register: registerContext, error } = useContext(AuthContext);
+  const {
+    register: registerContext,
+    error,
+    getSchools,
+    authLoading,
+  } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const [schools, setSchools] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
 
+  useEffect(() => {
+    getSchools().then((res) => setSchools(res.data));
+  }, []);
+
   const onSubmit = (data) => {
-    console.log("hi");
     registerContext({
       email: data.email,
       first_name: data.first_name,
       middle_name: data.middle_name || "",
       last_name: data.last_name,
       password: password,
-      student_id: data.student_id || 1,
-      school: data.school || "test",
-      date_of_birth: data.date_of_birth || "01/14/1999",
+      student_id: data.student_id,
+      school: schools[data.school].name,
+      school_id: schools[data.school].id,
+      date_of_birth: startDate,
     });
+    setTimeout(() => {
+      setMessage(null);
+      navigate("/");
+      window.location.reload();
+    }, [2000]);
+    setMessage("Successfully Registered");
   };
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      {message ||
+        (error && (
+          <Toast
+            message={error ? "E-mail in use" : message}
+            setMessage={setMessage}
+            type={error ? "error" : "success"}
+          />
+        ))}
       <div className="max-w-md w-full space-y-8">
         <div>
           {/* TODO: LOGO HERE */}
@@ -62,54 +89,68 @@ function Register() {
               className="input-basic"
               placeholder="Email address"
             />
-            <input
-              {...register("first_name")}
-              id="first-name"
-              name="first_name"
-              required
-              className="input-basic"
-              placeholder="First Name"
-            />
-            <input
-              {...register("middle_name")}
-              id="middle-name"
-              name="middle_name"
-              className="input-basic"
-              placeholder="Middle Name (opt)"
-            />
-            <input
-              {...register("last_name")}
-              id="last-name"
-              name="last_name"
-              required
-              className="input-basic"
-              placeholder="Last Name"
-            />
-            <input
-              {...register("date_of_birth", {
-                pattern: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
-              })}
-              type="datetime"
-              placeholder="Date of Birth"
-              className="input-basic"
-            />
+            <div className="flex">
+              <input
+                {...register("first_name")}
+                id="first-name"
+                name="first_name"
+                required
+                className="input-basic"
+                placeholder="First Name"
+              />
+              <input
+                {...register("middle_name")}
+                id="middle-name"
+                name="middle_name"
+                className="input-basic ml-2"
+                placeholder="Middle Name (opt)"
+              />
+              <input
+                {...register("last_name")}
+                id="last-name"
+                name="last_name"
+                required
+                className="input-basic ml-2"
+                placeholder="Last Name"
+              />
+            </div>
+            <div>
+              <DatePicker
+                selected={startDate}
+                className="w-full relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                onChange={(date) => setStartDate(date)}
+                showYearDropdown
+                dateFormatCalendar="MMMM"
+                yearDropdownItemNumber={30}
+                scrollableYearDropdown
+              />
+            </div>
+
             <input
               {...register("student_id")}
-              id="student-id"
-              name="student-id"
+              id="student_id"
+              name="student_id"
               required
               className="input-basic"
               placeholder="Student ID"
             />
-            <input
+            <select
               {...register("school")}
               id="school"
               name="school"
               required
               className="input-basic"
               placeholder="Name of School"
-            />
-            <div className="-space-y-px mt-2">
+            >
+              {!authLoading &&
+                schools &&
+                schools.map((school, index) => (
+                  <option key={school.name} value={index}>
+                    {school.name}
+                  </option>
+                ))}
+            </select>
+            <div className="-space-y-px mt-2 relative">
               <input
                 data-tooltip-target="tooltip-default"
                 id="password"
@@ -133,7 +174,7 @@ function Register() {
               />
 
               {password !== "" && (
-                <div>
+                <div className="absolute top-0 right-[-250px] z-20 text-xs bg-white p-2 shadow-sm rounded-md">
                   <PasswordChecklist
                     rules={["minLength", "number", "capital", "match"]}
                     minLength={8}
@@ -142,7 +183,6 @@ function Register() {
                   />
                 </div>
               )}
-              {error && <div className="text-red-300">E-mail in use</div>}
             </div>
           </div>
           <button

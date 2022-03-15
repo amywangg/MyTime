@@ -15,7 +15,11 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const path = window.location.pathname;
     if (path !== "/login" && path !== "/register") {
-      checkLogin();
+      checkLogin().then((res) => {
+        setCurrentUser(res);
+        TokenService.setUser(res);
+        setAuthLoading(false);
+      });
     }
   }, []);
 
@@ -24,11 +28,9 @@ export const AuthContextProvider = ({ children }) => {
     const token = TokenService.getLocalAccessToken();
     if (token !== "undefined" && token !== null) {
       setCurrentUser(TokenService.getUser());
-      await api.post("profile", { email: currentUser?.email }).then((res) => {
-        setCurrentUser(res.data);
-        TokenService.setUser(res.data);
+      return api.post("profile", { email: currentUser?.email }).then((res) => {
+        return res.data;
       });
-      setAuthLoading(false);
     } else {
       setAuthLoading(false);
       setCurrentUser(null);
@@ -50,6 +52,17 @@ export const AuthContextProvider = ({ children }) => {
       .catch((err) => setError("Incorrect Credentials"));
   };
 
+  const updateUser = async (student) => {
+    await api
+      .post("profile/update", student)
+      .then((res) => {
+        setError(null);
+        TokenService.setUser(res.data);
+        setCurrentUser(res.data);
+      })
+      .catch((err) => setError("Incorrect Credentials"));
+  };
+
   const register = async (student) => {
     console.log(student);
     await api
@@ -57,6 +70,11 @@ export const AuthContextProvider = ({ children }) => {
       .then((res) => {
         setError(null);
         const student = {
+          id: res.data.id,
+          middle_name: res.data.middle_name,
+          student_id: res.data.student_id,
+          school: res.data.school,
+          school_id: res.data.school_id,
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           email: res.data.email,
@@ -75,14 +93,23 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(null);
     navigate("/login");
   };
+  const getSchools = async () => {
+    setAuthLoading(true);
+    return await api.get("schools").then((res) => {
+      setAuthLoading(false);
+      return res;
+    });
+  };
 
   const stateValues = {
     currentUser,
     setCurrentUser,
     checkLogin,
     setAuthLoading,
+    updateUser,
     authLoading,
     handleLogout,
+    getSchools,
     login,
     register,
     error,

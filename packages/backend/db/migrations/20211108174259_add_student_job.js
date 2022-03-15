@@ -8,14 +8,12 @@ exports.up = async function (knex) {
         .integer("job_id")
         .unsigned()
         .references("jobs.id")
-        .unique()
         .onDelete("CASCADE");
 
       table
         .integer("student_id")
         .unsigned()
         .references("students.id")
-        .unique()
         .onDelete("CASCADE");
 
       table.string("status");

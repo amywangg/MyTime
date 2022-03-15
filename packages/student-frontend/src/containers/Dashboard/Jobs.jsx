@@ -5,8 +5,8 @@ function Jobs() {
   const [tab, setTab] = useState("completed");
 
   return (
-    <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow">
-      <p className="inline-block font-medium text-xl mb-2">Your Jobs</p>
+    <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow overflow-auto">
+      <p className="inline-block font-semibold text-xl mb-2">Your Jobs</p>
       <p className="text-subText text-xs flex-wrap mb-4">
         Look back at all the hard work you put in
       </p>
