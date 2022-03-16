@@ -17,10 +17,10 @@ function OpenAction({ applicants, onClick, index, appHover, setAppHover }) {
           onMouseLeave={() => setAppHover(null)}
           className="relative mt-3.5 flex justify-center items-center h-5 w-5 hover:cursor-pointer text-[10px] font-semibold text-center bg-red-500 text-white rounded mr-4"
         >
-          7
+          {applicants}
           {appHover === index && (
             <span className="absolute rounded-md py-1 px-2 z-10 left-[-110px] bottom-0 mt-4 inline-block bg-gray-600">
-              7 new applicants
+              {applicants} new applicant{applicants !== 1 && "s"}
             </span>
           )}
         </span>
@@ -48,6 +48,7 @@ function Postings() {
     if (!postingLoading) {
       const status =
         tab === "Open" ? "open" : tab === "Pending" ? "pending" : "closed";
+      console.log(postings);
       setFilteredPostings(
         postings.filter((posting) => posting.status === status)
       );
@@ -87,7 +88,7 @@ function Postings() {
             message2="Click New Posting to add a posting"
           />
         ) : (
-          <div className="mt-2 overflow-auto">
+          <div className="mt-4 overflow-auto">
             {filteredPostings.map((posting, i) => (
               <Posting
                 item={posting}
@@ -97,7 +98,11 @@ function Postings() {
                 onClick={() => onPostingClick(posting.id)}
                 action={
                   <OpenAction
-                    applicants={posting.applicants?.length}
+                    applicants={
+                      posting.applicants.filter(
+                        (applicant) => applicant.status === "applied"
+                      )?.length
+                    }
                     onClick={() => onPostingClick(posting.id)}
                     index={i}
                     setAppHover={setAppHover}

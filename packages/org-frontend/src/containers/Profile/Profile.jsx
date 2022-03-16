@@ -11,11 +11,12 @@ function Profile() {
     email: null,
     website: null,
     location: null,
+    image: null,
     phone_number: null,
     description: "",
   });
   const [message, setMessage] = useState(null);
-  const { currentUser, authLoading, updateUser } = useContext(AuthContext);
+  const { currentUser, authLoading, updateProfile } = useContext(AuthContext);
 
   const handleEdit = (field, text) => {
     setProfile((prevState) => ({
@@ -25,7 +26,7 @@ function Profile() {
   };
 
   const handleSubmit = () => {
-    updateUser({
+    updateProfile({
       id: currentUser.id,
       email: profile.email || currentUser.email,
       website: profile.website || currentUser.website,
@@ -84,55 +85,49 @@ function Profile() {
               Update Your Profile
             </p>
             <div className="flex mt-3">
-              {/* <div className="w-1/2 px-4">
-                <p className="text-xs font-semibold ml-2 mb-1">First Name</p>
+              <div className="w-1/2 px-4">
+                <p className="text-xs font-semibold ml-2 mb-1">Location</p>
+                <select
+                  id="school"
+                  name="school"
+                  className="border-none pl-3 pr-10 p-0 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
+                  value={
+                    profile?.location ? profile.location : currentUser?.location
+                  }
+                  onChange={(e) => handleEdit("location", e.target.value)}
+                >
+                  <option key="Richmond Hill" value="Richmond Hill">
+                    Richmond Hill
+                  </option>
+                  <option key="Markham" value="Markham">
+                    Markham
+                  </option>
+                  <option key="Toronto" value="Toronto">
+                    Toronto
+                  </option>
+                  <option key="Brampton" value="Brampton">
+                    Brampton
+                  </option>
+                  <option key="Missisauga" value="Missisauga">
+                    Missisauga
+                  </option>
+                </select>
+              </div>
+              <div className="w-1/2 px-4">
+                <p className="text-xs font-semibold ml-2 mb-1">Website</p>
                 <input
-                  id="first_name"
-                  name="first_name"
+                  id="website"
+                  name="website"
                   type="text"
                   value={
-                    profile?.first_name
-                      ? profile.first_name
-                      : currentUser?.first_name
+                    profile?.website ? profile.website : currentUser?.website
                   }
-                  onChange={(e) => handleEdit("first_name", e.target.value)}
-                  autoComplete="first_name"
-                  className="px-3 border-none outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
-                />
-              </div> */}
-              {/* <div className="w-1/2 px-4">
-                <p className="text-xs font-semibold ml-2 mb-1">
-                  Middle Name (opt)
-                </p>
-                <input
-                  id="middle_name"
-                  name="middle_name"
-                  type="text"
-                  value={
-                    profile?.middle_name
-                      ? profile.middle_name
-                      : currentUser?.middle_name
-                  }
-                  onChange={(e) => handleEdit("middle_name", e.target.value)}
-                  autoComplete="middle_name"
+                  onChange={(e) => handleEdit("website", e.target.value)}
                   className="border-none px-3 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
                 />
-              </div> */}
+              </div>
             </div>
             <div className="flex mt-3">
-              {/* <div className="w-1/2 px-4">
-                <p className="text-xs font-semibold ml-2 mb-1">Last Name</p>
-                <input
-                  value={
-                    profile?.last_name
-                      ? profile.last_name
-                      : currentUser?.last_name
-                  }
-                  type="text"
-                  onChange={(e) => handleEdit("last_name", e.target.value)}
-                  className="border-none pl-3 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
-                />
-              </div> */}
               <div className="w-1/2 px-4">
                 <p className="text-xs font-semibold ml-2 mb-1">E-mail</p>
                 <input
@@ -145,14 +140,47 @@ function Profile() {
                   className="border-none outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
                 />
               </div>
+              <div className="w-1/2 px-4">
+                <p className="text-xs font-semibold ml-2 mb-1">Phone Number</p>
+                <input
+                  value={
+                    profile?.phone_number
+                      ? profile.phone_number
+                      : currentUser?.phone_number
+                  }
+                  type="text"
+                  onChange={(e) => handleEdit("phone_number", e.target.value)}
+                  className="border-none pl-3 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
+                />
+              </div>
+            </div>
+            <div className="flex mt-3">
+              <div className="w-full px-4">
+                <p className="text-xs font-semibold ml-2 mb-1">
+                  Profile Image URL
+                </p>
+                <input
+                  id="image"
+                  name="image"
+                  type="url"
+                  value={
+                    profile?.image
+                      ? profile.image
+                      : currentUser?.image.toString()
+                  }
+                  onChange={(e) => handleEdit("image", e.target.value)}
+                  autoComplete="image"
+                  className="border-none outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col mt-3">
               <div className="w-full px-4">
                 <p className="text-xs font-semibold ml-2 my-1">Description</p>
                 <textarea
-                  className="h-[80%] border-0 text-md flex-grow mb-4 resize-none overflow-auto block mt-2 w-full px-3 py-1.5 text-sm font-normal bg-ghost bg-clip-padding transition ease-in-out placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10"
-                  rows="6"
+                  className="h-[100%] border-0 text-md flex-grow mb-4 resize-none overflow-auto block mt-2 w-full px-3 py-1.5 text-sm font-normal bg-ghost bg-clip-padding transition ease-in-out placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10"
+                  rows="12"
                   value={
                     profile?.description
                       ? profile.description

@@ -4,7 +4,7 @@ import SideNav from "../SideNav";
 function Page({ children, title }) {
   return (
     <div className="flex h-screen flex-1 max-h-[100vh]">
-      <div className="flex w-[25vw] max-w-[250px]">
+      <div className="flex w-[35vw] max-w-[250px]">
         <SideNav />
       </div>
       <div className="flex flex-col flex-1 bg-bg px-16 py-8 pb-12 max-h-[100vh] rounded-tl-lg rounded-bl-lg shadow-xl">

@@ -10,8 +10,6 @@ exports.up = async function (knex) {
 
       table.string("last_name");
 
-      table.boolean("verified").defaultTo(false);
-
       table.string("email").unique();
 
       table.string("password");
