@@ -72,7 +72,8 @@ module.exports = {
                 ])
                 .from("student_job")
                 .join("students", "student_job.student_id", "=", "students.id")
-                .where("student_job.job_id", time.id);
+                .where("student_job.job_id", time.id)
+                .whereNot("student_job.status", "");
               return students;
             })
           );
