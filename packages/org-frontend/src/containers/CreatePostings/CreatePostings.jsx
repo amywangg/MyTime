@@ -14,12 +14,12 @@ function CreatePostings() {
   const [message, setMessage] = useState(null);
   const [timeslots, setTimeslots] = useState([
     {
-      startTime: {
+      start_time: {
         hours: "8",
         minutes: "00",
         ampm: "am",
       },
-      endTime: {
+      end_time: {
         hours: "5",
         minutes: "00",
         ampm: "pm",

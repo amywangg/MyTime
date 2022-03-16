@@ -19,17 +19,17 @@ module.exports = {
 
       posting.timeslots.map(async (time) => {
         let start_time =
-          time.startTime.hours +
+          time.start_time.hours +
           ":" +
-          time.startTime.minutes +
+          time.start_time.minutes +
           " " +
-          time.startTime.ampm;
+          time.start_time.ampm;
         let end_time =
-          time.endTime.hours +
+          time.end_time.hours +
           ":" +
-          time.endTime.minutes +
+          time.end_time.minutes +
           " " +
-          time.endTime.ampm;
+          time.end_time.ampm;
         await knex("jobs").insert({
           posting_id: obj[0],
           start_time,

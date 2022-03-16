@@ -11,7 +11,6 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
     let item = { ...timeslots[index] };
     item.openings = value;
     items[index] = item;
-    console.log(items);
     setTimeslots(items);
   };
 
@@ -34,7 +33,7 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                   required
                   time={timeslots}
                   setTime={setTimeslots}
-                  field="startTime"
+                  field="start_time"
                   index={index}
                 />
                 <p className="text-xl mt-1 mx-5">-</p>
@@ -42,7 +41,7 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                   required
                   time={timeslots}
                   setTime={setTimeslots}
-                  field="endTime"
+                  field="end_time"
                   index={index}
                 />
               </div>
@@ -78,12 +77,12 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                       setTimeslots([
                         ...timeslots,
                         {
-                          startTime: {
+                          start_time: {
                             hours: "8",
                             minutes: "00",
                             ampm: "am",
                           },
-                          endTime: {
+                          end_time: {
                             hours: "5",
                             minutes: "00",
                             ampm: "pm",

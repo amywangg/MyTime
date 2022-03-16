@@ -23,9 +23,10 @@ export const month = [
 ];
 
 export const getHours = (start, end) => {
-  var start_hours = start.includes("pm")
-    ? Number(start.match(/^(\d+)/)[1]) + 12
-    : Number(start.match(/^(\d+)/)[1]);
+  var start_hours =
+    start.includes("pm") && !start.includes("12")
+      ? Number(start.match(/^(\d+)/)[1]) + 12
+      : Number(start.match(/^(\d+)/)[1]);
   var start_minutes = Number(start.match(/:(\d+)/)[1]);
   var end_hours = end.includes("pm")
     ? Number(end.match(/^(\d+)/)[1]) + 12

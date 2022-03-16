@@ -41,10 +41,10 @@ const TimePicker = ({ time, setTime, field, index }) => {
           handleChange(e.target.value, "minutes");
         }}
       >
-        <option value="0">00</option>
-        <option value="0">15</option>
+        <option value="00">00</option>
+        <option value="15">15</option>
         <option value="30">30</option>
-        <option value="30">45</option>
+        <option value="45">45</option>
       </select>
       <select
         name="ampm"

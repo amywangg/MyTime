@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../components/Page";
 import { AuthContext } from "../../context/AuthContext";
-
 import Loading from "../../components/Loading";
 import Toast from "../../components/Toast";
 import { weekday, month, getHours } from "./dates";
@@ -12,7 +11,6 @@ function Posting() {
   const [posting, setPosting] = useState();
   const [postDate, setPostDate] = useState();
   const [timeslots, setTimeslots] = useState();
-  const [applied, setApplied] = useState(false);
   const [update, setUpdate] = useState(false);
   const [message, setMessage] = useState(null);
   const { postings, postingLoading, updateSave, updateStatus } =
@@ -24,6 +22,16 @@ function Posting() {
 
   useEffect(() => {
     if (!postingLoading) {
+      setTimeslots(
+        postings
+          .filter((post) => post.id === parseInt(id))[0]
+          ?.timeslots.map((x, index) => {
+            if (index === 0) {
+              return { ...x, selected: true };
+            }
+            return { ...x, selected: false };
+          })
+      );
       setPostDate(
         new Date(postings.filter((post) => post.id === parseInt(id))[0]?.date)
       );
@@ -109,50 +117,35 @@ function Posting() {
           <Loading />
         ) : (
           <>
-            <div className="flex flex-col min-h-0 h-[60%]">
+            <div className="flex flex-col min-h-0 h-[50%]">
               <p className="font-semibold text-l mt-6 text-primary ml-3 h-6">
                 Posting Details
               </p>
               <div className="flex justify-between h-full overflow-auto">
-                <div className="flex flex-col mt-3 w-2/3 pr-10">
-                  <div className="w-full px-4 mb-2">
-                    <p className="text-xs font-semibold mb-1 mt-2">
-                      Event Date
-                    </p>
-                    <p className="text-xs">
-                      {postDate &&
-                        `${weekday[postDate.getDay()]}, ${
-                          month[postDate.getMonth()]
-                        } ${postDate.getDate()}, ${postDate.getFullYear()}`}
-                    </p>
+                <div className="flex flex-col w-full pr-10">
+                  <div className="flex justify-start">
+                    <div className="px-4 mb-2">
+                      <p className="text-xs font-semibold mb-1 mt-2">
+                        Event Date
+                      </p>
+                      <p className="text-xs">
+                        {postDate &&
+                          `${weekday[postDate.getDay()]}, ${
+                            month[postDate.getMonth()]
+                          } ${postDate.getDate()}, ${postDate.getFullYear()}`}
+                      </p>
+                    </div>
+                    <div className="ml-10 px-4 mb-2">
+                      <p className="text-xs font-semibold mb-1 mt-2">
+                        Event Location
+                      </p>
+                      <p className="text-xs">{posting?.location}</p>
+                    </div>
                   </div>
+
                   <p className="text-xs font-semibold ml-4">Description</p>
                   <div className="flex-grow h-full w-full px-4 bg-ghost border-0 text-xs overflow-auto mt-2 py-1.5 rounded-md ml-3">
                     <p className="text-xs">{posting?.description}</p>
-                  </div>
-                </div>
-                <div className="w-1/3">
-                  <div className="flex flex-col border-[1px] border-gray-300 rounded-md p-3 min-h-0">
-                    <p className="text-xs font-semibold  mb-1 mt-2">
-                      Org Website
-                    </p>
-                    <a
-                      href={posting?.website}
-                      target="_blank"
-                      className="text-xs text-blue-600"
-                    >
-                      {posting?.website}
-                    </a>
-                    <p className="text-xs font-semibold  mb-1 mt-2">
-                      Event Location
-                    </p>
-                    <p className="text-xs">{posting?.location}</p>
-                    <p className="text-xs font-semibold  mb-1 mt-2">E-mail</p>
-                    <p className="text-xs">{posting?.email}</p>
-                    <p className="text-xs font-semibold  mb-1 mt-2">
-                      Phone Number
-                    </p>
-                    <p className="text-xs">{posting?.phone_number}</p>
                   </div>
                 </div>
               </div>
@@ -162,47 +155,64 @@ function Posting() {
                 Timeslots
               </p>
               <p className="font-semibold text-xs text-subText ml-3">
-                {applied
-                  ? "Toggle blocks to edit/remove application"
-                  : "Click blocks to select timeslots to apply for"}
+                Click blocks to view applicants for each timeslot
               </p>
-              <div className="overflow-auto grid grid-cols-3 gap-4 mt-2 ml-3">
-                {posting?.timeslots &&
-                  posting.timeslots.map((time, index) => {
-                    const { hours, minutes } = getHours(
-                      time.start_time,
-                      time.end_time
-                    );
-                    return (
-                      <div
-                        key={time.id}
-                        className={`${
-                          time.selected ? "bg-nav shadow-lg" : "bg-ghost"
-                        }  hover:cursor-pointer py-2 px-1`}
-                        onClick={() => {
-                          let items = [...timeslots];
-                          let item = { ...timeslots[index] };
-                          item.selected = !time.selected;
-                          items[index] = item;
-                          if (applied) {
-                            setUpdate(true);
-                          }
-                          setTimeslots(items);
-                        }}
-                      >
-                        <p className="font-semibold text-xs  ml-3">
-                          Time: {time.start_time} - {time.end_time}
-                        </p>
-                        <p className="font-semibold text-xs ml-3">
-                          Openings: {time.openings}
-                        </p>
-                        <p className="font-semibold text-xs  ml-3">
-                          Number of Hours: {hours !== 0 && hours}{" "}
-                          {minutes !== 0 && minutes}
-                        </p>
-                      </div>
-                    );
-                  })}
+              <div className="overflow-auto flex flex-grow gap-4 mt-2 ml-3">
+                <div className="w-[50%]">
+                  {timeslots &&
+                    timeslots.map((time, index) => {
+                      let start_time = time.start_time;
+                      let end_time = time.end_time;
+                      if (time.start_time?.hours) {
+                        start_time =
+                          start_time.hours +
+                          ":" +
+                          start_time.minutes +
+                          " " +
+                          start_time.ampm;
+                      }
+                      if (time.end_time?.hours) {
+                        end_time =
+                          end_time.hours +
+                          ":" +
+                          end_time.minutes +
+                          " " +
+                          end_time.ampm;
+                      }
+                      const { hours, minutes } = getHours(start_time, end_time);
+                      return (
+                        <div
+                          key={time.id}
+                          className={`${
+                            time.selected ? "bg-nav shadow-lg" : "bg-ghost"
+                          }  hover:cursor-pointer py-2 px-1`}
+                          onClick={() => {
+                            let items = [...timeslots];
+                            items = items.map((x) => {
+                              x.selected = false;
+                              return x;
+                            });
+                            items[index].selected = true;
+                            setTimeslots(items);
+                          }}
+                        >
+                          <p className="font-semibold text-xs  ml-3">
+                            Time: {start_time} - {end_time}
+                          </p>
+                          <p className="font-semibold text-xs ml-3">
+                            Openings: {time.openings}
+                          </p>
+                          <p className="font-semibold text-xs  ml-3">
+                            Number of Hours: {hours !== 0 && hours}{" "}
+                            {minutes !== 0 && minutes}
+                          </p>
+                        </div>
+                      );
+                    })}
+                </div>
+                <div className="bg-ghost h-full w-full flex-grow">
+                  Applicants
+                </div>
               </div>
             </div>
           </>

@@ -32,16 +32,17 @@ function EditPosting() {
       setPosting(postingObj);
 
       let newTime = postTimeslots?.map((time) => {
-        var hours = Number(time.start_time.match(/^(\d+)/)[1]);
-        var minutes = Number(time.start_time.match(/:(\d+)/)[1]);
+        var hours = time.start_time.match(/^(\d+)/)[1];
+        var minutes = time.start_time.match(/:(\d+)/)[1];
         var ampm = time.start_time.match(/([AaPp][Mm])$/)[1];
         time.start_time = { hours, minutes, ampm };
-        var hours = Number(time.end_time.match(/^(\d+)/)[1]);
-        var minutes = Number(time.end_time.match(/:(\d+)/)[1]);
+        var hours = time.end_time.match(/^(\d+)/)[1];
+        var minutes = time.end_time.match(/:(\d+)/)[1];
         var ampm = time.end_time.match(/([AaPp][Mm])$/)[1];
         time.end_time = { hours, minutes, ampm };
         return time;
       });
+      console.log(newTime);
       setTimeslots(newTime);
     }
   }, [postingLoading]);
@@ -51,7 +52,6 @@ function EditPosting() {
       (time, i) => i === 0 || time.openings !== ""
     );
     setTimeslots(newTimeslots);
-    console.log(posting);
     if (
       posting.title &&
       posting.location &&
@@ -87,7 +87,7 @@ function EditPosting() {
       <div>
         <button
           className="absolute top-10 right-12 text-sm font-semibold text-gray-700"
-          onClick={() => navigate("/postings")}
+          onClick={() => navigate(-1)}
         >
           {"< "}Go back
         </button>

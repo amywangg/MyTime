@@ -11,7 +11,6 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
     let item = { ...timeslots[index] };
     item.openings = value;
     items[index] = item;
-    console.log(items);
     setTimeslots(items);
   };
 
