@@ -9,60 +9,59 @@ exports.seed = async function (knex) {
       // Inserts seed entries
       return knex("orgs").insert([
         {
-          email: "rhillvets@gmail.com",
+          email: "mticountdown@gmail.com",
           password: password_hash,
-          name: "Richmond Hill Veterinary",
-          location: "Richmond Hill",
-          website: "www.rhillvets.com",
-          phone_number: "416-416-4166",
-          description: "",
-          image:
-            "https://mulfordanimal.com/files/2021/01/Mulford-AH-Color-Logo.gif",
+          name: "MTI Countdowns",
+          location: "Toronto",
+          website: "https://mymti.org/",
+          phone_number: "905-884-8477",
+          description: "We are a group of young and ambitious individuals who have an innate passion for music and broadcasting. As a registered non-profit organization based out of Canada, our goal is to educate and entertain Japanese music culture to everyone around the world. We believe the power and future of digital radio broadcasting is in podcasting. We strive to be acclaimed at educating and entertaining listeners in Japanese music culture. We cater our podcast to the feedback and needs of listeners. We believe in the development of the Japanese music industry through digital media broadcasting. Our podcast show is called Japan Top 10 and it is a podcast focusing on the mainstream music from Japan along with the cultural aspects that are intertwined in Japan's music.",
+          image: "https://media.redcircle.com/images/2020/4/17/20/044d51d1-8e25-42ef-a7f5-d60cf9a5d5ba_3776e1-59c0693cf9d5f.png",
+        //  category: "Arts & Culture, Education & Literacy, Computers & Technology, Media & Broadcasting, International"
         },
         {
-          email: "townrhill@gmail.com",
+          email: "climatescience@gmail.com",
           password: password_hash,
-          name: "Town of Richmond Hill",
-          location: "Richmond Hill",
-          website: "https://www.richmondhill.ca/en/index.aspx",
+          name: "Climate Science",
+          location: "Toronto",
+          website: "https://climatescience.org/",
           phone_number: "416-416-4166",
-          description: "",
-          image:
-            "https://pbs.twimg.com/profile_images/2553373725/yr8gsadj65izt1fq0xfk_400x400.jpeg",
+          description: "We are a UK-based charity driven by volunteers from all around the world. Our articles and courses reference scientific reports & papers to help you trust what you read. We try to explain things simply, and focus on what's most important to solve climate change. We promote work on clean energy, recycling, sustainable agriculture, and other major challenges.",
+          image: "https://climatescience.org/climate-science/icons/climate-science-icon-384x384.png",
+          //category: "Community, Environment, Education & Literacy, International"
         },
         {
           email: "sickkids@gmail.com",
           password: password_hash,
           name: "Sick Kids Foundation",
-          location: "Richmond Hill",
+          location: "Toronto",
           website: "https://www.sickkids.ca/",
           phone_number: "416-416-4166",
-          description: "",
-          image:
-            "https://childrenshospitals.ca/wp-content/uploads/2019/03/logo-SickKids-320x200.png",
+          description: "SickKids wouldn’t be the same without the strength, commitment and diversity of our valued volunteers. Every volunteer role at the hospital presents exciting new opportunities to learn, engage and gain enriching experiences. The benefits to volunteering are endless. Through direct or indirect interaction with patients and their families, you contribute to the quality of care, spirit and overall experience at SickKids.Volunteers are essential SickKids team members. We depend on them to enhance the programs and services we offer, and to assist staff in providing the finest standards of health care that align with our SickKids mission, vision and values.",
+          image: "https://childrenshospitals.ca/wp-content/uploads/2019/03/logo-SickKids-320x200.png",
+          //category: "Children & Youth, Healthcare, Community"
         },
         {
           email: "markhammuseum@gmail.com",
           password: password_hash,
           name: "Markham Museum",
           location: "Markham",
-          website:
-            "https://www.markham.ca/wps/portal/home/arts/markham-museum/?utm_source=markhammuseum.ca&utm_medium=referral&utm_campaign=redirects",
+          website: "https://www.markham.ca/wps/portal/home/arts/markham-museum/?utm_source=markhammuseum.ca&utm_medium=referral&utm_campaign=redirects",
           phone_number: "416-416-4166",
-          description: "",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuwoiHKV40V0j2fnoUXgFlA5ktMWnVAUfzmQ&usqp=CAU",
+          description: "We are associated with the City of Markham. We are looking for passionate people ages 14 and older who want to share their talents, skills and experiences to make Markham an even better place to live, work and play! Make new friends and memories that will last a lifetime by volunteering for Recreation Services, Markham Museum, Varley Art Gallery of Markham, Flato Markham Theatre, Markham Public Library or at one of the City’s events.",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuwoiHKV40V0j2fnoUXgFlA5ktMWnVAUfzmQ&usqp=CAU",
+         // category: "Community, Children & Youth, Seniors"
         },
         {
-          email: "ccs@gmail.com",
+          email: "savis@gmail.com",
           password: password_hash,
-          name: "Canadian Cancer Society",
-          location: "Markham",
-          website: "https://cancer.ca/en/",
-          phone_number: "416-416-4166",
-          description: "",
-          image:
-            "https://federatedhealth.ca/wp-content/uploads/2019/11/donate-canadian-cancer-society.png",
+          name: "Sexual Assault & Violence Intervention Services of Halton",
+          location: "Halton",
+          website: "www.savisofhalton.org",
+          phone_number: "905-825-3622",
+          description: "Sexual Assault and Violence Intervention Services (SAVIS of Halton) offers free and confidential 24/7, one-on-one crisis counselling services, with no judgment, just support. Services can be short- or long-term in nature and are open to female-identified, male-identified and transgender people aged 12 and over who are survivors of violence, including childhood sexual abuse. SAVIS does not discriminate when it comes to race, colour, disability, age or national origin.",
+          image: "https://pbs.twimg.com/profile_images/850410741551312897/_JN-b8LL_400x400.jpg",
+        //  category: "Legal & Advocacy"
         },
       ]);
     });
