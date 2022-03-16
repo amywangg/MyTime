@@ -12,7 +12,7 @@ exports.up = async function (knex) {
 
       table.string("location");
 
-      table.string("description");
+      table.string("description", 10000);
 
       table.string("website");
 
