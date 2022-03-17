@@ -63,6 +63,16 @@ exports.seed = async function (knex) {
           image: "https://pbs.twimg.com/profile_images/850410741551312897/_JN-b8LL_400x400.jpg",
         //  category: "Legal & Advocacy"
         },
+        {
+          email: "darlinghomeforkids@gmail.com",
+          password: password_hash,
+          name: "Darling Home For Kids",
+          location: "Vaughan",
+          website: "www.darlinghomeforkids.ca",
+          phone_number: "905-825-3622",
+          description: "The Darling Home for Kids, situated in Vaughan, Ontario, is a place of joy, filled with the smiles and laughter of children engaging in unique and enriching experiences and exploring new and exciting activities. Medically fragile children receive wonderful care in a beautiful, warm and home-like environment, which provides comfort and a break to families facing the daily challenges of caring for a child with complex medical needs.  Families are supported in knowing that there is a continuum of care from respite through to palliation and, when needed, end of life care. The Cedarbrook Society is a registered charity that owns and operates The Darling Home for Kids, a children’s hospice experience . ",
+          image: "https://www.darlinghomeforkids.ca/wp-content/uploads/2017/07/logo.png",
+        },
       ]);
     });
 };
