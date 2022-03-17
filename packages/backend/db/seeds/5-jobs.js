@@ -167,6 +167,38 @@ exports.seed = async function (knex) {
           applicants: 0,
           status: "open",
         },
+        {
+          posting_id: 12,
+          start_time: "9:00 am",
+          end_time: "4:00 pm",
+          openings: 15,
+          applicants: 0,
+          status: "open",
+        },
+        {
+          posting_id: 13,
+          start_time: "9:00 am",
+          end_time: "4:00 pm",
+          openings: 15,
+          applicants: 0,
+          status: "open",
+        },
+        {
+          posting_id: 14,
+          start_time: "10:00 am",
+          end_time: "12:00 pm",
+          openings: 3,
+          applicants: 0,
+          status: "open",
+        },
+        {
+          posting_id: 15,
+          start_time: "6:00 pm",
+          end_time: "8:00 pm",
+          openings: 10,
+          applicants: 0,
+          status: "open",
+        },
       ]);
     });
 };
