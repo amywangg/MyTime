@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 
-const TimePicker = ({ time, setTime, field, index }) => {
+const TimePicker = ({ time, setTime, field, index, setUpdateTimeslots }) => {
   const handleChange = (value, type) => {
     let items = [...time];
     let item = { ...time[index] };
     item[field][type] = value;
     items[index] = item;
     setTime(items);
+    if (setUpdateTimeslots) {
+      setUpdateTimeslots(true);
+    }
   };
 
   return (
@@ -39,6 +42,9 @@ const TimePicker = ({ time, setTime, field, index }) => {
         className="px-2 appearance-none h-10 w-20 relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
         onChange={(e) => {
           handleChange(e.target.value, "minutes");
+          if (setUpdateTimeslots) {
+            setUpdateTimeslots(true);
+          }
         }}
       >
         <option value="00">00</option>
@@ -52,6 +58,9 @@ const TimePicker = ({ time, setTime, field, index }) => {
         value={time[index][field].ampm}
         onChange={(e) => {
           handleChange(e.target.value, "ampm");
+          if (setUpdateTimeslots) {
+            setUpdateTimeslots(true);
+          }
         }}
       >
         <option value="am">AM</option>

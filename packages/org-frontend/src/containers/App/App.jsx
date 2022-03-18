@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "../Dashboard";
 import Login from "../Login";
 import Register from "../Register";
-import Applications from "../Applications";
 import Schedule from "../Schedule";
 import Postings from "../Postings";
 import Profile from "../Profile";
@@ -15,6 +14,8 @@ import { PostingContextProvider } from "../../context/PostingContext";
 import { SchoolContextProvider } from "../../context/SchoolContext";
 import Posting from "../Posting/Posting";
 import EditPosting from "../EditPosting";
+import PendingPosting from "../PendingPosting/PendingPosting";
+import ClosedPosting from "../ClosedPosting/ClosedPosting";
 
 function PrivateOutlet({ Component }) {
   const currentUser = TokenService.getUser();
@@ -63,6 +64,30 @@ export function App() {
           }
         />
         <Route
+          path="/postings/pending/:id"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <PendingPosting />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
+          path="/postings/closed/:id"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <ClosedPosting />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
           path="/postings/:id/edit"
           element={
             <PrivateOutlet
@@ -92,7 +117,15 @@ export function App() {
         />
         <Route
           path="/schedule"
-          element={<PrivateOutlet Component={<Schedule />} />}
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Schedule />
+                </PostingContextProvider>
+              }
+            />
+          }
         />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

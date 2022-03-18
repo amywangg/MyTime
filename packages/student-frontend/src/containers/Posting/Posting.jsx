@@ -12,6 +12,7 @@ function Posting() {
   const [timeslots, setTimeslots] = useState();
   const [applied, setApplied] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [message, setMessage] = useState(null);
   const { postings, postingLoading, updateSave, updateStatus } =
     useContext(PostingContext);
@@ -19,13 +20,19 @@ function Posting() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const selectedPosting = postings.filter(
+      (post) => post.id === parseInt(id)
+    )[0];
     if (!postingLoading) {
-      setUpdate(false);
+      setUpdate(new Date(selectedPosting?.date) <= new Date() ? null : false);
       setApplied(false);
       setTimeslots(
         postings
           .filter((post) => post.id === parseInt(id))[0]
           ?.timeslots.map((x) => {
+            if (x.student_status?.status === "selected") {
+              setIsSelected(true);
+            }
             if (
               x.student_status?.status === "applied" ||
               x.student_status?.status === "selected"
@@ -36,10 +43,8 @@ function Posting() {
             return { ...x, selected: false };
           })
       );
-      setPostDate(
-        new Date(postings.filter((post) => post.id === parseInt(id))[0]?.date)
-      );
-      setPosting(postings.filter((post) => post.id === parseInt(id))[0]);
+      setPostDate(new Date(selectedPosting?.date));
+      setPosting(selectedPosting);
     }
   }, [postingLoading, postings]);
 
@@ -114,15 +119,31 @@ function Posting() {
               <div className="flex justify-center self-center items-center mr-3">
                 <button
                   className={`${
-                    update
+                    update === true
                       ? "bg-red-400 text-white cursor-pointer"
+                      : update === null
+                      ? "bg-yellow-400 text-white "
                       : applied
                       ? "bg-nav text-primary cursor-auto"
                       : "bg-primary text-white hover:shadow-md"
                   }  rounded-3xl px-6 h-7 text-sm`}
-                  onClick={update ? onUpdate : applied ? null : onSubmit}
+                  onClick={
+                    update === null
+                      ? null
+                      : update
+                      ? onUpdate
+                      : applied
+                      ? null
+                      : onSubmit
+                  }
                 >
-                  {update ? "Update" : applied ? "Applied" : "Apply"}
+                  {update === true
+                    ? "Update"
+                    : update === null
+                    ? "Completed"
+                    : applied
+                    ? "Applied"
+                    : "Apply"}
                 </button>
               </div>
               {posting?.timeslots[0]?.student_status?.saved &&
@@ -178,7 +199,7 @@ function Posting() {
                     <a
                       href={posting?.website}
                       target="_blank"
-                      className="text-xs text-blue-600"
+                      className="text-xs text-blue-600 overflow-hidden"
                     >
                       {posting?.website}
                     </a>
@@ -201,7 +222,11 @@ function Posting() {
                 Timeslots
               </p>
               <p className="font-semibold text-xs text-subText ml-3">
-                {applied
+                {update === null || isSelected
+                  ? `The highlighted blocks are your ${
+                      isSelected ? "selected" : "completed"
+                    } timeslots`
+                  : applied
                   ? "Toggle blocks to edit/remove application"
                   : "Click blocks to select timeslots to apply for"}
               </p>
@@ -217,16 +242,20 @@ function Posting() {
                         key={time.id}
                         className={`${
                           time.selected ? "bg-nav shadow-lg" : "bg-ghost"
-                        }  hover:cursor-pointer py-2 px-1`}
+                        }  ${
+                          update !== null && "hover:cursor-pointer"
+                        } py-2 px-1`}
                         onClick={() => {
-                          let items = [...timeslots];
-                          let item = { ...timeslots[index] };
-                          item.selected = !time.selected;
-                          items[index] = item;
-                          if (applied) {
-                            setUpdate(true);
+                          if (update !== null && !isSelected) {
+                            let items = [...timeslots];
+                            let item = { ...timeslots[index] };
+                            item.selected = !time.selected;
+                            items[index] = item;
+                            if (applied) {
+                              setUpdate(true);
+                            }
+                            setTimeslots(items);
                           }
-                          setTimeslots(items);
                         }}
                       >
                         <p className="font-semibold text-xs  ml-3">

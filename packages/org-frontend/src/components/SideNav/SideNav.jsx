@@ -25,7 +25,9 @@ function SideNav() {
         <ul className="relative mt-2">
           <li
             className={`${
-              path === "/" ? "bg-nav font-semibold" : "font-medium hover:bg-nav"
+              path === "/" || path.includes("school")
+                ? "bg-nav font-semibold"
+                : "font-medium hover:bg-nav"
             } relative flex py-2 px-4 items-end rounded-lg  hover:cursor-pointer hover:shadow-md mb-2`}
             onClick={() => navigate("/")}
           >

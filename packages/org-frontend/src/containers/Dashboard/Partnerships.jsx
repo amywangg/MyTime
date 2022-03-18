@@ -24,9 +24,7 @@ function Partnerships() {
   };
 
   useEffect(() => {
-    console.log(schoolLoading);
     if (!schoolLoading && schools !== null) {
-      console.log(schools);
       setFilteredSchools(
         schools.filter((school) => school.status === "verified") || []
       );
@@ -34,7 +32,7 @@ function Partnerships() {
   }, [schoolLoading]);
 
   return (
-    <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow pt-8 overflow-auto">
+    <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow min-h-0 pt-8">
       <p className="inline-block font-semibold text-xl mb-2">
         Your Partnerships
       </p>
@@ -46,15 +44,17 @@ function Partnerships() {
           <Loading />
         </div>
       ) : filteredSchools.length !== 0 ? (
-        filteredSchools.map((school, i) => (
-          <Listing
-            item={school}
-            key={i}
-            br={i !== filteredSchools.length - 1}
-            onClick={() => onSchoolClick(school.id)}
-            action={<PartnerAction />}
-          />
-        ))
+        <div className="h-full overflow-auto no-scrollbar">
+          {filteredSchools.map((school, i) => (
+            <Listing
+              item={school}
+              key={i}
+              br={i !== filteredSchools.length - 1}
+              onClick={() => onSchoolClick(school.id)}
+              action={<PartnerAction />}
+            />
+          ))}
+        </div>
       ) : (
         <NoJobs
           message1={"No Schools have verified you yet!"}

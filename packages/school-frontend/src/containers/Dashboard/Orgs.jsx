@@ -63,9 +63,8 @@ function Orgs({ tab, orgs, updateOrgSchool }) {
       : tab === "Pending"
       ? orgs.filter((org) => org.status === "")
       : orgs.filter((org) => org.status === "rejected");
-  // const filteredOrgs = orgs.filter((org) => org.verified === false);
   return (
-    <div className="bg-white rounded-xl shadow-md flex flex-col p-2 w-full flex-grow pt-8 overflow-auto">
+    <div className="bg-white rounded-xl flex flex-col p-2 w-full flex-grow pt-8 overflow-auto">
       {filteredOrgs.length !== 0 ? (
         filteredOrgs.map((org, i) => (
           <Listing

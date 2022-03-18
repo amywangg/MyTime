@@ -1,1 +1,15 @@
-export const interests = ["Animals", "Computers", "Community", "Recreation"];
+export const interests = [
+  "teamwork",
+  "problem solving",
+  "creativity",
+  "negotiation",
+  "construction",
+  "customer service",
+  "communications",
+  "creativity",
+  "building & construction",
+  "human services",
+  "legal & advocacy",
+  "leadership",
+  "listening",
+];

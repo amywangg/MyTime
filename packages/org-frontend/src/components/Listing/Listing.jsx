@@ -3,9 +3,8 @@ import React, { useState } from "react";
 function Listing({ item, action, br, index, onClick, props }) {
   return (
     <div
-      className={`flex h-16 mb-2 p-2 bg-ghost rounded-md ${
-        br && "border-b-[1px] border-gray-600"
-      } hover:bg-gray-400 hover:bg-opacity-20`}
+      className={`flex h-16 mb-2 p-2 bg-ghost rounded-md 
+       hover:bg-gray-400 hover:bg-opacity-20`}
     >
       {item.image ? (
         <img className="w-12 h-12 rounded-md" src={item.image} alt="org_img" />

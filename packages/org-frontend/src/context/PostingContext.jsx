@@ -8,19 +8,39 @@ export const PostingContext = createContext();
 
 export const PostingContextProvider = ({ children }) => {
   const [postings, setPostings] = useState([]);
+  const [completePostings, setCompletePostings] = useState([]);
+  const [closedPostings, setClosedPostings] = useState([]);
   const [error, setError] = useState(null);
   const [postingLoading, setPostingLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const getPostingsAction = () => {
+    getPostings().then((res) => {
+      setPostings(
+        res.filter((post) => {
+          return new Date(post.date) >= new Date() ? true : false;
+        })
+      );
+      setCompletePostings(
+        res.filter((post) => {
+          return new Date(post.date) < new Date() && post.status !== "closed"
+            ? true
+            : false;
+        })
+      );
+      setClosedPostings(res.filter((post) => post.status === "closed"));
+      setPostingLoading(false);
+    });
+  };
 
   useEffect(() => {
     const path = window.location.pathname;
-    if (path === "/" || path.includes("postings")) {
-      console.log("here");
+    if (
+      path === "/" ||
+      path.includes("postings") ||
+      path.includes("schedule")
+    ) {
       setPostingLoading(true);
-      getPostings().then((res) => {
-        setPostings(res);
-        setPostingLoading(false);
-      });
+      getPostingsAction();
     }
   }, []);
 
@@ -48,18 +68,45 @@ export const PostingContextProvider = ({ children }) => {
       });
   };
 
-  const updatePosting = async (posting) => {
+  const updatePosting = async (posting, updateTimeslots) => {
     return await api
-      .post("postings/update", posting)
+      .post("postings/update", { posting, updateTimeslots })
       .then((res) => {
         return res.data;
       })
       .then(() => {
         setPostingLoading(true);
-        getPostings().then((res) => {
-          setPostings(res);
-          setPostingLoading(false);
-        });
+        getPostingsAction();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const updateStatus = async (student_job_id, status) => {
+    return await api
+      .post("postings/applicant/update", { student_job_id, status })
+      .then((res) => {
+        return res.data;
+      })
+      .then(() => {
+        setPostingLoading(true);
+        getPostingsAction();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const closePosting = async (posting_id) => {
+    return await api
+      .post("postings/close", { posting_id })
+      .then((res) => {
+        return res.data;
+      })
+      .then(() => {
+        setPostingLoading(true);
+        getPostingsAction();
       })
       .catch((error) => {
         console.log(error);
@@ -67,12 +114,16 @@ export const PostingContextProvider = ({ children }) => {
   };
 
   const stateValues = {
+    closedPostings,
     postings,
+    completePostings,
     setPostings,
     getPostings,
     createPosting,
     setPostingLoading,
+    closePosting,
     updatePosting,
+    updateStatus,
     postingLoading,
     error,
   };

@@ -72,7 +72,7 @@ function Profile() {
                 {currentUser !== undefined && currentUser?.name}
               </p>
               <p className="text-sm font-semibold text-gray-500">
-                {currentUser !== undefined && currentUser?.location}
+                {currentUser !== undefined && currentUser?.location}, ON
               </p>
             </div>
           </div>
@@ -123,7 +123,7 @@ function Profile() {
                     profile?.website ? profile.website : currentUser?.website
                   }
                   onChange={(e) => handleEdit("website", e.target.value)}
-                  className="border-none px-3 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
+                  className="overflow-hidden border-none px-3 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
                 />
               </div>
             </div>

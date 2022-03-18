@@ -17,7 +17,6 @@ export const SchoolContextProvider = ({ children }) => {
   useEffect(() => {
     const path = window.location.pathname;
     if (path === "/" || path.includes("school")) {
-      console.log(currentUser);
       if (currentUser !== undefined) {
         setSchoolLoading(true);
         getSchools().then((res) => {

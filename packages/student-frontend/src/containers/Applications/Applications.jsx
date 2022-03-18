@@ -13,7 +13,6 @@ function Application() {
   const [sortBy, setSortBy] = useState(null);
   const [tab, setTab] = useState("Applied");
   const navigate = useNavigate();
-  const { currentUser } = useContext(AuthContext);
   const { postings, postingLoading, updateSave } = useContext(PostingContext);
 
   useEffect(() => {
@@ -22,12 +21,12 @@ function Application() {
       searchResults = postings.filter((post) =>
         post.timeslots.some(
           (time) =>
-            time.student_status.status !== "" && time.student_status?.status
+            time.student_status?.status !== "" && time.student_status?.status
         )
       );
     } else {
       searchResults = postings.filter((post) =>
-        post.timeslots.some((time) => time.student_status.saved === "true")
+        post.timeslots.some((time) => time?.student_status?.saved === "true")
       );
     }
 
@@ -79,11 +78,15 @@ function Application() {
 
   const StatusAction = ({ timeslots }) => {
     let status = "applied";
-    timeslots.map((x) => {
-      if (x.student_status?.status === "selected") {
+    for (var i = 0; i < timeslots.length; i++) {
+      if (timeslots[i].student_status?.status === "rejected") {
+        status = "rejected";
+        break;
+      } else if (timeslots[i].student_status?.status === "selected") {
         status = "selected";
+        break;
       }
-    });
+    }
     return (
       <div className="flex flex-col justify-center items-middle h-full mr-4">
         {status === "applied" ? (
@@ -98,7 +101,7 @@ function Application() {
   };
 
   return (
-    <Page title="My Application">
+    <Page title="My Applications">
       <div className="relative bg-white rounded-xl shadow-md flex flex-col p-6 w-full min-h-0 flex-grow">
         <div className="flex justify-between">
           <Tabs tab={tab} tabs={["Applied", "Saved"]} setTab={setTab} />
@@ -118,7 +121,7 @@ function Application() {
         </div>
 
         <p className="text-xs text-subText mt-1">
-          Based on your interests we've compiled postings
+          Here are your applied postings that are currently active
         </p>
         {postingLoading || !filteredPostings ? (
           <div className="w-full h-full flex justify-center items-center">
@@ -127,7 +130,7 @@ function Application() {
         ) : filteredPostings.length > 0 ? (
           <div className="h-[90%] overflow-auto mt-5">
             <div className="flex flex-col">
-              {filteredPostings.map((post, index) => (
+              {filteredPostings.map((post) => (
                 <Posting
                   key={post.title}
                   item={post}

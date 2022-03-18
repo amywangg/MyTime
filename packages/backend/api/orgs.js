@@ -37,6 +37,9 @@ router.post("/login", async (req, res, next) => {
         org: {
           id: org.id,
           email: org.email,
+          description: org.description,
+          phone_number: org.phone_number,
+          website: org.website,
           name: org.name,
           image: org.image,
           location: org.location,
@@ -144,7 +147,25 @@ router.post("/postings/create", (req, res, next) => {
 
 router.post("/postings/update", (req, res, next) => {
   postingQueries
-    .updatePosting(req.body)
+    .updatePosting(req.body.posting, req.body.updateTimeslots)
+    .then((posting) => res.sendStatus(200).send(posting))
+    .catch((error) => {
+      res.sendStatus(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings/close", (req, res, next) => {
+  postingQueries
+    .closePosting(req.body.posting_id)
+    .then((posting) => res.sendStatus(200).send(posting))
+    .catch((error) => {
+      res.sendStatus(401).send({ error: error.message });
+    });
+});
+
+router.post("/postings/applicant/update", (req, res, next) => {
+  postingQueries
+    .updateApplicantStatus(req.body.student_job_id, req.body.status)
     .then((posting) => res.sendStatus(200).send(posting))
     .catch((error) => {
       res.sendStatus(401).send({ error: error.message });

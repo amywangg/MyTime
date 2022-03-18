@@ -19,6 +19,18 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, []);
 
+  const updateProfile = async (school) => {
+    await api
+      .post("profile/update", school)
+      .then((res) => {
+        setAuthLoading(true);
+        TokenService.setUser(res.data);
+        setCurrentUser(res.data);
+        setAuthLoading(false);
+      })
+      .catch((err) => setError("Invalid Fields"));
+  };
+
   const checkLogin = async () => {
     setAuthLoading(true);
     const token = TokenService.getLocalAccessToken();
@@ -58,6 +70,8 @@ export const AuthContextProvider = ({ children }) => {
         const school = {
           id: res.data.id,
           location: res.data.location,
+          description: res.data.description,
+          image: res.data.image,
           name: res.data.name,
           email: res.data.email,
         };
@@ -80,6 +94,7 @@ export const AuthContextProvider = ({ children }) => {
     currentUser,
     setCurrentUser,
     checkLogin,
+    updateProfile,
     setAuthLoading,
     authLoading,
     handleLogout,

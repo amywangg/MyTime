@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import Page from "../../components/Page";
 import { AuthContext } from "../../context/AuthContext";
 import plus from "../../assets/plus.png";
@@ -6,6 +6,62 @@ import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading";
 import Toast from "../../components/Toast";
 import { interests } from "./interests";
+import Select from "react-select";
+
+const Menu = React.forwardRef(({ options, setSkills, skills }, ref) => (
+  <ul
+    ref={ref}
+    className="h-48 overflow-auto dropdown-menu min-w-max bottom-[10px] left-[70px] absolute bg-white text-base z-50 float-right py-2 list-none text-left rounded-lg shadow-lg border-none"
+  >
+    {options.map((option) => (
+      <li key={option}>
+        <button
+          className="
+              dropdown-item
+              text-xs
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+          onClick={() => setSkills([...skills, option])}
+        >
+          {option}
+        </button>
+      </li>
+    ))}
+  </ul>
+));
+
+const Chip = ({ label, onClick, props }) => (
+  <span className="h-5 px-[6px] pl-[10px] py-[2px] mr-1 mt-2 rounded-full text-xs text-gray-600 bg-nav flex align-center w-max cursor-pointer transition duration-300 ease">
+    {label}
+    <button
+      onClick={onClick}
+      className="bg-transparent hover focus:outline-none"
+    >
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        data-prefix="fas"
+        data-icon="times"
+        className="w-2 ml-2"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 352 512"
+      >
+        <path
+          fill="currentColor"
+          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+        ></path>
+      </svg>
+    </button>
+  </span>
+);
 
 function Profile() {
   const [profile, setProfile] = useState({
@@ -17,14 +73,23 @@ function Profile() {
     school_id: null,
     description: "",
   });
+  const [showMenu, setShowMenu] = useState(false);
   const [schools, setSchools] = useState(null);
   const [message, setMessage] = useState(null);
+  const [skills, setSkills] = useState([]);
+  const ref = useRef(null);
   const { currentUser, authLoading, getSchools, updateUser } =
     useContext(AuthContext);
+
+  useOnClickOutside(ref, () => setShowMenu(false));
 
   useEffect(() => {
     getSchools().then((res) => setSchools(res.data));
   }, []);
+
+  useEffect(() => {
+    setSkills(currentUser?.skills.split(", "));
+  }, [authLoading]);
 
   const handleEdit = (field, text) => {
     setProfile((prevState) => ({
@@ -43,7 +108,7 @@ function Profile() {
       school: profile.school || currentUser?.school,
       school_id: profile.school_id || currentUser?.school_id,
       description: profile.description || currentUser?.description,
-      skills: profile.skills || currentUser?.skills,
+      skills: skills.length > 0 ? skills.join(", ") : currentUser?.skills,
     });
     setTimeout(() => {
       setMessage(null);
@@ -189,18 +254,33 @@ function Profile() {
                   value={
                     profile?.description
                       ? profile.description
-                      : currentUser?.description || ""
+                      : currentUser?.description
                   }
                   placeholder="Add a description about you"
                   onChange={(e) => handleEdit("description", e.target.value)}
                 />
               </div>
-              <div className="mt-3">
+              <div className="mt-3 flex flex-col">
                 <p className="font-semibold text-l text-primary ml-4">
                   Interests
                 </p>
-                <div className="flex text-xs mt-4 text-gray-400">
-                  <button className="flex">
+
+                <div className="mt-2 ml-3 flex flex-wrap overflow-auto">
+                  {skills?.map((skill, index) => (
+                    <Chip
+                      key={index + "-chip"}
+                      label={skill}
+                      onClick={() =>
+                        setSkills(skills.filter((_skill, i) => i !== index))
+                      }
+                    />
+                  ))}
+                </div>
+                <div className="relative inline-block">
+                  <button
+                    onClick={() => setShowMenu(true)}
+                    className="flex rounded-full px-[6px] py-[2px] text-xs mt-2 text-gray-400 hover:bg-gray-200"
+                  >
                     <img
                       className="h-3 mt-[2px] mr-[2px]"
                       src={plus}
@@ -208,6 +288,15 @@ function Profile() {
                     />
                     add interest
                   </button>
+                  {showMenu && (
+                    <Menu
+                      ref={ref}
+                      setShowMenu={setShowMenu}
+                      setSkills={setSkills}
+                      skills={skills}
+                      options={interests.filter((x) => !skills.includes(x))}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -232,3 +321,20 @@ function Profile() {
 Profile.propTypes = {};
 
 export default Profile;
+
+export function useOnClickOutside(ref, handler) {
+  useEffect(() => {
+    const listener = (event) => {
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event);
+    };
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+}

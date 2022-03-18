@@ -14,10 +14,10 @@ export default function Modal({ title, content, setShowModal }) {
             </div>
             {/*body*/}
             <div className="relative p-6 flex-auto">
-              <p className="text-blueGray-500 leading-relaxed text-xs">
-                <p className="text-lg font-semibold" dir="ltr">
+              <div className="text-blueGray-500 leading-relaxed text-xs">
+                <div className="text-lg font-semibold" dir="ltr">
                   <span>MyTime&rsquo;s Privacy Policy</span>
-                </p>
+                </div>
                 <p dir="ltr">
                   <span>Last updated: March 15, 2022</span>
                 </p>
@@ -62,122 +62,107 @@ export default function Modal({ title, content, setShowModal }) {
                 <p dir="ltr">
                   <span>For the purposes of this Privacy Policy:</span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Account</span>
-                      <span>
-                        {" "}
-                        means a unique account created for You to access our
-                        Service or parts of our Service.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Affiliate</span>
-                      <span>
-                        {" "}
-                        means an entity that controls, is controlled by or is
-                        under common control with a party, where "control" means
-                        ownership of 50% or more of the shares, equity interest
-                        or other securities entitled to vote for election of
-                        directors or other managing authority.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Application</span>
-                      <span>
-                        {" "}
-                        means the software program provided by the Company
-                        downloaded by You on any electronic device, named MyTime
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Company</span>
-                      <span>
-                        {" "}
-                        (referred to as either "the Company", "We", "Us" or
-                        "Our" in this Agreement) refers to MyTime.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Country</span>
-                      <span> refers to: Ontario, Canada</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Device</span>
-                      <span>
-                        {" "}
-                        means any device that can access the Service such as a
-                        computer, a cellphone or a digital tablet.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Personal Data</span>
-                      <span>
-                        {" "}
-                        is any information that relates to an identified or
-                        identifiable individual.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Service</span>
-                      <span> refers to the Application.</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Service Provider</span>
-                      <span>
-                        {" "}
-                        means any natural or legal person who processes the data
-                        on behalf of the Company. It refers to third-party
-                        companies or individuals employed by the Company to
-                        facilitate the Service, to provide the Service on behalf
-                        of the Company, to perform services related to the
-                        Service or to assist the Company in analyzing how the
-                        Service is used.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Usage Data</span>
-                      <span>
-                        {" "}
-                        refers to data collected automatically, either generated
-                        by the use of the Service or from the Service
-                        infrastructure itself (for example, the duration of a
-                        page visit).
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>You</span>
-                      <span>
-                        {" "}
-                        means the individual accessing or using the Service, or
-                        the company, or other legal entity on behalf of which
-                        such individual is accessing or using the Service, as
-                        applicable.
-                      </span>
-                    </p>
-                  </li>
-                </ul>
+
+                <p dir="ltr">
+                  <span>Account</span>
+                  <span>
+                    {" "}
+                    means a unique account created for You to access our Service
+                    or parts of our Service.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Affiliate</span>
+                  <span>
+                    {" "}
+                    means an entity that controls, is controlled by or is under
+                    common control with a party, where "control" means ownership
+                    of 50% or more of the shares, equity interest or other
+                    securities entitled to vote for election of directors or
+                    other managing authority.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Application</span>
+                  <span>
+                    {" "}
+                    means the software program provided by the Company
+                    downloaded by You on any electronic device, named MyTime
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Company</span>
+                  <span>
+                    {" "}
+                    (referred to as either "the Company", "We", "Us" or "Our" in
+                    this Agreement) refers to MyTime.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Country</span>
+                  <span> refers to: Ontario, Canada</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Device</span>
+                  <span>
+                    {" "}
+                    means any device that can access the Service such as a
+                    computer, a cellphone or a digital tablet.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Personal Data</span>
+                  <span>
+                    {" "}
+                    is any information that relates to an identified or
+                    identifiable individual.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Service</span>
+                  <span> refers to the Application.</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Service Provider</span>
+                  <span>
+                    {" "}
+                    means any natural or legal person who processes the data on
+                    behalf of the Company. It refers to third-party companies or
+                    individuals employed by the Company to facilitate the
+                    Service, to provide the Service on behalf of the Company, to
+                    perform services related to the Service or to assist the
+                    Company in analyzing how the Service is used.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Usage Data</span>
+                  <span>
+                    {" "}
+                    refers to data collected automatically, either generated by
+                    the use of the Service or from the Service infrastructure
+                    itself (for example, the duration of a page visit).
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>You</span>
+                  <span>
+                    {" "}
+                    means the individual accessing or using the Service, or the
+                    company, or other legal entity on behalf of which such
+                    individual is accessing or using the Service, as applicable.
+                  </span>
+                </p>
+
                 <p className="text-lg font-semibold" dir="ltr">
                   <span>Collecting and Using Your Personal Data</span>
                 </p>
@@ -195,35 +180,27 @@ export default function Modal({ title, content, setShowModal }) {
                     information may include, but is not limited to:
                   </span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Email address</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>First name and last name</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Phone number</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>
-                        Address, State, Province, ZIP/Postal code, City
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Usage Data</span>
-                    </p>
-                  </li>
-                </ul>
+
+                <p dir="ltr">
+                  <span>Email address</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>First name and last name</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Phone number</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Address, State, Province, ZIP/Postal code, City</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Usage Data</span>
+                </p>
+
                 <p className="text-md font-semibold" dir="ltr">
                   <span>Usage Data</span>
                 </p>
@@ -269,13 +246,11 @@ export default function Modal({ title, content, setShowModal }) {
                     Our Application, We may collect, with Your prior permission:
                   </span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Information regarding your location</span>
-                    </p>
-                  </li>
-                </ul>
+
+                <p dir="ltr">
+                  <span>Information regarding your location</span>
+                </p>
+
                 <p dir="ltr">
                   <span>
                     We use this information to provide features of Our Service,
@@ -299,177 +274,155 @@ export default function Modal({ title, content, setShowModal }) {
                     purposes:
                   </span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>To provide and maintain our Service</span>
-                      <span>
-                        , including to monitor the usage of our Service.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>To manage Your Account:</span>
-                      <span>
-                        {" "}
-                        to manage Your registration as a user of the Service.
-                        The Personal Data You provide can give You access to
-                        different functionalities of the Service that are
-                        available to You as a registered user.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>For the performance of a contract:</span>
-                      <span>
-                        {" "}
-                        the development, compliance and undertaking of the
-                        purchase contract for the products, items or services
-                        You have purchased or of any other contract with Us
-                        through the Service.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>To contact You:</span>
-                      <span>
-                        {" "}
-                        To contact You by email, telephone calls, SMS, or other
-                        equivalent forms of electronic communication, such as a
-                        mobile application's push notifications regarding
-                        updates or informative communications related to the
-                        functionalities, products or contracted services,
-                        including the security updates, when necessary or
-                        reasonable for their implementation.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>To provide You</span>
-                      <span>
-                        {" "}
-                        with news, special offers and general information about
-                        other goods, services and events which we offer that are
-                        similar to those that you have already purchased or
-                        enquired about unless You have opted not to receive such
-                        information.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>To manage Your requests:</span>
-                      <span> To attend and manage Your requests to Us.</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>For business transfers:</span>
-                      <span>
-                        {" "}
-                        We may use Your information to evaluate or conduct a
-                        merger, divestiture, restructuring, reorganization,
-                        dissolution, or other sale or transfer of some or all of
-                        Our assets, whether as a going concern or as part of
-                        bankruptcy, liquidation, or similar proceeding, in which
-                        Personal Data held by Us about our Service users is
-                        among the assets transferred.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>For other purposes</span>
-                      <span>
-                        : We may use Your information for other purposes, such
-                        as data analysis, identifying usage trends, determining
-                        the effectiveness of our promotional campaigns and to
-                        evaluate and improve our Service, products, services,
-                        marketing and your experience.
-                      </span>
-                    </p>
-                  </li>
-                </ul>
+
+                <p dir="ltr">
+                  <span>To provide and maintain our Service</span>
+                  <span>, including to monitor the usage of our Service.</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>To manage Your Account:</span>
+                  <span>
+                    {" "}
+                    to manage Your registration as a user of the Service. The
+                    Personal Data You provide can give You access to different
+                    functionalities of the Service that are available to You as
+                    a registered user.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>For the performance of a contract:</span>
+                  <span>
+                    {" "}
+                    the development, compliance and undertaking of the purchase
+                    contract for the products, items or services You have
+                    purchased or of any other contract with Us through the
+                    Service.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>To contact You:</span>
+                  <span>
+                    {" "}
+                    To contact You by email, telephone calls, SMS, or other
+                    equivalent forms of electronic communication, such as a
+                    mobile application's push notifications regarding updates or
+                    informative communications related to the functionalities,
+                    products or contracted services, including the security
+                    updates, when necessary or reasonable for their
+                    implementation.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>To provide You</span>
+                  <span>
+                    {" "}
+                    with news, special offers and general information about
+                    other goods, services and events which we offer that are
+                    similar to those that you have already purchased or enquired
+                    about unless You have opted not to receive such information.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>To manage Your requests:</span>
+                  <span> To attend and manage Your requests to Us.</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>For business transfers:</span>
+                  <span>
+                    {" "}
+                    We may use Your information to evaluate or conduct a merger,
+                    divestiture, restructuring, reorganization, dissolution, or
+                    other sale or transfer of some or all of Our assets, whether
+                    as a going concern or as part of bankruptcy, liquidation, or
+                    similar proceeding, in which Personal Data held by Us about
+                    our Service users is among the assets transferred.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>For other purposes</span>
+                  <span>
+                    : We may use Your information for other purposes, such as
+                    data analysis, identifying usage trends, determining the
+                    effectiveness of our promotional campaigns and to evaluate
+                    and improve our Service, products, services, marketing and
+                    your experience.
+                  </span>
+                </p>
+
                 <p dir="ltr">
                   <span>
                     We may share Your personal information in the following
                     situations:
                   </span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>With Service Providers:</span>
-                      <span>
-                        {" "}
-                        We may share Your personal information with Service
-                        Providers to monitor and analyze the use of our Service,
-                        to contact You.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>For business transfers:</span>
-                      <span>
-                        {" "}
-                        We may share or transfer Your personal information in
-                        connection with, or during negotiations of, any merger,
-                        sale of Company assets, financing, or acquisition of all
-                        or a portion of Our business to another company.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>With Affiliates:</span>
-                      <span>
-                        {" "}
-                        We may share Your information with Our affiliates, in
-                        which case we will require those affiliates to honor
-                        this Privacy Policy. Affiliates include Our parent
-                        company and any other subsidiaries, joint venture
-                        partners or other companies that We control or that are
-                        under common control with Us.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>With business partners:</span>
-                      <span>
-                        {" "}
-                        We may share Your information with Our business partners
-                        to offer You certain products, services or promotions.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>With other users:</span>
-                      <span>
-                        {" "}
-                        when You share personal information or otherwise
-                        interact in the public areas with other users, such
-                        information may be viewed by all users and may be
-                        publicly distributed outside.
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>With Your consent</span>
-                      <span>
-                        : We may disclose Your personal information for any
-                        other purpose with Your consent.
-                      </span>
-                    </p>
-                  </li>
-                </ul>
+
+                <p dir="ltr">
+                  <span>With Service Providers:</span>
+                  <span>
+                    {" "}
+                    We may share Your personal information with Service
+                    Providers to monitor and analyze the use of our Service, to
+                    contact You.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>For business transfers:</span>
+                  <span>
+                    {" "}
+                    We may share or transfer Your personal information in
+                    connection with, or during negotiations of, any merger, sale
+                    of Company assets, financing, or acquisition of all or a
+                    portion of Our business to another company.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>With Affiliates:</span>
+                  <span>
+                    {" "}
+                    We may share Your information with Our affiliates, in which
+                    case we will require those affiliates to honor this Privacy
+                    Policy. Affiliates include Our parent company and any other
+                    subsidiaries, joint venture partners or other companies that
+                    We control or that are under common control with Us.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>With business partners:</span>
+                  <span>
+                    {" "}
+                    We may share Your information with Our business partners to
+                    offer You certain products, services or promotions.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>With other users:</span>
+                  <span>
+                    {" "}
+                    when You share personal information or otherwise interact in
+                    the public areas with other users, such information may be
+                    viewed by all users and may be publicly distributed outside.
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>With Your consent</span>
+                  <span>
+                    : We may disclose Your personal information for any other
+                    purpose with Your consent.
+                  </span>
+                </p>
+
                 <p className="font-bold text-md" dir="ltr">
                   <span>Retention of Your Personal Data</span>
                 </p>
@@ -560,41 +513,35 @@ export default function Modal({ title, content, setShowModal }) {
                     faith belief that such action is necessary to:
                   </span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Comply with a legal obligation</span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>
-                        Protect and defend the rights or property of the Company
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>
-                        Prevent or investigate possible wrongdoing in connection
-                        with the Service
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>
-                        Protect the personal safety of Users of the Service or
-                        the public
-                      </span>
-                    </p>
-                  </li>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>Protect against legal liability</span>
-                    </p>
-                  </li>
-                </ul>
+
+                <p dir="ltr">
+                  <span>Comply with a legal obligation</span>
+                </p>
+
+                <p dir="ltr">
+                  <span>
+                    Protect and defend the rights or property of the Company
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>
+                    Prevent or investigate possible wrongdoing in connection
+                    with the Service
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>
+                    Protect the personal safety of Users of the Service or the
+                    public
+                  </span>
+                </p>
+
+                <p dir="ltr">
+                  <span>Protect against legal liability</span>
+                </p>
+
                 <p className="font-bold text-md" dir="ltr">
                   <span>Security of Your Personal Data</span>
                 </p>
@@ -682,14 +629,11 @@ export default function Modal({ title, content, setShowModal }) {
                     contact us:
                   </span>
                 </p>
-                <ul>
-                  <li dir="ltr">
-                    <p dir="ltr">
-                      <span>By email: mytime@gmail.com</span>
-                    </p>
-                  </li>
-                </ul>
-              </p>
+
+                <p dir="ltr">
+                  <span>By email: mytime@gmail.com</span>
+                </p>
+              </div>
             </div>
             {/*footer*/}
             <div className="flex items-center justify-end p-4 border-t border-solid border-blueGray-200 rounded-b">

@@ -9,13 +9,23 @@ export const PostingContext = createContext();
 export const PostingContextProvider = ({ children }) => {
   const location = useLocation();
   const [postings, setPostings] = useState([]);
+  const [completePostings, setCompletePostings] = useState([]);
   const [error, setError] = useState(null);
   const [postingLoading, setPostingLoading] = useState(false);
 
   useEffect(() => {
     setPostingLoading(true);
     getPostings().then((res) => {
-      setPostings(res);
+      setPostings(
+        res.filter((post) => {
+          return new Date(post.date) >= new Date() ? true : false;
+        })
+      );
+      setCompletePostings(
+        res.filter((post) => {
+          return new Date(post.date) < new Date() ? true : false;
+        })
+      );
       setPostingLoading(false);
     });
   }, []);
@@ -63,6 +73,7 @@ export const PostingContextProvider = ({ children }) => {
 
   const stateValues = {
     postings,
+    completePostings,
     setPostings,
     getPostings,
     setPostingLoading,

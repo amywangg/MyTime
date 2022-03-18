@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../components/Page";
-import mail from "../../assets/mail.png";
-import location from "../../assets/location.png";
+import { useParams, useNavigate } from "react-router-dom";
+import { SchoolContext } from "../../context/SchoolContext";
 import Loading from "../../components/Loading";
 import NoJobs from "../../components/NoJobs";
-import { SchoolContext } from "../../context/SchoolContext";
 
-function SchoolProfile({ props }) {
+function SchoolProfile() {
   const [school, setSchool] = useState();
   const { schools, schoolLoading } = useContext(SchoolContext);
   let { id } = useParams();
@@ -23,69 +21,82 @@ function SchoolProfile({ props }) {
     <Page>
       <div>
         <button
-          className="text-sm font-semibold text-gray-700"
-          onClick={() => navigate("/")}
+          className="absolute right-10 text-sm font-semibold text-gray-700"
+          onClick={() => navigate(-1)}
         >
           {"< "}Go back
         </button>
       </div>
-      <div className="relative bg-white rounded-xl shadow-md flex flex-col p-8 mt-20 w-full flex-grow">
+      <div className="relative bg-white rounded-xl shadow-md p-8 mt-8 w-full h-full min-h-0">
         {schoolLoading ? (
-          <div className="w-full h-full flex justify-center items-center">
-            <Loading />
-          </div>
+          <Loading />
         ) : (
-          <div className="w-full h-full flex-grow flex flex-col">
+          <div className="flex">
             {school?.image ? (
               <img
-                className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full uppercase border-4 border-white bg-white"
+                className="z-10 mr-2 w-20 h-20 relative flex shadow-md justify-center items-center rounded-full "
                 src={school?.image}
                 alt="avatar"
               />
             ) : (
-              <div className="mt-[-5rem] z-10 mr-2 w-28 h-28 relative flex justify-center items-center rounded-full bg-primary text-xl text-white uppercase border-4 border-white">
+              <div className="z-10 mr-2 w-20 h-20 relative flex shadow-md justify-center items-center rounded-full bg-primary text-xl text-white uppercase">
                 {school !== undefined && school?.name[0] + school?.name[1]}
               </div>
             )}
-            <div className="mt-3">
-              <p className="text-2xl font-medium">
+
+            <div className="mt-3 ml-4">
+              <p className="text-xl font-semibold">
                 {school !== undefined && school?.name}
               </p>
-            </div>
-            <div className="flex w-[300px] mt-3">
-              <img
-                className="h-[20px] flex-none mr-3 pt-1"
-                src={mail}
-                alt="email"
-              />
-              <p className="flex-grow mt-1">
-                {school !== undefined && school?.email}
+              <p className="text-sm font-semibold text-gray-500">
+                {school !== undefined && school?.location}, ON
               </p>
             </div>
-            {/* location */}
-            <div className="flex w-[300px]">
-              <img
-                className="h-[20px] flex-none mr-3 pt-1 mt-2"
-                src={location}
-                alt="location"
-              />
-              <p className="flex-grow mt-2">
-                {school !== undefined && school?.location + ", ON"}
-              </p>
-            </div>
-            <div className="flex-grow overflow-auto no-scrollbar items-center justify-center">
-              {school?.description ? (
-                <p>
-                  {school?.description
-                    ? school.description
-                    : school !== undefined && school?.description}
+          </div>
+        )}
+        {schoolLoading ? (
+          <Loading />
+        ) : (
+          <div>
+            <div className="flex mt-6">
+              <div className="w-1/2 px-4">
+                <p className="text-xs font-semibold ml-2 mb-1">Location</p>
+                <p className="border-none pl-3 pr-10 p-0 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm">
+                  {school?.location}
                 </p>
-              ) : (
-                <NoJobs
-                  message1="This school hasn't put a description"
-                  message2="Send an email to find out more"
-                />
-              )}
+              </div>
+              <div className="w-1/2 px-4" />
+            </div>
+            <div className="flex mt-3">
+              <div className="w-1/2 px-4">
+                <p className="text-xs font-semibold ml-2 mb-1">E-mail</p>
+                <p className="border-none pl-3 pr-10 p-0 outline-none ring-0 bg-ghost flex-grow appearance-none h-6 relative focus:ring-primary focus:border-primary focus:z-10 block w-full border  placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm">
+                  {school?.email}
+                </p>
+              </div>
+              <div className="w-1/2 px-4" />
+            </div>
+
+            <div className="flex flex-col mt-3">
+              <div className="w-full px-4">
+                <p className="text-xs font-semibold ml-2 my-1">Description</p>
+                <div className="flex-grow overflow-auto no-scrollbar items-center justify-center">
+                  {school?.description ? (
+                    <textarea
+                      className="h-[100%] border-0 text-md flex-grow mb-4 resize-none overflow-auto block mt-2 w-full px-3 py-1.5 text-sm font-normal bg-ghost bg-clip-padding transition ease-in-out placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10"
+                      rows="12"
+                      value={school?.description || ""}
+                      placeholder="Add a description about you"
+                      disabled
+                    />
+                  ) : (
+                    <NoJobs
+                      message1="This school hasn't put a description"
+                      message2="Send an email to find out more"
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -87,6 +87,18 @@ export function App() {
           }
         />
         <Route
+          path="postings/complete/:id"
+          element={
+            <PrivateOutlet
+              Component={
+                <PostingContextProvider>
+                  <Posting complete={true} />
+                </PostingContextProvider>
+              }
+            />
+          }
+        />
+        <Route
           path="browse/search/:params"
           element={
             <PrivateOutlet

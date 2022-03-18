@@ -3,18 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../components/Page";
 import { AuthContext } from "../../context/AuthContext";
 import Loading from "../../components/Loading";
-import Toast from "../../components/Toast";
 import { weekday, month, getHours } from "./dates";
 import { PostingContext } from "../../context/PostingContext";
-import NoJobs from "../../components/NoJobs";
 
-function Posting({}) {
+function ClosedPosting() {
   const [posting, setPosting] = useState();
   const [postDate, setPostDate] = useState();
   const [timeslots, setTimeslots] = useState();
-  const [update, setUpdate] = useState(false);
-  const [message, setMessage] = useState(null);
-  const { postings, postingLoading, updateSave, updateStatus } =
+  const { closedPostings, postingLoading, updateStatus } =
     useContext(PostingContext);
   const { currentUser } = useContext(AuthContext);
 
@@ -23,38 +19,29 @@ function Posting({}) {
 
   useEffect(() => {
     if (!postingLoading) {
-      setTimeslots(
-        postings
-          .filter((post) => post.id === parseInt(id))[0]
-          ?.timeslots.map((x, index) => {
-            if (index === 0) {
-              return { ...x, selected: true };
-            }
-            return { ...x, selected: false };
-          })
-      );
+      const signTimeslots = [];
+      let first = true;
+      closedPostings
+        .filter((post) => post.id === parseInt(id))[0]
+        ?.timeslots.map((x) => {
+          if (
+            x?.applicants.some(
+              (app) => app.status === "selected" || app.status === "signed"
+            ) > 0
+          ) {
+            signTimeslots.push({ ...x, selected: first ? true : false });
+            first = false;
+          }
+        });
+      setTimeslots(signTimeslots);
       setPostDate(
-        new Date(postings.filter((post) => post.id === parseInt(id))[0]?.date)
+        new Date(
+          closedPostings.filter((post) => post.id === parseInt(id))[0]?.date
+        )
       );
-      setPosting(postings.filter((post) => post.id === parseInt(id))[0]);
+      setPosting(closedPostings.filter((post) => post.id === parseInt(id))[0]);
     }
-  }, [postingLoading]);
-
-  const onSubmit = () => {
-    const selectedTimeslots = timeslots.filter((x) => x.selected);
-    if (selectedTimeslots.length > 0) {
-      updateStatus(posting.id, timeslots);
-      setMessage("Successfully applied! Check back for updates");
-      setTimeout(() => {
-        setMessage(null);
-      }, [2000]);
-    } else {
-      setMessage("Error please select at least 1 timeslot");
-      setTimeout(() => {
-        setMessage(null);
-      }, [2000]);
-    }
-  };
+  }, [postingLoading, closedPostings]);
 
   return (
     <Page>
@@ -92,25 +79,13 @@ function Posting({}) {
                 </p>
               </div>
             </div>
-            <div className="flex">
-              <div className="flex justify-center self-center items-center mr-3">
-                <button
-                  className="absolute right-10 top-10 text-gray-600 hover:text-primary underline text-sm "
-                  onClick={() => {
-                    navigate(`/postings/${posting.id}/edit`);
-                  }}
-                >
-                  Edit
-                </button>
-              </div>
-            </div>
           </div>
         )}
         {postingLoading ? (
           <Loading />
         ) : (
           <>
-            <div className="flex flex-col min-h-0 h-[50%]">
+            <div className="flex flex-col min-h-0 h-[40%]">
               <p className="font-semibold text-l mt-6 text-primary ml-3 h-6">
                 Posting Details
               </p>
@@ -148,7 +123,7 @@ function Posting({}) {
                 Timeslots
               </p>
               <p className="font-semibold text-xs text-subText ml-3">
-                Click blocks to view applicants for each timeslot
+                Click blocks to view applicants for each timeslot to sign
               </p>
               <div className="overflow-auto flex flex-grow gap-4 mt-2 ml-3 h-full">
                 <div className="w-[50%]">
@@ -193,7 +168,7 @@ function Posting({}) {
                             Time: {start_time} - {end_time}
                           </p>
                           <p className="font-semibold text-xs ml-3">
-                            Openings: {time.openings}
+                            Participants: {time.applicants.length}
                           </p>
                           <p className="font-semibold text-xs  ml-3">
                             Number of Hours: {hours !== 0 && hours}{" "}
@@ -206,18 +181,16 @@ function Posting({}) {
                 <div className="h-full w-full flex-grow overflow-auto">
                   {timeslots &&
                   timeslots?.filter((time) => time.selected === true)[0]
-                    .applicants.length > 0 ? (
+                    ?.applicants.length > 0 ? (
                     timeslots
                       ?.filter((time) => time.selected == true)[0]
                       ?.applicants.map((applicant) => (
                         <div
                           key={applicant.email}
                           className={`${
-                            applicant.status === "applied"
-                              ? "bg-ghost"
-                              : applicant.status === "selected"
-                              ? "bg-nav"
-                              : "bg-red-200"
+                            applicant.status === "selected"
+                              ? "bg-smoke"
+                              : "bg-nav"
                           } flex justify-between rounded-md py-1 px-2 mb-2`}
                         >
                           <div>
@@ -227,71 +200,19 @@ function Posting({}) {
                             <p className="text-xs">{applicant.email}</p>
                           </div>
                           <div className="flex">
-                            {applicant.status === "applied" ? (
-                              <>
-                                <div
-                                  onClick={() =>
-                                    updateStatus(applicant.id, "rejected")
-                                  }
-                                  className="flex cursor-pointer justify-center self-center items-center rounded-full w-7 h-7 hover:bg-gray-200"
-                                >
-                                  <i className="text-red-400 fa-solid fa-circle-xmark" />
-                                </div>
-                                <div
+                            {applicant.status === "selected" ? (
+                              <div className="flex justify-center self-center items-center">
+                                <button
+                                  className="rounded-md px-2 py-1 text-xs text-white bg-yellow-200"
                                   onClick={() => {
-                                    if (
-                                      timeslots
-                                        .filter(
-                                          (time) => time.selected == true
-                                        )[0]
-                                        .applicants.filter(
-                                          (app) => app.status === "selected"
-                                        ).length >
-                                      timeslots.filter(
-                                        (time) => time.selected == true
-                                      )[0].openings
-                                    ) {
-                                      setMessage("This timeslot is full!");
-                                    } else {
-                                      updateStatus(applicant.id, "selected");
-                                    }
+                                    updateStatus(applicant.id, "signed");
                                   }}
-                                  className="flex cursor-pointer justify-center self-center items-center rounded-full w-7 h-7 hover:bg-gray-200"
                                 >
-                                  <i className="text-primary fa-solid fa-circle-check" />
-                                </div>
-                              </>
-                            ) : applicant.status === "selected" ? (
-                              <div
-                                onClick={() =>
-                                  updateStatus(applicant.id, "rejected")
-                                }
-                                className="flex cursor-pointer justify-center self-center items-center rounded-full w-7 h-7 hover:bg-gray-200"
-                              >
-                                <i className="text-red-400 fa-solid fa-circle-xmark" />
+                                  Sign
+                                </button>
                               </div>
                             ) : (
-                              <div
-                                onClick={() => {
-                                  if (
-                                    timeslots
-                                      .filter(
-                                        (time) => time.selected == true
-                                      )[0]
-                                      .applicants.filter(
-                                        (app) => app.status === "selected"
-                                      ).length >
-                                    timeslots.filter(
-                                      (time) => time.selected == true
-                                    )[0].openings
-                                  ) {
-                                    setMessage("This timeslot is full!");
-                                  } else {
-                                    updateStatus(applicant.id, "selected");
-                                  }
-                                }}
-                                className="flex cursor-pointer justify-center self-center items-center rounded-full w-7 h-7 hover:bg-gray-200"
-                              >
+                              <div className="flex  justify-center self-center items-center rounded-full w-7 h-7">
                                 <i className="text-gray-600 fa-solid fa-circle-check" />
                               </div>
                             )}
@@ -315,6 +236,6 @@ function Posting({}) {
   );
 }
 
-Posting.propTypes = {};
+ClosedPosting.propTypes = {};
 
-export default Posting;
+export default ClosedPosting;

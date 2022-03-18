@@ -58,6 +58,7 @@ module.exports = {
         website: body.website,
         location: body.location,
         description: body.description,
+        image: body.image,
       });
     return org;
   },

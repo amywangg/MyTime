@@ -5,7 +5,6 @@ import { PostingContext } from "../../context/PostingContext";
 import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TimePicker from "../../components/TimePicker/TimePicker";
 import AddTimeslots from "./AddTimeslots";
 import Toast from "../../components/Toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,7 +13,7 @@ import Loading from "../../components/Loading";
 function EditPosting() {
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
-  const [originalTimeslots, setOriginalTimeslots] = useState(0);
+  const [updateTimeslots, setUpdateTimeslots] = useState(false);
   const [timeslots, setTimeslots] = useState(null);
   const [startDate, setStartDate] = useState();
   const [posting, setPosting] = useState();
@@ -27,22 +26,25 @@ function EditPosting() {
     if (!postingLoading) {
       const postingObj = postings.filter((post) => post.id === parseInt(id))[0];
       const postTimeslots = postingObj?.timeslots;
-      setOriginalTimeslots(postingObj?.timeslots.length);
       setStartDate(new Date(postingObj?.date));
       setPosting(postingObj);
 
       let newTime = postTimeslots?.map((time) => {
-        var hours = time.start_time.match(/^(\d+)/)[1];
-        var minutes = time.start_time.match(/:(\d+)/)[1];
-        var ampm = time.start_time.match(/([AaPp][Mm])$/)[1];
-        time.start_time = { hours, minutes, ampm };
-        var hours = time.end_time.match(/^(\d+)/)[1];
-        var minutes = time.end_time.match(/:(\d+)/)[1];
-        var ampm = time.end_time.match(/([AaPp][Mm])$/)[1];
-        time.end_time = { hours, minutes, ampm };
+        if (!time.start_time?.hours) {
+          var hours = time.start_time.match(/^(\d+)/)[1];
+          var minutes = time.start_time.match(/:(\d+)/)[1];
+          var ampm = time.start_time.match(/([AaPp][Mm])$/)[1];
+          time.start_time = { hours, minutes, ampm };
+        }
+        if (!time.end_time?.hours) {
+          var hours = time.end_time.match(/^(\d+)/)[1];
+          var minutes = time.end_time.match(/:(\d+)/)[1];
+          var ampm = time.end_time.match(/([AaPp][Mm])$/)[1];
+          time.end_time = { hours, minutes, ampm };
+        }
+
         return time;
       });
-      console.log(newTime);
       setTimeslots(newTime);
     }
   }, [postingLoading]);
@@ -59,15 +61,17 @@ function EditPosting() {
       timeslots[0]?.openings &&
       startDate
     ) {
-      updatePosting({
-        id: posting.id,
-        title: posting.title,
-        location: posting.location,
-        description: posting.description,
-        timeslots: timeslots,
-        date: startDate,
-        original_timeslots: originalTimeslots,
-      });
+      updatePosting(
+        {
+          id: posting.id,
+          title: posting.title,
+          location: posting.location,
+          description: posting.description,
+          timeslots: timeslots,
+          date: startDate,
+        },
+        updateTimeslots
+      );
       setTimeout(() => {
         setMessage(null);
         navigate(`/postings/${id}`);
@@ -158,8 +162,15 @@ function EditPosting() {
                 placeholder="Add a description"
               />
             </div>
-            <p className="text-l font-semibold mb-2">Timeslots</p>
-            <AddTimeslots timeslots={timeslots} setTimeslots={setTimeslots} />
+            <p className="text-l font-semibold ">Timeslots</p>
+            <p className="text-xs mb-2 text-gray-500">
+              Editing timeslots will cause applicants to have to re-apply
+            </p>
+            <AddTimeslots
+              timeslots={timeslots}
+              setTimeslots={setTimeslots}
+              setUpdateTimeslots={setUpdateTimeslots}
+            />
             <div className="flex justify-end mt-2">
               <button
                 type="button"

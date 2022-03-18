@@ -1,8 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { PostingContext } from "../../context/PostingContext";
+import { useNavigate } from "react-router-dom";
 import NoJobs from "../../components/NoJobs";
+import Tabs from "../../components/Tabs/Tabs";
+import Loading from "../../components/Loading";
+import Posting from "../../components/Posting";
 
 function Jobs() {
-  const [tab, setTab] = useState("completed");
+  const [tab, setTab] = useState("Upcoming");
+  const navigate = useNavigate();
+  const [filteredPostings, setFilteredPostings] = useState([]);
+  const { postings, completePostings, postingLoading, updateSave } =
+    useContext(PostingContext);
+
+  useEffect(() => {
+    let searchResults = [];
+
+    if (tab === "Upcoming") {
+      searchResults = postings.filter((post) =>
+        post.timeslots.some((time) => time.student_status?.status == "selected")
+      );
+    } else {
+      searchResults = completePostings.filter((post) =>
+        post.timeslots.some((time) => time.student_status?.status == "selected")
+      );
+    }
+    setFilteredPostings(searchResults);
+  }, [postingLoading, postings, tab]);
 
   return (
     <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow overflow-auto">
@@ -10,46 +34,29 @@ function Jobs() {
       <p className="text-subText text-xs flex-wrap mb-4">
         Look back at all the hard work you put in
       </p>
-      <ul className="flex flex-wrap -mb-px h-16">
-        <li className="mr-2">
-          <button
-            onClick={() => setTab("completed")}
-            className={`${
-              tab === "completed"
-                ? "text-primary border-primary"
-                : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-          >
-            Completed
-          </button>
-        </li>
-        <li className="mr-2">
-          <button
-            onClick={() => setTab("pending")}
-            className={`${
-              tab === "pending"
-                ? "text-primary border-primary"
-                : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-            aria-current="page"
-          >
-            Pending
-          </button>
-        </li>
-        <li className="mr-2">
-          <button
-            onClick={() => setTab("cancelled")}
-            className={`${
-              tab === "cancelled"
-                ? "text-primary border-primary"
-                : "text-subText border-transparent"
-            } inline-block py-[2px] px-4 text-sm font-medium text-center border-b-2 hover:text-primary hover:border-primary`}
-          >
-            Cancelled
-          </button>
-        </li>
-      </ul>
-      <NoJobs />
+      <Tabs setTab={setTab} tab={tab} tabs={["Upcoming", "Completed"]} />
+      {postingLoading ? (
+        <div className="w-full h-full flex justify-center items-center">
+          <Loading />
+        </div>
+      ) : filteredPostings.length > 0 ? (
+        <div className="h-[90%] overflow-auto mt-5">
+          <div className="flex flex-col">
+            {filteredPostings.map((post) => (
+              <Posting
+                key={post.title}
+                item={post}
+                onClick={() => navigate(`../browse/postings/${post.id}`)}
+              />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <NoJobs
+          message1="No postings!"
+          message2="Go to browse to apply for a posting"
+        />
+      )}
     </div>
   );
 }

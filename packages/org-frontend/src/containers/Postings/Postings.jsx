@@ -8,29 +8,61 @@ import Posting from "../../components/Posting";
 import Loading from "../../components/Loading";
 import { AuthContext } from "../../context/AuthContext";
 
-function OpenAction({ applicants, onClick, index, appHover, setAppHover }) {
+function OpenAction({
+  applicants,
+  onClick,
+  index,
+  appHover,
+  setAppHover,
+  tab,
+}) {
   return (
-    <div className="flex mr-2 justify-center align-middle">
-      {applicants ? (
+    <div className="flex mr-4 justify-center align-middle">
+      {applicants.length > 0 ? (
         <span
           onMouseOver={() => setAppHover(index)}
           onMouseLeave={() => setAppHover(null)}
           className="relative mt-3.5 flex justify-center items-center h-5 w-5 hover:cursor-pointer text-[10px] font-semibold text-center bg-red-500 text-white rounded mr-4"
         >
-          {applicants}
+          {applicants.length}
           {appHover === index && (
             <span className="absolute rounded-md py-1 px-2 z-10 left-[-110px] bottom-0 mt-4 inline-block bg-gray-600">
-              {applicants} new applicant{applicants !== 1 && "s"}
+              {applicants.length > 0 &&
+                `${applicants.length} ${
+                  tab === "Open" ? " new applicant" : " pending action"
+                }${applicants.length !== 1 ? "s" : ""}`}
             </span>
           )}
         </span>
       ) : null}
-      <button
-        className="text-gray-600 hover:text-primary underline text-[13px] font-semibold"
-        onClick={onClick}
-      >
-        View
-      </button>
+      {tab === "Pending Action" && applicants.length === 0 ? (
+        <div>
+          <span
+            onMouseOver={() => setAppHover(index)}
+            onMouseLeave={() => setAppHover(null)}
+            className="relative flex justify-center items-center h-full"
+          >
+            {appHover === index && (
+              <span className="absolute text-white text-[10px] rounded-md py-1 px-2 z-10 left-[-120px] top-0 mt-3 inline-block bg-gray-600">
+                No pending signatures
+              </span>
+            )}
+            <button
+              className="text-gray-600 hover:text-primary underline text-[13px] font-semibold"
+              onClick={onClick}
+            >
+              Close
+            </button>
+          </span>
+        </div>
+      ) : (
+        <button
+          className="text-gray-600 hover:text-primary underline text-[13px] font-semibold"
+          onClick={onClick}
+        >
+          View
+        </button>
+      )}
     </div>
   );
 }
@@ -40,23 +72,53 @@ function Postings() {
   const [filteredPostings, setFilteredPostings] = useState([]);
   const [appHover, setAppHover] = useState(null);
   const navigate = useNavigate();
-  const { postings, updatePosting, postingLoading } =
-    useContext(PostingContext);
+  const {
+    postings,
+    closedPostings,
+    completePostings,
+    postingLoading,
+    closePosting,
+  } = useContext(PostingContext);
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (!postingLoading) {
-      const status =
-        tab === "Open" ? "open" : tab === "Pending" ? "pending" : "closed";
-      console.log(postings);
-      setFilteredPostings(
-        postings.filter((posting) => posting.status === status)
-      );
+      if (tab === "Open") {
+        setFilteredPostings(postings);
+      } else if (tab === "Pending Action") {
+        const pendingPostings = [];
+        completePostings.map((posting) => {
+          let isFound = false;
+          posting.timeslots.map((time) => {
+            if (
+              time.applicants.some(
+                (applicant) =>
+                  applicant.status === "selected" ||
+                  applicant.status === "signed"
+              ) &&
+              !isFound
+            ) {
+              isFound = true;
+              pendingPostings.push(posting);
+            }
+          });
+        });
+        setFilteredPostings(pendingPostings);
+      } else {
+        console.log(closedPostings);
+        setFilteredPostings(closedPostings);
+      }
     }
   }, [postingLoading, tab]);
 
-  const onPostingClick = (id) => {
-    navigate(`/postings/${id}`);
+  const onPostingClick = (id, close) => {
+    if (close) {
+      closePosting(id);
+    } else {
+      tab === "Open"
+        ? navigate(`/postings/${id}`)
+        : navigate(`/postings/pending/${id}`);
+    }
   };
 
   return (
@@ -78,6 +140,13 @@ function Postings() {
           setTab={setTab}
           tab={tab}
         />
+        <p className="text-xs text-gray-500 ml-2 mt-1">
+          {tab === "Open"
+            ? "Edit postings and select applicants"
+            : tab === "Pending Action"
+            ? "The posting date has passed, sign off on complete jobs"
+            : "Postings which have no tasks and are fully complete"}
+        </p>
         {postingLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
@@ -89,28 +158,41 @@ function Postings() {
           />
         ) : (
           <div className="mt-4 overflow-auto">
-            {filteredPostings.map((posting, i) => (
-              <Posting
-                item={posting}
-                org={currentUser}
-                key={i}
-                br={i !== filteredPostings.length - 1}
-                onClick={() => onPostingClick(posting.id)}
-                action={
-                  <OpenAction
-                    applicants={
-                      posting.applicants.filter(
-                        (applicant) => applicant.status === "applied"
-                      )?.length
-                    }
-                    onClick={() => onPostingClick(posting.id)}
-                    index={i}
-                    setAppHover={setAppHover}
-                    appHover={appHover}
-                  />
-                }
-              />
-            ))}
+            {filteredPostings.map((posting, i) => {
+              const notif = posting.timeslots.filter((time) =>
+                time.applicants.some(
+                  (applicant) =>
+                    applicant.status ===
+                    (tab === "Open" ? "applied" : "selected")
+                )
+              );
+              return (
+                <Posting
+                  item={posting}
+                  org={currentUser}
+                  key={i}
+                  br={i !== filteredPostings.length - 1}
+                  onClick={() => onPostingClick(posting.id)}
+                  action={
+                    <OpenAction
+                      applicants={notif}
+                      onClick={() =>
+                        onPostingClick(
+                          posting.id,
+                          tab === "Pending Action" && notif.length === 0
+                            ? true
+                            : false
+                        )
+                      }
+                      index={i}
+                      setAppHover={setAppHover}
+                      appHover={appHover}
+                      tab={tab}
+                    />
+                  }
+                />
+              );
+            })}
           </div>
         )}
       </div>

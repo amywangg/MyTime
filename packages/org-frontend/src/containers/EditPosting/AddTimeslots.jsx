@@ -2,7 +2,11 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "../../components/TimePicker/TimePicker";
 
-export default function AddTimeslots({ timeslots, setTimeslots }) {
+export default function AddTimeslots({
+  timeslots,
+  setTimeslots,
+  setUpdateTimeslots,
+}) {
   const handleOpeningChange = (value, index) => {
     if (value > 20) {
       value = 20;
@@ -12,11 +16,13 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
     item.openings = value;
     items[index] = item;
     setTimeslots(items);
+    setUpdateTimeslots(true);
   };
 
   const handleRemove = (index) => {
     const newTimeslots = timeslots.filter((time, i) => i !== index);
     setTimeslots(newTimeslots);
+    setUpdateTimeslots(true);
   };
 
   return (
@@ -33,6 +39,7 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                   required
                   time={timeslots}
                   setTime={setTimeslots}
+                  setUpdateTimeslots={setUpdateTimeslots}
                   field="start_time"
                   index={index}
                 />
@@ -41,6 +48,7 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                   required
                   time={timeslots}
                   setTime={setTimeslots}
+                  setUpdateTimeslots={setUpdateTimeslots}
                   field="end_time"
                   index={index}
                 />
@@ -73,7 +81,8 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                 {index === timeslots.length - 1 && (
                   <button
                     className="rounded-lg border-[1px] ml-4 h-[30px] border-primary text-primary px-3 text-xs py-0 hover:bg-primary hover:text-white whitespace-nowrap"
-                    onClick={() =>
+                    onClick={() => {
+                      setUpdateTimeslots(true);
                       setTimeslots([
                         ...timeslots,
                         {
@@ -89,8 +98,8 @@ export default function AddTimeslots({ timeslots, setTimeslots }) {
                           },
                           openings: "",
                         },
-                      ])
-                    }
+                      ]);
+                    }}
                   >
                     + Add Timeslot
                   </button>
