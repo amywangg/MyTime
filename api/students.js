@@ -41,6 +41,8 @@ router.post("/login", async (req, res, next) => {
           school: student.school,
           school_id: student.school_id,
           student_id: student.student_id,
+          description: student.description,
+          skills: student.skills,
           email: student.email,
           first_name: student.first_name,
           last_name: student.last_name,

@@ -53,14 +53,16 @@ async function getPdf(postings, user) {
   let totalMinutes = 0;
 
   for (var i = 0; i < postings.timeslots.length || formSpace > 4; i++) {
-    if (postings.timeslots[i].student_status.status === "signed") {
+    if (
+      postings.timeslots[i].student_status.status === "signed" ||
+      postings.timeslots[i].student_status.status === "selected"
+    ) {
       let time = getHours(
         postings.timeslots[i].start_time,
         postings.timeslots[i].end_time
       );
       totalHours += time.hours;
       totalMinutes += time.minutes;
-
       formSpace++;
       firstPage.drawText(postings.title, {
         x: 35,
@@ -98,6 +100,8 @@ async function getPdf(postings, user) {
         size: 10,
         font: helveticaFont,
       });
+    }
+    if (postings.timeslots[i].student_status.status === "signed") {
       firstPage.drawText(postings.supervisor, {
         x: width - 115,
         y: height - 250 - formSpace * 40,
