@@ -118,31 +118,6 @@ module.exports = {
     }
   },
 
-  // this returns all the info for student-job interactions
-  // missing a column here for getting hte hours from the job; consider adding a column in the jobs table
-  // should return more than one result; might need to change line 78
-  async studentJobs(student_id) {
-    try {
-      let studentJobs = await knex
-        .select(
-          "orgs.name",
-          "postings.title",
-          "orgs.website",
-          "student_job.status",
-          "jobs.start_time"
-        )
-        .from("student_job")
-        .leftJoin("postings", "postings.id", "student_job.posting_id")
-        .leftJoin("jobs", "jobs.posting_id", "postings.id")
-        .leftJoin("orgs", "orgs.id", "postings.org_id")
-        .where("student_job.student_id", student_id);
-      let student_job = studentJobs[0];
-      return student_job;
-    } catch (err) {
-      return err;
-    }
-  },
-
   async getPostings(school_id, id) {
     try {
       let getPostings = await knex
@@ -241,9 +216,6 @@ module.exports = {
     try {
       await Promise.all(
         timeslots.map(async (job) => {
-          await knex("jobs")
-            .where("posting_id", posting_id)
-            .update({ applicants: job.applicants + 1 });
           let student_job = await knex("student_job")
             .select("id")
             .where("student_id", student_id)

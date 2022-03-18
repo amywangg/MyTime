@@ -34,6 +34,8 @@ router.post("/login", async (req, res, next) => {
         access_token,
         refresh_token,
         school: {
+          image: school.image,
+          description: school.description,
           email: school.email,
           name: school.name,
           location: school.location,
@@ -97,7 +99,16 @@ router.post("/profile", verifyToken, (req, res, next) => {
       res.status(401).send({ error: error.message });
     });
 });
-
+router.post("/profile/update", verifyToken, (req, res, next) => {
+  queries
+    .updateSchool(req.body)
+    .then((user) => {
+      return res.json(user[0]);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
 router.post("/orgs", verifyToken, (req, res, next) => {
   queries
     .getOrgs(req.body.id)

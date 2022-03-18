@@ -7,7 +7,7 @@ module.exports = {
     try {
       let password_hash = await argon.hash(body.password);
       let school = await knex("schools")
-        .returning(["name", "email", "id", "location"])
+        .returning(["name", "email", "id", "location", "image", "description"])
         .insert({
           name: body.name,
           email: body.email,
@@ -60,6 +60,18 @@ module.exports = {
     } catch (err) {
       return err;
     }
+  },
+  async updateSchool(body) {
+    let org = await knex("schools")
+      .returning(["name", "email", "location", "id", "image", "description"])
+      .where({ id: body.id })
+      .update({
+        location: body.location,
+        email: body.email,
+        description: body.description,
+        image: body.image,
+      });
+    return org;
   },
 
   async getOrgs(id) {
