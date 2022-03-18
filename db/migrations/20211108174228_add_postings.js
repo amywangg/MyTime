@@ -10,6 +10,8 @@ exports.up = async function (knex) {
 
       table.string("location");
 
+      table.string("supervisor");
+
       table
         .integer("org_id")
         .unsigned()

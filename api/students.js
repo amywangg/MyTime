@@ -9,6 +9,8 @@ const {
   generateRefreshToken,
   verifyRefreshToken,
 } = require("../middleware/auth");
+const getPdf = require("./pdfgenerator");
+const fs = require("fs");
 
 router.post("/register", (req, res, next) => {
   queries
@@ -38,6 +40,7 @@ router.post("/login", async (req, res, next) => {
           id: student.id,
           school: student.school,
           school_id: student.school_id,
+          student_id: student.student_id,
           email: student.email,
           first_name: student.first_name,
           last_name: student.last_name,
@@ -194,5 +197,18 @@ router.post("/schedule", (req, res, next) => {
       res.status(401).send({ error: error.message });
     });
 });
-// still need to add in getPosting query; didn't know how to do it bc of the path (each job has its own path right)
+
+router.post("/get-pdf", (req, res, next) => {
+  getPdf(req.body.postings, req.body.user).then(() => {
+    const src = fs.createReadStream("volunteer-form-temp.pdf");
+
+    res.writeHead(200, {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": "attachment; volunteer-form-temp.pdf",
+      "Content-Transfer-Encoding": "Binary",
+    });
+    src.pipe(res);
+  });
+});
+
 module.exports = router;
