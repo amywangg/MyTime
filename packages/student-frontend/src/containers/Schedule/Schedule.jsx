@@ -75,6 +75,7 @@ function Schedule() {
         ? true
         : false;
     });
+    console.log(dates);
     setTimeslot(dates);
     setValue(nextValue);
   }

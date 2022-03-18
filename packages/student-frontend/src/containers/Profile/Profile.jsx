@@ -88,7 +88,7 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    setSkills(currentUser?.skills.split(", "));
+    setSkills(currentUser?.skills?.split(", "));
   }, [authLoading]);
 
   const handleEdit = (field, text) => {
@@ -126,7 +126,7 @@ function Profile() {
         />
       )}
       <div className="relative bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow">
-        {authLoading ? (
+        {authLoading && skills?.length > 0 ? (
           <Loading />
         ) : (
           <div className="flex">

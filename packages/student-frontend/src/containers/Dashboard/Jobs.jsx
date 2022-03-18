@@ -5,19 +5,13 @@ import NoJobs from "../../components/NoJobs";
 import Tabs from "../../components/Tabs/Tabs";
 import Loading from "../../components/Loading";
 import Posting from "../../components/Posting";
-import { AuthContext } from "../../context/AuthContext";
 
 function Jobs() {
   const [tab, setTab] = useState("Upcoming");
   const navigate = useNavigate();
   const [filteredPostings, setFilteredPostings] = useState([]);
-  const {
-    postings,
-    completePostings,
-    postingLoading,
-    generatePdf,
-    updateStatus,
-  } = useContext(PostingContext);
+  const { postings, completePostings, postingLoading, generatePdf } =
+    useContext(PostingContext);
 
   useEffect(() => {
     let searchResults = [];
@@ -30,8 +24,7 @@ function Jobs() {
         post.timeslots.some(
           (time) =>
             time.student_status?.status == "selected" ||
-            time.student_status?.status === "signed" ||
-            time.student_status?.status === "generated"
+            time.student_status?.status === "signed"
         )
       );
     }
@@ -46,7 +39,7 @@ function Jobs() {
           <p className="text-subText text-xs flex-wrap mb-4">
             {tab === "Upcoming"
               ? "Look back at all the hard work you put in"
-              : "If forms have been generated mark as signed, MyTime can only generate for up to 3 spaces"}
+              : "Generate forms from complete jobs, if org has not signed off, signatures will not appear"}
           </p>
         </div>
       </div>
@@ -75,18 +68,18 @@ function Jobs() {
                 action={
                   tab === "Completed" ? (
                     <div className="flex justify-end items-center">
-                      {post.timeslots.some(
+                      {/* {post.timeslots.some(
                         (time) => time.student_status?.status == "selected"
                       ).length > 0 ? (
                         <p className="text-xs">Pending Signature</p>
-                      ) : (
-                        <button
-                          className="rounded-lg border-[1px] h-[30px] border-primary text-primary px-3 text-xs py-0 hover:bg-primary hover:text-white"
-                          onClick={() => generatePdf(post)}
-                        >
-                          + Generate Form
-                        </button>
-                      )}
+                      ) : ( */}
+                      <button
+                        className="rounded-lg border-[1px] h-[30px] border-primary text-primary px-3 text-xs py-0 hover:bg-primary hover:text-white"
+                        onClick={() => generatePdf(post)}
+                      >
+                        + Generate Form
+                      </button>
+                      {/* )} */}
                     </div>
                   ) : null
                 }

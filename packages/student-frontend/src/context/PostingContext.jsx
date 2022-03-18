@@ -7,7 +7,6 @@ import api from "../api";
 export const PostingContext = createContext();
 
 export const PostingContextProvider = ({ children }) => {
-  const location = useLocation();
   const [postings, setPostings] = useState([]);
   const [completePostings, setCompletePostings] = useState([]);
   const [error, setError] = useState(null);
@@ -47,8 +46,10 @@ export const PostingContextProvider = ({ children }) => {
     await api
       .post("postings/save", { posting_id, student_id: user.id, saved })
       .then((res) => {
+        setPostingLoading(true);
         getPostings().then((res) => {
           setPostings(res);
+          setPostingLoading(false);
         });
       })
       .catch((error) => {

@@ -23,11 +23,13 @@ const month = [
   "December",
 ];
 
-function Posting({ item, action, index, onClick, props }) {
+function Posting({ explore = false, item, action, index, onClick, props }) {
   const postDate = new Date(item.date);
   return (
     <div
-      className={`flex h-16 mb-2 p-2 hover:bg-gray-400 hover:bg-opacity-20 bg-[#F8F8FF] rounded-lg`}
+      className={`flex ${
+        explore ? "h-24" : "h-16"
+      } mb-2 p-2 hover:bg-gray-400 hover:bg-opacity-20 bg-[#F8F8FF] rounded-lg`}
       key={item.name}
     >
       {item.image ? (

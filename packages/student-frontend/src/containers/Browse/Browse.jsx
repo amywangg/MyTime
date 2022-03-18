@@ -8,10 +8,22 @@ import NoJobs from "../../components/NoJobs";
 import { useNavigate } from "react-router-dom";
 
 function Browse() {
+  const [suggestedPostings, setSuggestedPostings] = useState([]);
   const [search, setSearch] = useState("");
+
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const { postings, postingLoading, updateSave } = useContext(PostingContext);
+
+  useEffect(() => {
+    setSuggestedPostings(
+      postings.filter(
+        (posting) =>
+          posting.name === "Sick Kids Foundation" ||
+          posting.name.includes("SAVIS")
+      )
+    );
+  }, [postingLoading]);
 
   const SaveAction = ({ saved, id }) => {
     let isSaved = false;
@@ -79,11 +91,12 @@ function Browse() {
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
           </div>
-        ) : postings.length > 0 ? (
+        ) : suggestedPostings.length > 0 ? (
           <div className="h-[90%] overflow-auto mt-3">
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              {postings.map((post, index) => (
+              {suggestedPostings.map((post, index) => (
                 <Posting
+                  explore={true}
                   key={post.title}
                   item={post}
                   onClick={() => navigate(`postings/${post.id}`)}
