@@ -136,6 +136,18 @@ router.post("/postings", (req, res, next) => {
     });
 });
 
+router.post("/postings/delete", (req, res, next) => {
+  console.log(req.body.posting_id);
+  postingQueries
+    .deletePosting(req.body.posting_id)
+    .then((postings) => {
+      return res.json(postings);
+    })
+    .catch((error) => {
+      res.status(401).send({ error: error.message });
+    });
+});
+
 router.post("/postings/create", (req, res, next) => {
   postingQueries
     .createPosting(req.body.org_id, req.body.posting)

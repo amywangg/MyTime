@@ -59,7 +59,7 @@ function PendingPosting({ closed }) {
       <div>
         <button
           className="absolute right-10 text-sm font-semibold text-gray-700"
-          onClick={() => navigate("../postings")}
+          onClick={() => navigate(-1)}
         >
           {"< "}Go back
         </button>
@@ -119,6 +119,12 @@ function PendingPosting({ closed }) {
                         Event Location
                       </p>
                       <p className="text-xs">{posting?.location}</p>
+                    </div>
+                    <div className="ml-10 px-4 mb-2">
+                      <p className="text-xs font-semibold mb-1 mt-2">
+                        Supervisor
+                      </p>
+                      <p className="text-xs">{posting?.supervisor}</p>
                     </div>
                   </div>
 

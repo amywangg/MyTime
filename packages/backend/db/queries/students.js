@@ -44,6 +44,7 @@ module.exports = {
         "password",
         "description",
         "id",
+        "student_id",
         "skills",
         "school",
         "school_id",
@@ -67,6 +68,7 @@ module.exports = {
         "first_name",
         "middle_name",
         "last_name",
+        "student_id",
         "email",
         "description",
         "school",
@@ -95,6 +97,7 @@ module.exports = {
           "first_name",
           "middle_name",
           "last_name",
+          "student_id",
           "description",
           "email",
           "school",
@@ -123,6 +126,7 @@ module.exports = {
       let getPostings = await knex
         .select(
           "postings.id",
+          "postings.supervisor",
           "postings.title",
           "postings.date",
           "postings.description",

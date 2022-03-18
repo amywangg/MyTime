@@ -109,6 +109,12 @@ function ClosedPosting() {
                       </p>
                       <p className="text-xs">{posting?.location}</p>
                     </div>
+                    <div className="ml-10 px-4 mb-2">
+                      <p className="text-xs font-semibold mb-1 mt-2">
+                        Supervisor
+                      </p>
+                      <p className="text-xs">{posting?.supervisor}</p>
+                    </div>
                   </div>
 
                   <p className="text-xs font-semibold ml-4">Description</p>

@@ -68,6 +68,21 @@ export const PostingContextProvider = ({ children }) => {
       });
   };
 
+  const deletePosting = async (posting_id) => {
+    return await api
+      .post("postings/delete", { posting_id })
+      .then((res) => {
+        return res.data;
+      })
+      .then(() => {
+        setPostingLoading(true);
+        getPostingsAction();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const updatePosting = async (posting, updateTimeslots) => {
     return await api
       .post("postings/update", { posting, updateTimeslots })
@@ -117,6 +132,7 @@ export const PostingContextProvider = ({ children }) => {
     closedPostings,
     postings,
     completePostings,
+    deletePosting,
     setPostings,
     getPostings,
     createPosting,

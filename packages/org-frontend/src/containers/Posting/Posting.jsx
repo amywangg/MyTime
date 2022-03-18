@@ -14,7 +14,7 @@ function Posting({}) {
   const [timeslots, setTimeslots] = useState();
   const [update, setUpdate] = useState(false);
   const [message, setMessage] = useState(null);
-  const { postings, postingLoading, updateSave, updateStatus } =
+  const { postings, postingLoading, updateSave, updateStatus, deletePosting } =
     useContext(PostingContext);
   const { currentUser } = useContext(AuthContext);
 
@@ -40,28 +40,12 @@ function Posting({}) {
     }
   }, [postingLoading]);
 
-  const onSubmit = () => {
-    const selectedTimeslots = timeslots.filter((x) => x.selected);
-    if (selectedTimeslots.length > 0) {
-      updateStatus(posting.id, timeslots);
-      setMessage("Successfully applied! Check back for updates");
-      setTimeout(() => {
-        setMessage(null);
-      }, [2000]);
-    } else {
-      setMessage("Error please select at least 1 timeslot");
-      setTimeout(() => {
-        setMessage(null);
-      }, [2000]);
-    }
-  };
-
   return (
     <Page>
       <div>
         <button
           className="absolute right-10 text-sm font-semibold text-gray-700"
-          onClick={() => navigate("../postings")}
+          onClick={() => navigate(-1)}
         >
           {"< "}Go back
         </button>
@@ -94,6 +78,19 @@ function Posting({}) {
             </div>
             <div className="flex">
               <div className="flex justify-center self-center items-center mr-3">
+                <button
+                  className="absolute bg-red-400 text-white right-24 top-9 rounded-sm hover:bg-red-500 px-2 py-1 text-sm "
+                  onClick={() => {
+                    setMessage("Posting has successfully been deleted");
+                    setTimeout(() => {
+                      setMessage(null);
+                    }, [2000]);
+                    deletePosting(posting.id);
+                    navigate("../postings");
+                  }}
+                >
+                  Delete
+                </button>
                 <button
                   className="absolute right-10 top-10 text-gray-600 hover:text-primary underline text-sm "
                   onClick={() => {
@@ -133,6 +130,12 @@ function Posting({}) {
                         Event Location
                       </p>
                       <p className="text-xs">{posting?.location}</p>
+                    </div>
+                    <div className="ml-10 px-4 mb-2">
+                      <p className="text-xs font-semibold mb-1 mt-2">
+                        Supervisor
+                      </p>
+                      <p className="text-xs">{posting?.supervisor}</p>
                     </div>
                   </div>
 

@@ -6,7 +6,7 @@ import Toast from "../../components/Toast";
 import { weekday, month, getHours } from "./dates";
 import { PostingContext } from "../../context/PostingContext";
 
-function Posting() {
+function Posting({ complete }) {
   const [posting, setPosting] = useState();
   const [postDate, setPostDate] = useState();
   const [timeslots, setTimeslots] = useState();
@@ -14,39 +14,46 @@ function Posting() {
   const [update, setUpdate] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [message, setMessage] = useState(null);
-  const { postings, postingLoading, updateSave, updateStatus } =
-    useContext(PostingContext);
+  const {
+    postings,
+    postingLoading,
+    updateSave,
+    updateStatus,
+    completePostings,
+  } = useContext(PostingContext);
   let { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const selectedPosting = postings.filter(
-      (post) => post.id === parseInt(id)
-    )[0];
+    const selectedPosting = complete
+      ? completePostings.filter((post) => post.id === parseInt(id))[0]
+      : postings.filter((post) => post.id === parseInt(id))[0];
     if (!postingLoading) {
       setUpdate(new Date(selectedPosting?.date) <= new Date() ? null : false);
       setApplied(false);
       setTimeslots(
-        postings
-          .filter((post) => post.id === parseInt(id))[0]
-          ?.timeslots.map((x) => {
-            if (x.student_status?.status === "selected") {
-              setIsSelected(true);
-            }
-            if (
-              x.student_status?.status === "applied" ||
-              x.student_status?.status === "selected"
-            ) {
-              setApplied(true);
-              return { ...x, selected: true };
-            }
-            return { ...x, selected: false };
-          })
+        selectedPosting?.timeslots.map((x) => {
+          if (
+            x.student_status?.status === "selected" ||
+            x.student_status?.status === "signed"
+          ) {
+            setIsSelected(true);
+          }
+          if (
+            x.student_status?.status === "applied" ||
+            x.student_status?.status === "selected" ||
+            x.student_status?.status === "signed"
+          ) {
+            setApplied(true);
+            return { ...x, selected: true };
+          }
+          return { ...x, selected: false };
+        })
       );
       setPostDate(new Date(selectedPosting?.date));
       setPosting(selectedPosting);
     }
-  }, [postingLoading, postings]);
+  }, [postingLoading, complete ? completePostings : postings]);
 
   const onSubmit = () => {
     const selectedTimeslots = timeslots.filter((x) => x.selected);
@@ -203,6 +210,10 @@ function Posting() {
                     >
                       {posting?.website}
                     </a>
+                    <p className="text-xs font-semibold  mb-1 mt-2">
+                      Supervisor
+                    </p>
+                    <p className="text-xs">{posting?.supervisor}</p>
                     <p className="text-xs font-semibold  mb-1 mt-2">
                       Event Location
                     </p>

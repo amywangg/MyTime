@@ -71,6 +71,29 @@ export const PostingContextProvider = ({ children }) => {
       });
   };
 
+  const generatePdf = async (postings) => {
+    const user = TokenService.getUser();
+    console.log(postings);
+    api
+      .post(
+        "get-pdf",
+        { postings, user },
+        { responseType: "arraybuffer", headers: { Accept: "application/pdf" } }
+      )
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute(
+          "download",
+          `${user.first_name}-${user.last_name}-hours.pdf`
+        );
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => console.log(error));
+  };
+
   const stateValues = {
     postings,
     completePostings,
@@ -79,6 +102,7 @@ export const PostingContextProvider = ({ children }) => {
     setPostingLoading,
     updateSave,
     updateStatus,
+    generatePdf,
     postingLoading,
     error,
   };

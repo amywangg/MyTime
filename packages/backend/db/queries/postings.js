@@ -10,6 +10,7 @@ module.exports = {
         .returning("id")
         .insert({
           title: posting.title,
+          supervisor: posting.supervisor,
           description: posting.description,
           org_id: org_id,
           location: posting.location,
@@ -101,6 +102,7 @@ module.exports = {
           title: posting.title,
           description: posting.description,
           location: posting.location,
+          supervisor: posting.supervisor,
           date: posting.date,
           expires_at: new Date(expires_at),
         });
@@ -154,6 +156,16 @@ module.exports = {
       let obj = await knex("postings").where({ id: posting_id }).update({
         status: "closed",
       });
+      return obj;
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  },
+
+  async deletePosting(posting_id) {
+    try {
+      let obj = await knex("postings").where({ id: posting_id }).del();
       return obj;
     } catch (error) {
       console.log(error);

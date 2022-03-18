@@ -41,6 +41,7 @@ function CreatePostings() {
       data.name &&
       data.location &&
       data.description &&
+      data.supervisor &&
       timeslots[0].openings &&
       startDate
     ) {
@@ -48,6 +49,7 @@ function CreatePostings() {
         title: data.name,
         location: data.location,
         description: data.description,
+        supervisor: data.supervisor,
         timeslots: timeslots,
         date: startDate,
       });
@@ -89,6 +91,16 @@ function CreatePostings() {
             {...register("name")}
             id="name"
             name="name"
+            required
+            className="w-4/5 appearance-none px-2 h-8 relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+          />
+        </div>
+        <div className="flex justify-between mb-4">
+          <p className="text-sm font-semibold text-gray-600">Supervisor *</p>
+          <input
+            {...register("supervisor")}
+            id="supervisor"
+            name="supervisor"
             required
             className="w-4/5 appearance-none px-2 h-8 relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
           />

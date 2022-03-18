@@ -7,14 +7,13 @@ import { getHours } from "../Posting/dates";
 import "./calendar.css";
 
 function Schedule() {
-  const [hover, setHover] = useState(false);
   const [value, setValue] = useState(new Date());
   const [timeslot, setTimeslot] = useState(null);
   const [dateClick, setDateClick] = useState(false);
+  const navigate = useNavigate();
 
   var date = new Date();
   const [filteredPostings, setFilteredPostings] = useState([]);
-  const navigate = useNavigate();
   const { postings, completePostings, postingLoading } =
     useContext(PostingContext);
 
@@ -27,6 +26,8 @@ function Schedule() {
         );
         if (temp.length > 0) {
           pendingPostings.push({
+            id: posting.id,
+            completed: false,
             title: posting.title,
             date: posting.date,
             timeslots: temp,
@@ -42,14 +43,14 @@ function Schedule() {
         );
         if (temp.length > 0) {
           pendingPostings.push({
+            id: posting.id,
+            completed: true,
             title: posting.title,
             date: posting.date,
             timeslots: temp,
           });
         }
       });
-
-      console.log(pendingPostings);
       const dates = filteredPostings.filter((post) => {
         let calDate = new Date(value);
         let postDate = new Date(post.date);
@@ -74,7 +75,6 @@ function Schedule() {
         ? true
         : false;
     });
-    console.log(dates);
     setTimeslot(dates);
     setValue(nextValue);
   }
@@ -115,8 +115,6 @@ function Schedule() {
               return dates.map((x) => (
                 <div
                   key={x.title}
-                  onMouseOver={() => setHover(x.title)}
-                  onMouseOut={() => setHover("")}
                   className={`overflow-hidden text-[8px] whitespace-nowrap ${
                     isDateSelected ? "bg-tertiary text-black" : "bg-nav"
                   } rounded-lg font-medium mb-1`}
@@ -187,7 +185,16 @@ function Schedule() {
                 return (
                   <div
                     key={time.title + index + "-time"}
-                    className="bg-nav shadow-md py-2 px-1 mb-2 rounded-md mr-2"
+                    className="bg-nav shadow-md py-2 px-1 mb-2 rounded-md mr-2 hover:cursor-pointer"
+                    onClick={() =>
+                      navigate(
+                        `${
+                          time.completed
+                            ? "../postings/complete"
+                            : "../browse/postings"
+                        }/${time.id}`
+                      )
+                    }
                   >
                     <p className="font-semibold text-xs  ml-3 mr-3">
                       Time: {start_time} - {end_time}

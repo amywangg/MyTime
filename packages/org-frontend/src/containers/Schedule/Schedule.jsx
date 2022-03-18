@@ -7,7 +7,6 @@ import { getHours } from "../Posting/dates";
 import "./calendar.css";
 
 function Schedule() {
-  const [hover, setHover] = useState(false);
   const [value, setValue] = useState(new Date());
   const [timeslot, setTimeslot] = useState(null);
   const [dateClick, setDateClick] = useState(false);
@@ -31,7 +30,7 @@ function Schedule() {
             !isFound
           ) {
             isFound = true;
-            pendingPostings.push(posting);
+            pendingPostings.push({ ...posting, complete: false });
           }
         });
       });
@@ -46,7 +45,7 @@ function Schedule() {
             !isFound
           ) {
             isFound = true;
-            pendingPostings.push(posting);
+            pendingPostings.push({ ...posting, complete: true });
           }
         });
       });
@@ -73,7 +72,6 @@ function Schedule() {
         ? true
         : false;
     });
-    console.log(dates);
     setTimeslot(dates);
     setValue(nextValue);
   }
@@ -114,8 +112,6 @@ function Schedule() {
               return dates.map((x) => (
                 <div
                   key={x.title}
-                  onMouseOver={() => setHover(x.title)}
-                  onMouseOut={() => setHover("")}
                   className={`overflow-hidden text-[8px] ${
                     isDateSelected ? "bg-tertiary text-black" : "bg-nav"
                   } rounded-lg font-medium mb-1`}
@@ -163,7 +159,7 @@ function Schedule() {
         <div className="flex overflow-x-auto">
           {timeslot?.length > 0 ? (
             timeslot.map((time) =>
-              time.timeslots.map((x) => {
+              time.timeslots.map((x, index) => {
                 let start_time = x.start_time;
                 let end_time = x.end_time;
                 if (x.start_time?.hours) {
@@ -185,8 +181,17 @@ function Schedule() {
                 const { hours, minutes } = getHours(start_time, end_time);
                 return (
                   <div
-                    key={time.id}
-                    className="bg-nav shadow-md py-2 px-1 mb-2 rounded-md"
+                    key={time.id + "-" + index}
+                    className="bg-nav shadow-md py-2 px-1 mb-2 rounded-md hover:cursor-pointer"
+                    onClick={() =>
+                      navigate(
+                        `${
+                          time.complete
+                            ? "../postings/pending/"
+                            : "../postings/"
+                        }${time.id}`
+                      )
+                    }
                   >
                     <p className="font-semibold text-xs  ml-3 mr-3">
                       Time: {start_time} - {end_time}

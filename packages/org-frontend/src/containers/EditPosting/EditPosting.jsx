@@ -58,6 +58,7 @@ function EditPosting() {
       posting.title &&
       posting.location &&
       posting.description &&
+      posting.supervisor &&
       timeslots[0]?.openings &&
       startDate
     ) {
@@ -66,6 +67,7 @@ function EditPosting() {
           id: posting.id,
           title: posting.title,
           location: posting.location,
+          supervisor: posting.supervisor,
           description: posting.description,
           timeslots: timeslots,
           date: startDate,
@@ -121,6 +123,21 @@ function EditPosting() {
                 name="name"
                 required
                 className="w-4/5 appearance-none px-2 h-8 relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+              />
+            </div>
+            <div className="flex justify-between mb-4">
+              <p className="text-sm font-semibold text-gray-600">
+                Supervisor *
+              </p>
+              <input
+                value={posting.supervisor}
+                onChange={(e) =>
+                  setPosting({ ...posting, supervisor: e.target.value })
+                }
+                id="supervisor"
+                name="supervisor"
+                required
+                className="w-4/5 px-2 appearance-none h-8 relative block border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
               />
             </div>
             <div className="flex justify-between mb-4">
