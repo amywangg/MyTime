@@ -2,7 +2,7 @@ const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 let connection =
-  process.env === "production"
+  process.env.NODE_ENV === "production"
     ? process.env.DATABASE_URL
     : {
         host: process.env.DB_HOST || "localhost",
