@@ -2,8 +2,7 @@
   "name": "student-frontend",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://app.herokuapp.com/",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "17.0.1"
   },
