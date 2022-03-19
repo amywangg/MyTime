@@ -1,6 +1,5 @@
 const redis = require("redis");
-var url = require("url");
-// 1 configure our redis
+
 let redis_client;
 (async () => {
   if (process.env.REDIS_URL) {
