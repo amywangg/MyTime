@@ -3,18 +3,11 @@ var url = require("url");
 // 1 configure our redis
 let redis_client;
 (async () => {
-  if (process.env.REDISTOGO_URL) {
-    console.log("iamhere");
-    console.log(process.env.REDISTOGO_URL.split("@")[1].split(":")[0]);
-
-    var redisURL = url.parse(process.env.REDISTOGO_URL);
-    console.log(redisURL);
+  if (process.env.REDIS_URL) {
     redis_client = redis.createClient({
-      url: process.env.REDISTOGO_URL,
+      url: process.env.REDIS_URL,
     });
-
     await redis_client.connect();
-    redis_client.auth("", redisURL.auth.split(":")[1]);
     await redis_client.set("key", "Successfully Connected to Redis ✨");
     console.log(await redis_client.get("key"));
   } else {
