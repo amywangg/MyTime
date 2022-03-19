@@ -8,7 +8,7 @@ module.exports = {
   // Where files should be sent once they are bundled
   output: {
     publicPath: "/",
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(path.join(__dirname, "client/build")),
     filename: "bundle.js",
   },
   // webpack 5 comes with devServer which loads in development mode
