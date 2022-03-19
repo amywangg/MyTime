@@ -46,6 +46,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({ filename: "index.css" }),
   ],
+  watch: false,
+  mode: "production",
+  devtool: false,
   resolve: {
     extensions: [".ts", ".js", ".jsx"],
     modules: ["src", "node_modules"],
