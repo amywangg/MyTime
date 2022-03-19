@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry: path.resolve(__dirname, "src", "app.js"),
+  entry: path.resolve(__dirname, "src", "App.js"),
   // Where files should be sent once they are bundled
   output: {
     publicPath: "/",
