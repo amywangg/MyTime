@@ -4,16 +4,12 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
-// heroku will provide a port or local
-const port = process.env.PORT || 3002;
-
-app.use("/static", express.static(path.join(__dirname, "client/build")));
-
+const publicPath = path.join(__dirname, "client/build");
+const port = process.env.PORT || 3000;
+app.use(express.static(publicPath));
 app.get("*", (req, res) => {
-  const index = path.join(__dirname, "client/build", "index.html");
-  res.sendFile(index);
+  res.sendFile(path.join(publicPath, "index.html"));
 });
-
 app.listen(port, () => {
-  console.log(`Server is up on port ${port}!`);
+  console.log("Server is up!");
 });
