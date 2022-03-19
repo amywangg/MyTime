@@ -10,7 +10,7 @@ const port = process.env.PORT || 3002;
 app.use("/static", express.static(path.join(__dirname, "client/build")));
 
 app.get("*", (req, res) => {
-  const index = path.join(__dirname, "build", "index.html");
+  const index = path.join(__dirname, "client/build", "index.html");
   res.sendFile(index);
 });
 
