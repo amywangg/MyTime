@@ -1,47 +1,32 @@
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
+let connection =
+  env === "production"
+    ? process.env.DATABASE_URL
+    : {
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        port: 5432,
+      };
+
 module.exports = {
   development: {
     client: "postgresql",
-    connection: {
-      host: process.env.DB_HOST || "localhost",
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      port: 5432,
-    },
+    connection,
     migrations: {
+      tableName: "knex_migrations",
       directory: "./db/migrations",
     },
     seeds: {
       directory: "./db/seeds",
     },
   },
-  staging: {
-    client: "postgresql",
-    connection: {
-      host: "127.0.0.1",
-      user: "[db_username]",
-      password: "[db_password]",
-      database: "[db_name]",
-      charset: "utf8",
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
-    },
-  },
   production: {
     client: "postgresql",
-    connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
-    },
+    connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
       max: 10,
