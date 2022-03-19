@@ -50,6 +50,5 @@ module.exports = {
   devtool: false,
   resolve: {
     extensions: [".ts", ".js", ".jsx"],
-    modules: ["src", "node_modules"],
   },
 };
