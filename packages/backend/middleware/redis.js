@@ -3,7 +3,7 @@ const redis = require("redis");
 let redis_client = null;
 (async () => {
   redis_client = redis.createClient(
-    env === "production" && process.env.REDISTOGO_URL
+    process.env === "production" && process.env.REDISTOGO_URL
   );
 
   redis_client.on("error", (err) => console.log("Redis Client Error", err));
