@@ -4,11 +4,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry: path.join(__dirname, "src", "app.js"),
+  entry: path.resolve(__dirname, "src", "App.js"),
   // Where files should be sent once they are bundled
   output: {
     publicPath: "/",
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "client/build"),
     filename: "bundle.js",
   },
   // webpack 5 comes with devServer which loads in development mode
@@ -16,8 +16,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "public"),
     },
-    hot: true,
-    port: 3003,
+    port: 3001,
     compress: true,
     historyApiFallback: true,
   },
@@ -47,6 +46,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({ filename: "index.css" }),
   ],
+  watch: false,
+  devtool: false,
   resolve: {
     extensions: [".ts", ".js", ".jsx"],
   },
