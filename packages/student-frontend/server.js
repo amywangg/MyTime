@@ -7,10 +7,13 @@ app.use(cors());
 // heroku will provide a port or local
 const port = process.env.PORT || 3002;
 
-app.use("/static", express.static(path.join(__dirname, "client/build")));
+const publicPath = path.join(__dirname, "..", "client/build");
+
+app.use(express.static(publicPath));
+// app.use("/static", express.static(path.join(__dirname, "client/build")));
 
 app.get("*", (req, res) => {
-  const index = path.join(__dirname, "..", "index.html");
+  const index = path.join(__dirname, "build", "index.html");
   res.sendFile(index);
 });
 
