@@ -12,11 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mui/material": "^5.1.0",
     "@tailwindcss/forms": "^0.3.4",
     "axios": "^0.25.0",
     "fs": "^0.0.1-security",
-    "pdf-lib": "^1.17.1",
     "react": "^17.0.2",
     "react-calendar": "^3.7.0",
     "react-datepicker": "^4.7.0",
