@@ -3,7 +3,7 @@ import axios from "axios";
 import TokenService from "../services/TokenService";
 
 const api = axios.create({
-  baseURL: process.env.BACKEND_URL || "http://localhost:3000/students/",
+  baseURL: "https://mytime-backend-1.herokuapp.com/students/",
   timeout: 5000,
   headers: {
     "Access-Control-Allow-Origin": "*",

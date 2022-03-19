@@ -46,7 +46,6 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({ filename: "index.css" }),
   ],
-
   watch: false,
   devtool: false,
   resolve: {
