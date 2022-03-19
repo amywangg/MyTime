@@ -5,16 +5,16 @@ let redis_client = null;
 
 (async () => {
   if (process.env.NODE_ENV === "production") {
-    var rtg = require("url").parse(process.env.REDISTOGO_URL);
-    var redis = require("redis").createClient(rtg.port, rtg.hostname);
-    redis.auth(rtg.auth.split(":")[1]);
+    var rtg = url.parse(process.env.REDISTOGO_URL);
+    redis_client = redis.createClient(rtg.port, rtg.hostname);
+    redis_client.auth(rtg.auth.split(":")[1]);
   } else {
     redis_client = redis.createClient();
-    redis_client.on("error", (err) => console.log("Redis Client Error", err));
-    await redis_client.connect();
-    await redis_client.set("key", "Successfully Connected to Redis ✨");
-    console.log(await redis_client.get("key"));
   }
+  redis_client.on("error", (err) => console.log("Redis Client Error", err));
+  await redis_client.connect();
+  await redis_client.set("key", "Successfully Connected to Redis ✨");
+  console.log(await redis_client.get("key"));
 })();
 
 module.exports = redis_client;
