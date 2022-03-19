@@ -7,7 +7,7 @@ let redis_client = null;
   if (process.env.NODE_ENV === "production") {
     var rtg = url.parse(process.env.REDISTOGO_URL);
     redis_client = redis.createClient(rtg.port, rtg.hostname);
-    redis_client.auth(rtg.auth.split(":")[1]);
+    await redis_client.auth(rtg.auth.split(":")[1]);
   } else {
     redis_client = redis.createClient();
   }
