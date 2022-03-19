@@ -7,9 +7,7 @@ app.use(cors());
 // heroku will provide a port or local
 const port = process.env.PORT || 3002;
 
-const publicPath = process.env.PORT
-  ? path.join(__dirname, "..", "build")
-  : path.join(__dirname, "..", "public");
+const publicPath = path.join(__dirname, "..", "client/build");
 
 app.use(express.static(publicPath));
 app.use("/static", express.static(path.join(__dirname, "client/build")));
