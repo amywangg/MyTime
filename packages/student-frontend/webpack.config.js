@@ -46,7 +46,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({ filename: "index.css" }),
     new webpack.DefinePlugin({
-      BACKEND_URL: JSON.stringify(process.env.BACKEND_URL),
+      BACKEND_URL: JSON.stringify(
+        "https://mytime-backend-1.herokuapp.com/students/"
+      ),
     }),
   ],
 
