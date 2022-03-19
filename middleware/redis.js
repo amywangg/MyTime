@@ -2,7 +2,9 @@ const redis = require("redis");
 // 1 configure our redis
 let redis_client = null;
 (async () => {
-  redis_client = redis.createClient();
+  redis_client = redis.createClient(
+    env === "production" && process.env.REDISTOGO_URL
+  );
 
   redis_client.on("error", (err) => console.log("Redis Client Error", err));
 
