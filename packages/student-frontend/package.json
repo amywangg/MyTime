@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "webpack serve --mode development",
-    "build": "BACKEND_URL=https://mytime-backend-1.herokuapp.com/students/ webpack --mode production",
+    "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
