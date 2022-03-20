@@ -8,8 +8,12 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const cors = require("cors");
 
-app.options("*", cors());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://mytime-student-frontend.herokuapp.com",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
