@@ -10,7 +10,11 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "https://mytime-student-frontend.herokuapp.com",
+    origin: [
+      "https://mytime-student-frontend.herokuapp.com",
+      "https://mytime-school-frontend.herokuapp.com",
+      "https://mytime-org-frontend.herokuapp.com",
+    ],
     credentials: true,
   })
 );

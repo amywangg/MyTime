@@ -3,7 +3,10 @@ require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 let connection =
   process.env.NODE_ENV === "production"
-    ? process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
+      }
     : {
         host: process.env.DB_HOST || "localhost",
         user: process.env.DB_USER,
