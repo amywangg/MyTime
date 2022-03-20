@@ -5,11 +5,11 @@ let redis_client;
   if (process.env.REDIS_URL) {
     redis_client = redis.createClient({
       url: process.env.REDIS_URL,
-      socket: {
-        rejectUnauthorized: false,
-      },
     });
     await redis_client.connect();
+    redis_client.on("connect", function () {
+      client.stream.setKeepAlive(true, 1000000000000000000000);
+    });
     await redis_client.set("key", "Successfully Connected to Redis ✨");
     console.log(await redis_client.get("key"));
   } else {
