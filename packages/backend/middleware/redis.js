@@ -6,7 +6,6 @@ let redis_client;
     redis_client = redis.createClient({
       url: process.env.REDIS_URL,
       socket: {
-        tls: true,
         rejectUnauthorized: false,
       },
     });
