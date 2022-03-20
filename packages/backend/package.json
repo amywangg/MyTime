@@ -2,6 +2,9 @@
   "name": "nodejs-postgresql",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "17.0.1"
+  },
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon",
