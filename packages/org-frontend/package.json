@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "17.0.1"
+  },
   "scripts": {
-    "start": "webpack serve --mode development",
+    "start": "node server.js",
+    "dev": "webpack serve --mode development",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +19,8 @@
     "@mui/material": "^5.1.0",
     "@tailwindcss/forms": "^0.3.4",
     "axios": "^0.25.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
     "react": "^17.0.2",
     "react-calendar": "^3.7.0",
     "react-datepicker": "^4.7.0",
