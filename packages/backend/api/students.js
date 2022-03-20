@@ -11,6 +11,7 @@ const {
 } = require("../middleware/auth");
 const getPdf = require("./pdfgenerator");
 const fs = require("fs");
+const axios = require("axios");
 
 router.post("/register", (req, res, next) => {
   queries
@@ -118,15 +119,10 @@ router.get("/schools", (req, res, next) => {
   });
 });
 
-router.post("/dashboard", (req, res, next) => {
-  queries
-    .studentStats(req.student_id)
-    .then(async (student) => {
-      return res.json(student);
-    })
-    .catch((error) => {
-      res.status(401).send({ error: error.message });
-    });
+router.post("/schools", (req, res, next) => {
+  queries.getSchools().then((user) => {
+    return res.json(user);
+  });
 });
 
 router.post("/postings", (req, res, next) => {
@@ -166,40 +162,6 @@ router.post("/postings/update", (req, res, next) => {
     });
 });
 
-// i'm adding in some more info for the profile from the query i wrote; you can take out if u want
-router.post("/profile", (req, res, next) => {
-  queries
-    .studentStats(req.student_id)
-    .then(async (student) => {
-      console.log("route_name", student);
-    })
-    .catch((error) => {
-      res.status(401).send({ error: error.message });
-    });
-});
-
-router.post("/applications", (req, res, next) => {
-  queries
-    .studentJobs(req.student_id)
-    .then(async (student_job) => {
-      console.log("route_name", student_job);
-    })
-    .catch((error) => {
-      res.status(401).send({ error: error.message });
-    });
-});
-
-router.post("/schedule", (req, res, next) => {
-  queries
-    .studentJobs(req.student_id)
-    .then(async (student_job) => {
-      console.log("route_name", student_job);
-    })
-    .catch((error) => {
-      res.status(401).send({ error: error.message });
-    });
-});
-
 router.post("/get-pdf", (req, res, next) => {
   getPdf(req.body.postings, req.body.user).then(() => {
     const src = fs.createReadStream("volunteer-form-temp.pdf");
@@ -211,6 +173,38 @@ router.post("/get-pdf", (req, res, next) => {
     });
     src.pipe(res);
   });
+});
+
+router.post("/get-suggestions", (req, res, next) => {
+  // pass in student's skills in the reqs
+  const skills = req.body.skills;
+  queries
+    .getPostings(req.body.school_id, req.body.id)
+    .then(async (postings) => {
+      const cleanedPostings = postings.map((post) => {
+        return { id: post.id, description: post.description };
+      });
+      axios
+        .post(`${process.env.ML_URL}/predict`, cleanedPostings, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-type": "application/json",
+          },
+        })
+        .then((res) => {
+          let relatedPostings = [];
+          const categorizedPostings = res.data;
+          skills.map((skill) => {
+            relatedPostings = categorizedPostings.filter((post) =>
+              post.categories.includes(skill)
+            );
+          });
+        })
+        .catch((err) => {
+          console.log("Error: ", err.message);
+        });
+    });
 });
 
 module.exports = router;
