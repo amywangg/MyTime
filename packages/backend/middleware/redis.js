@@ -20,7 +20,7 @@
 
 // module.exports = redis_client;
 
-const redis = require("ioredis");
+const Redis = require("ioredis");
 
 let redis_client = new Redis(process.env.REDIS_URL);
 // (async () => {
