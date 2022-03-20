@@ -3,7 +3,7 @@ import axios from "axios";
 import TokenService from "../services/TokenService";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/orgs/",
+  baseURL: "https://mytime-backend-1.herokuapp.com/orgs/",
   timeout: 5000,
   headers: {
     "Access-Control-Allow-Origin": "*",
