@@ -175,12 +175,14 @@ router.post("/get-pdf", (req, res, next) => {
   });
 });
 
-router.post("/get-suggestions", (req, res, next) => {
+router.post("/postings/recommended", (req, res, next) => {
   // pass in student's skills in the reqs
-  const skills = req.body.skills;
+  let postingsList;
   queries
     .getPostings(req.body.school_id, req.body.id)
     .then(async (postings) => {
+      postingsList = [...postings];
+      // console.log("iamhere", postingsList);
       const cleanedPostings = postings.map((post) => {
         return { id: post.id, description: post.description };
       });
@@ -193,17 +195,25 @@ router.post("/get-suggestions", (req, res, next) => {
           },
         })
         .then((res) => {
-          let relatedPostings = [];
+          let foundIds = [];
           const categorizedPostings = res.data;
-          skills.map((skill) => {
-            relatedPostings = categorizedPostings.filter((post) =>
-              post.categories.includes(skill)
-            );
+          req.body.skills.split(", ").map((skill) => {
+            categorizedPostings.map((post) => {
+              if (post.skills.includes(skill) && !foundIds.includes(post.id)) {
+                foundIds.push(post.id);
+              }
+            });
           });
+          postingsList = postingsList.filter((post) =>
+            foundIds.includes(post.id)
+          );
         })
         .catch((err) => {
           console.log("Error: ", err.message);
         });
+    })
+    .then(() => {
+      return res.json(postingsList);
     });
 });
 

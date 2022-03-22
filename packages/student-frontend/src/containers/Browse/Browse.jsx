@@ -8,21 +8,31 @@ import NoJobs from "../../components/NoJobs";
 import { useNavigate } from "react-router-dom";
 
 function Browse() {
-  const [suggestedPostings, setSuggestedPostings] = useState([]);
+  const [recPostings, setRecPostings] = useState([]);
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
-  const { postings, postingLoading, updateSave } = useContext(PostingContext);
+  const {
+    postings,
+    postingLoading,
+    updateSave,
+    setPostingLoading,
+    getRecommendedPostings,
+  } = useContext(PostingContext);
 
   useEffect(() => {
-    setSuggestedPostings(
-      postings.filter(
-        (posting) =>
-          posting.name === "Sick Kids Foundation" ||
-          posting.name.includes("SAVIS")
-      )
-    );
+    if (window.location.href === "browse") {
+      setPostingLoading(true);
+    }
+    getRecommendedPostings().then((res) => {
+      setRecPostings(
+        res.filter((post) => {
+          return new Date(post.date) >= new Date() ? true : false;
+        })
+      );
+      setPostingLoading(false);
+    });
   }, [postingLoading]);
 
   const SaveAction = ({ saved, id }) => {
@@ -91,10 +101,10 @@ function Browse() {
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
           </div>
-        ) : suggestedPostings.length > 0 ? (
+        ) : recPostings.length > 0 ? (
           <div className="h-[90%] overflow-auto mt-3">
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              {suggestedPostings.map((post, index) => (
+              {recPostings.map((post, index) => (
                 <Posting
                   explore={true}
                   key={post.title}
@@ -107,8 +117,8 @@ function Browse() {
           </div>
         ) : (
           <NoJobs
-            message1="No organizations have postings"
-            message2="Check back later!"
+            message1="We weren't able to find postings related to your skillset"
+            message2="Check back later or update your skills!"
           />
         )}
         <button

@@ -41,6 +41,22 @@ export const PostingContextProvider = ({ children }) => {
       });
   };
 
+  const getRecommendedPostings = async () => {
+    const user = TokenService.getUser();
+    return await api
+      .post("postings/recommended", {
+        school_id: user.school_id,
+        id: user.id,
+        skills: user.skills,
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const updateSave = async (posting_id, saved) => {
     const user = TokenService.getUser();
     await api
@@ -100,6 +116,7 @@ export const PostingContextProvider = ({ children }) => {
     completePostings,
     setPostings,
     getPostings,
+    getRecommendedPostings,
     setPostingLoading,
     updateSave,
     updateStatus,
