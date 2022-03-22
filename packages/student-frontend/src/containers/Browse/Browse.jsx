@@ -9,31 +9,25 @@ import { useNavigate } from "react-router-dom";
 
 function Browse() {
   const [recPostings, setRecPostings] = useState([]);
+  const [recLoading, setRecLoading] = useState(true);
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
-  const {
-    postings,
-    postingLoading,
-    updateSave,
-    setPostingLoading,
-    getRecommendedPostings,
-  } = useContext(PostingContext);
+  const { updateSave, getRecommendedPostings } = useContext(PostingContext);
 
   useEffect(() => {
-    if (window.location.href === "browse") {
-      setPostingLoading(true);
-    }
     getRecommendedPostings().then((res) => {
       setRecPostings(
         res.filter((post) => {
           return new Date(post.date) >= new Date() ? true : false;
         })
       );
-      setPostingLoading(false);
+      setTimeout(() => {
+        setRecLoading(false);
+      }, [1500]);
     });
-  }, [postingLoading]);
+  }, []);
 
   const SaveAction = ({ saved, id }) => {
     let isSaved = false;
@@ -97,7 +91,7 @@ function Browse() {
         <p className="text-xs text-subText mt-1">
           Based on your interests we've compiled postings
         </p>
-        {postingLoading ? (
+        {recLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
           </div>

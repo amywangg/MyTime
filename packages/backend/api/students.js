@@ -182,11 +182,10 @@ router.post("/postings/recommended", (req, res, next) => {
     .getPostings(req.body.school_id, req.body.id)
     .then(async (postings) => {
       postingsList = [...postings];
-      // console.log("iamhere", postingsList);
       const cleanedPostings = postings.map((post) => {
         return { id: post.id, description: post.description };
       });
-      axios
+      return await axios
         .post(`${process.env.ML_URL}/predict`, cleanedPostings, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -207,13 +206,16 @@ router.post("/postings/recommended", (req, res, next) => {
           postingsList = postingsList.filter((post) =>
             foundIds.includes(post.id)
           );
+          console.log(postingsList);
+          return postingsList;
         })
         .catch((err) => {
           console.log("Error: ", err.message);
         });
     })
-    .then(() => {
-      return res.json(postingsList);
+    .then((postings) => {
+      console.log(postings);
+      return res.json(postings);
     });
 });
 

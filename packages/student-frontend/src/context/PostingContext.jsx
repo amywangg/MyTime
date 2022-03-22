@@ -42,6 +42,7 @@ export const PostingContextProvider = ({ children }) => {
   };
 
   const getRecommendedPostings = async () => {
+    console.log("here");
     const user = TokenService.getUser();
     return await api
       .post("postings/recommended", {
