@@ -108,7 +108,7 @@ function Profile() {
       school: profile.school || currentUser?.school,
       school_id: profile.school_id || currentUser?.school_id,
       description: profile.description || currentUser?.description,
-      skills: skills.length > 0 ? skills.join(", ") : currentUser?.skills,
+      skills: skills.length > 0 ? skills.join(", ") : "tbd",
     });
     setTimeout(() => {
       setMessage(null);
