@@ -185,37 +185,37 @@ router.post("/postings/recommended", (req, res, next) => {
       const cleanedPostings = postings.map((post) => {
         return { id: post.id, description: post.description };
       });
-      const recPostings = await axios
-        .post(`${process.env.ML_URL}/predict`, cleanedPostings, {
+
+      const recPostings = await axios.post(
+        `${process.env.ML_URL}/predict`,
+        cleanedPostings,
+        {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": true,
             "Content-type": "application/json",
           },
-        })
-        .then((res) => {
-          console.log("skills", res.data);
-          let foundIds = [];
-          const categorizedPostings = res.data;
-          req.body.skills.split(", ").map((skill) => {
-            categorizedPostings.map((post) => {
-              if (
-                post.skills.includes(skill.toLowerCase()) &&
-                !foundIds.includes(post.id)
-              ) {
-                foundIds.push(post.id);
-              }
-            });
-          });
-          postingsList = postingsList.filter((post) =>
-            foundIds.includes(post.id)
-          );
-          return postingsList;
-        })
-        .catch((err) => {
-          console.log("Error: ", err.message);
+        }
+      );
+
+      let foundIds = [];
+      await req.body.skills.split(", ").map((skill) => {
+        recPostings.data.map((post) => {
+          if (
+            post.skills.includes(skill.toLowerCase()) &&
+            !foundIds.includes(post.id)
+          ) {
+            foundIds.push(post.id);
+          }
         });
-      return res.json(recPostings);
+      });
+
+      return res.json(
+        postingsList.filter((post) => foundIds.includes(post.id))
+      );
+    })
+    .catch((err) => {
+      console.log("Error: ", err.message);
     });
 });
 
