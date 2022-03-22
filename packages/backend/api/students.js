@@ -185,7 +185,7 @@ router.post("/postings/recommended", (req, res, next) => {
       const cleanedPostings = postings.map((post) => {
         return { id: post.id, description: post.description };
       });
-      return await axios
+      const recPostings = await axios
         .post(`${process.env.ML_URL}/predict`, cleanedPostings, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -194,11 +194,15 @@ router.post("/postings/recommended", (req, res, next) => {
           },
         })
         .then((res) => {
+          console.log("skills", res.data);
           let foundIds = [];
           const categorizedPostings = res.data;
           req.body.skills.split(", ").map((skill) => {
             categorizedPostings.map((post) => {
-              if (post.skills.includes(skill) && !foundIds.includes(post.id)) {
+              if (
+                post.skills.includes(skill.toLowerCase()) &&
+                !foundIds.includes(post.id)
+              ) {
                 foundIds.push(post.id);
               }
             });
@@ -206,16 +210,12 @@ router.post("/postings/recommended", (req, res, next) => {
           postingsList = postingsList.filter((post) =>
             foundIds.includes(post.id)
           );
-          console.log(postingsList);
           return postingsList;
         })
         .catch((err) => {
           console.log("Error: ", err.message);
         });
-    })
-    .then((postings) => {
-      console.log(postings);
-      return res.json(postings);
+      return res.json(recPostings);
     });
 });
 
