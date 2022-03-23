@@ -139,7 +139,6 @@ exports.seed = async function (knex) {
           created_at: "2022-03-30 18:07:27.859961+00",
           expires_at: "2022-04-11 17:07:17.367+00",
         },
-        //12
         {
           title: "Youth Spring Volunteer Initiative",
           description:
@@ -187,6 +186,320 @@ exports.seed = async function (knex) {
           date: "2022-03-30 18:07:17.367+00",
           created_at: "2022-03-30 18:07:27.859961+00",
           expires_at: "2022-04-11 17:07:17.367+00",
+        },
+        {
+          title: "Medical Clinic Volunteer",
+          description:
+            "Dear Student, Are you passionate about the health-care field? Have you been struggling to choose your future career? Here is how we can help!!!Clinetic provides student volunteers with shadowing opportunities. You can shadow a chiropractor, naturopath, physiotherapist, osteopath, or medical doctor. We pay our practitioners using the insurance coverage that you have from school. When you or any other volunteer student needs treatment, you can shadow them and when you need treatment they can shadow you. This way our student volunteers get to experience a day into the lives of our doctors! Volunteer work tasks include: patient-care, outreach, research and more.",
+          location: "North York",
+          org_id: 7,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+
+        {
+          title: "Parkinson Advisory Council",
+          description:
+            "As a Member of the Parkinson Advisory Council, you bring your passion to make a difference for people affected by Parkinson’s. Your empathetic and compassionate approach to building community elevates the diverse perspectives of people affected by Parkinson’s. You are committed to Parkinson Canada’s mission and vision. As someone living with Parkinson’s, or with experience as a care partner of someone living with Parkinson’s, you bring your lived experience and expertise to the following responsibilities: Advise and make recommendations to the CEO on the development of new and/or existing programs, such as advocacy, programs and services, research, and fundraising. To inform Parkinson Canada on a patient engagement strategy for research, programs and services, advocacy, and fundraising, with the intent of strengthening Parkinson Canada’s engagement with the community. To promote the vision, mission, and initiatives of Parkinson Canada with the Parkinson community across Canada. To represent the PAC on additional internal Committees to ensure consistency and facilitate knowledge exchange. Additional responsibilities as agreed to. Lived experience as a person with Parkinson’s, or experience as a care partner of someone living with Parkinson’s. Passionate and eager to make a difference for the Parkinson’s community in Canada. Knowledge of Parkinson’s, networks, or connections within the Parkinson’s community. Strategic thinker with the ability to cultivate strong partnerships that grow the brand and mission of Parkinson Canada. Strong communication skills, including active listening. Dependable, responsive, and respectful of multiple points of view. Experience with or interest in the Canadian policy system, advocacy initiatives, or research and development, would be a strong asset. Mentorship experience would be an asset. Experience working with committees or advisory councils would be an asset. Commitment to the principles of Equity, Diversity, and Inclusivity",
+          location: "North York",
+          org_id: 7,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+
+        {
+          title: "Osteoporosis Canada Bingo Volunteer",
+          description:
+            "Charity Bingo volunteers are needed to represent Osteoporosis Canada at Rama Gaming East located at 991 Kennedy Rd, Scarborough, Ontario.Task Requirements: Walking and standing, Hearing, Verbal communication, Visual",
+          location: "North York",
+          org_id: 7,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+        {
+          title: "Card Writing Volunteer",
+          description:
+            "A brief summary of how our volunteering program works is an individual commits to sending in a certain amount of cards on our website. There isn't a deadline and you can write the cards at your own pace. When you finish, you mail your cards to our PO box and we will read them and count the number of cards. A signed confirmation letter is then emailed to you to show to your guidance counselor/teacher. Signing up: The first thing to do is to sign up on our website as a volunteer card writer The form asks for an email address and we will email the confirmation letter to this address. Please read the form carefully! Writing the cards: We have a few guidelines up on our website for future reference. Basically we are looking for something that can be a keepsake for residents that they can display in their room and re-read if they wish. Students can buy cards or make cards themselves, it is up to you! However, the message inside the card must be handwritten. If you choose to make a card it doesn't have to be fancy, but we do expect you to put effort and care into each card. You can write about your hobbies, interests or share some inspiration. Mailing the cards: Students can mail the cards to our PO box (45017-81 Lakeshore Rd. E. Mississauga, ON L5G 1B0). Since this is a Canada Post PO box, the cards have to be sent through Canada Post. If you can, please package all the cards together in one large envelope/box. Receiving confirmation: When we receive the cards, we will read through each one and count up the total. A signed confirmation letter will be sent to the email address provided during sign-up. We grant students 30 minutes per card and will indicate the total number of hours earned on the signed confirmation letter. If you require a specific form to be signed or hours to be confirmed using a website such as Hour Republic, we ask that you reply to the confirmation email with the specific form attached and we will be more than happy to fill it out!",
+          location: "North York",
+          org_id: 7,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+        {
+          title: "Mentor/Volunteer-Coding",
+          description:
+            "1:1 mentoriship with gr1-6 and gr.7-12. Need to be a great mentor and experience coding",
+          location: "Toronto",
+          org_id: 8,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+        {
+          title: "Lead Technology Reuse Volunteer",
+          description: `The Lead Technology Reuse Volunteer works in many dynamic, workshop-style volunteer areas which both produce refurbished technology and educate volunteers about technology. This position trains in multiple areas in order to help provide shift coverage, ensure a steady flow of gizmos for Free Geek Toronto and support volunteers. This position participates in group meetings to help develop programs and procedures. This position is not paid.
+Free Geek Toronto (FGT) is looking for volunteers interested in taking unwanted technology and extending its life through reuse! Volunteers support the reuse of technology to create accessible and affordable options for the community with a focus on people from marginalized, low-income communities, and anyone else that needs access to affordable technology. Free Geek Toronto’s operations focus on accepting donations of technology and reusing/refurbishing/upcycling them into usable devices.
+If this sounds like you, then we need you to join our team as a Lead Technology Reuse Volunteer. What You’ll Do:
+Train, support, and motivate volunteers Troubleshoot and help maintain the technical infrastructure in production areas
+Tests a variety of technologies, with an emphasis on computers and accessories
+
+Keep work areas clean and organized
+Monitor compliance of workflow and inventory with quality control protocols
+Other duties as assigned
+
+REQUIRED SKILLS, KNOWLEDGE AND ABILITIES:
+Ability to maintain a calm, positive and professional attitude at all times in a sometimes chaotic environment
+Ability to consistently follow policies and procedures
+
+Strong organizational skills and attention to detail
+
+Ability to work as part of a team and coordinate with teammates to determine daily responsibilities and priorities
+
+Comfortable speaking and writing using technical language and communicating these ideas to people with low digital literacy
+
+Demonstrable self-motivation and personal initiative
+
+Reliability and punctuality
+
+Must not be afraid to ask questions, but must be able to work without direct supervision on a regular basis
+
+Significant technical skills and knowledge related to identifying, troubleshooting and installing computer components and related hardware
+Experience as a volunteer at Free Geek Toronto or similar organization is an asset `,
+          location: "Toronto",
+          org_id: 8,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+
+        {
+          title: "Digital Support Volunteer",
+          description: `Purpose: To assist clients to participate in the Remote Monitoring program, involving a telemonitoring nurse who monitors clients’ self-inputted data, using an app. Clients may also use an iPad. This allows clients to stay in their homes longer, become active partners in making healthy lifestyle choices, avoid unnecessary hospital visits and it identifies issues before they turn into emergencies. AREA SERVED: Toronto: York, Scarborough, Downtown, East York, North York, Etobicoke (Visits Conducted Online or in-person) AGE REQUIREMENT: Must be 18 years, or older
+RESPONSIBILITIES
+Visit clients on assigned day/time; In-person or virtually (both opportunities available)
+Assist clients using digital medical devices or tablets as per assignment and training
+Ensure information is transferred electronically to the telemedicine nurse
+Care for the safety of the client at all times.
+Respect the client’s privacy and adhere to confidentiality and privacy policies (and other policies).
+Report to supervisor in a timely manner.
+Report all not found visits to the Call Centre immediately.
+Be familiar with emergency procedures; follow all policies and procedure`,
+          location: "Toronto",
+          org_id: 8,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+        {
+          title: "Digital Community Strategist",
+          description: `Understand FGT’s mission, audience, and message to research and create and share posts about product descriptions, promotional items, and newsletter content based on marketing strategies that you design (with a team of colleagues always ready to support you)
+Power digital community development, digital strategy, and content creation for all digital and social media channels for Free Geek Toronto, including (but not limited to): Webpage, Newsletter, Facebook, Twitter, and Instagram
+Lead the creation and publication of a multitude of content (including planned and in-the-moment) and feel comfortable taking an idea and bringing to life, while asking your team and the organization for any support that you may need to reach the goal
+Develop and maintain a social media calendar that keeps a strategic line up of content flowing to engage and inspire our digital community to learn more about us our mission, our vision, and how we are actively changing our communities
+Monitor and evaluate the performance and success of the Free Geek Toronto digital channels, while devising new strategies and opportunities to move the needle
+Help us analyze and learn from what & how we are doing so we can grow and move forward - define and track key performance indicators and benchmarks for digital marketing success`,
+          location: "Toronto",
+          org_id: 8,
+          status: "open",
+          date: "2022-03-30 18:07:17.367+00",
+          created_at: "2022-03-30 18:07:27.859961+00",
+          expires_at: "2022-04-11 17:07:17.367+00",
+        },
+        // AA's org postings -24
+        {
+          title: "Telephone Reassurance Volunteer",
+          description: `● Telephone clients at their home numbers or through assisted living facilities; minimum 30 minutes per week 
+● Build a supportive relationship through conversation and discussion 
+● Actively engage client in topics of interest including reminiscing about past experiences 
+● Complete the Monthly Service Record at the end of every month and submitting it to the Volunteer Services Coordinator 
+● Report issues, concerns and all incidents to the Volunteer Services Coordinator. 
+● Notify the Coordinator of any intended, extended absences by the volunteer 
+● Adhere to the vision, mission and guiding values of the organization and the 'Friendly Visiting' program 
+● Represent Indus in a professional manner at all times 
+● Adhere to the agreed upon volunteering hours 
+● Assist with related tasks as assigned`,
+          location: "Oakville",
+          org_id: 9,
+          status: "open",
+          date: "2022-01-04 15:00:00.000+00",
+          supervisor: "Thomas Ellis",
+          created_at: "2022-01-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+
+        {
+          title: "Friendly Visiting Volunteer",
+          description: `- Visit clients in their home or assisted living facility; minimum of 1 hour weekly visit at a mutually agreed upon time (between Mon-Sun, 9am-7pm) 
+- Build a supportive relationship through conversation and discussion 
+- Actively participate in activities which are of interest to the client 
+- Complete the Friendly Visiting Monthly Service Record 
+- Report issues, concerns and all incidents to the Volunteer Services Coordinator 
+- Represent Indus in a professional manner at all times 
+- Adhere to the vision, mission and guiding values of the organization and the Friendly Visiting Program.`,
+          location: "Oakville",
+          org_id: 9,
+          status: "open",
+          date: "2022-02-27 08:30:00.000+00",
+          supervisor: "Thomas Eddison",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Arts and Crafts Volunteer",
+          description: `Volunteer to facilitate senior-friendly arts and crafts workshops 
+Deliver instructions to a group of seniors virtually through zoom  
+Plan arts and crafts activities for assigned weeks  
+Must enjoy working with seniors Effective communication skills, with a particular skill in working with seniors 
+Proficient in one or more South Asian languages such as Hindi, Punjabi or Urdu 
+ 
+Particular flexibility is required for 2022 programming during the day 
+All necessary supplies will be provided by Indus Community Services`,
+          location: "Oakville",
+          org_id: 9,
+          status: "open",
+          date: "2022-04-14 16:00:00.000+00",
+          supervisor: "Meryl Streep",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Board of Director",
+          description: `Commit to the vision, mission and guiding values of the organization. 
+Participate in the on-going development and implementation of the organization's strategic plan. 
+Attend monthly Board meetings and the Annual General Meeting. 
+Serve on at least one Board Committee.
+Strong networking and communication skills. 
+Have previous experience leading business or social organizations, and/or serving on a Board. 
+Have a strong understanding of the needs of the communities the organization serves. 
+Integrity and commitment to represent the best interests of the organization. 
+Adhere to the organization's governance policies, procedures & bylaws.`,
+          location: "Oakville",
+          org_id: 9,
+          status: "open",
+          date: "2022-03-25 09:00:00.000+00",
+          supervisor: "Meryl Streep",
+          created_at: "2022-03-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Visiting Volunteer",
+          description:
+            "It's easy to help a Senior remain independent and content in their own home. Make a new friend by providing your support during a weekly visit. Your time can be spent in the clients home or if you are comfortable, by taking them in your car for a drive, for a coffee, walk by the lake, shopping, a museum visit, live music or any other activity of interest. Specific languages currently needed: Hungarian / Arabic / Urdu / Hindi / Punjabi / Persian / Italian / French",
+          location: "Oakville",
+          org_id: 10,
+          status: "open",
+          date: "2022-03-01 13:00:00.000+00",
+          supervisor: "Jack Daniels",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Wellness Services Volunteer",
+          description: `Wellness Services offers clients in the Halton Region Community complimentary therapy focusing on bringing relaxation to help manage pain, stress and enhance well-being. Looking for Wellness Services holistic practitioner volunteers, to commit to 1 hour per week or biweekly, to provide volunteer wellness services to clients in the community in need. Must have the following criteria: Reiki Level 2 or higher 
+Therapeutic Touch level 2 or higher`,
+          location: "Oakville",
+          org_id: 10,
+          status: "open",
+          date: "2022-04-20 12:00:00.000+00",
+          supervisor: "Jack Daniels",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Home Support Exercise Program Volunteer",
+          description: `Volunteers needed for Oakville and Burlington.  
+Providing simple exercises guidance and support to frail Seniors in their homes for 12 week cycles.  
+Training is provided and the program is intended to help Seniors gain strength and better balance. 
+ 
+Support a frail older adult through a standardized exercise program designed to improve strength, balance, mobility and endurance. 
+ 
+You’ll learn how to do the set of 10 simple exercises (toe taps, leg raises, wall push-ups) safely and how to increase the difficulty level as your client makes progress. 
+ 
+You’ll also learn how to motivate and cheer your client on so that they get the maximum benefit out of the program. The results are fantastic – over 90% of clients see improvement! 
+ 
+COVID-19 Precautions 
+-All volunteers must attend a COVID training, sign a declaration and provide proof of vaccine.`,
+          location: "Oakville",
+          org_id: 10,
+          status: "open",
+          date: "2022-03-03 17:00:00.000+00",
+          supervisor: "Tessa Williams",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Bereavement Peer Support Volunteer",
+          description:
+            "As a trained volunteer, you can help those with the loss of a loved one, work through their grief and find a way to move forward. Visits are taking place on the phone and in person. Wonderful training in one-on-one bereavement peer support is provided. After training, our Bereavement Counsellor will match you with a client to visit for a period of 3 to 12 months (depending on the client's needs), making all the difference in their journey through grief. Next training starts April 11, 2022",
+          location: "Oakville",
+          org_id: 10,
+          status: "open",
+          date: "2022-04-30 06:00:00.000+00",
+          supervisor: "Brandy Tetris",
+          created_at: "2022-01-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Compost Assistant",
+          description:
+            "Working with our compost program to help shovel wood chips to help our composter run smoothly. This job will be performed outside.",
+          location: "Burlington",
+          org_id: 11,
+          status: "open",
+          date: "2022-03-20 12:00:00.000+00",
+          supervisor: "Mother Theresa",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Fresh Food Sorter",
+          description:
+            "Sorting fresh food into crates. This would include separating edible food from the inedible. Removing the packaging and stickers to then be placed in green bins or our onsite composter.",
+          location: "Burlington",
+          org_id: 11,
+          status: "open",
+          date: "2022-01-16 10:00:00.000+00",
+          supervisor: "Laura Williams",
+          created_at: "2022-02-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Senior Translation Volunteer",
+          description: `Looking for students  
+            Ability to speak English and translate and have conversations in the following languages: Russian, Arabic, Urdu, French, Mandarin, Spanish 
+            Community minded individuals looking to further support those looking for food support who do not speak English 
+            Giving people direction on where and how to access food 
+            Most volunteer work will be done over the phone, with the possibility of in person should the current COVID environment improve`,
+          location: "Burlington",
+          org_id: 1,
+          status: "open",
+          date: "2022-01-01 19:00:00.000+00",
+          supervisor: "Angelina Bradley",
+          created_at: "2022-01-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
+        },
+        {
+          title: "Fresh Food Packer",
+          description:
+            "Pack and Sort fresh food into grocery bags that will be distributed to our neighbours in need.",
+          location: "Burlington",
+          org_id: 11,
+          status: "open",
+          date: "2022-04-21 08:30:00.000+00",
+          supervisor: "Brandy Tetris",
+          created_at: "2022-01-01 18:07:27.859961+00",
+          expires_at: "2022-06-11 17:07:17.367+00",
         },
       ]);
     });
