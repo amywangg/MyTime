@@ -1,7 +1,7 @@
 const argon = require("argon2");
 
 exports.seed = async function (knex) {
-  let password_hash = await argon.hash("test");
+  let password_hash = await argon.hash("mytime");
   // Deletes ALL existing entries
   return knex("orgs")
     .del()
