@@ -6,10 +6,12 @@ const api = axios.create({
   baseURL: "https://mytime-backend-1.herokuapp.com/schools/",
   timeout: 5000,
   headers: {
+    "Access-Control-Allow-Headers": "*",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": true,
     "Content-type": "application/json",
   },
+  withCredentials: true,
 });
 
 api.interceptors.request.use(
