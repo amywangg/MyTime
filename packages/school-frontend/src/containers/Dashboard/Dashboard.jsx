@@ -12,7 +12,7 @@ function Dashboard() {
 
   return (
     <Page title="Partnerships">
-      <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow">
+      <div className="bg-white rounded-xl shadow-md flex flex-col p-8 w-full flex-grow  min-h-0 overflow-auto">
         <p className="inline-block font-semibold text-xl mb-2">
           Your Organizations
         </p>
