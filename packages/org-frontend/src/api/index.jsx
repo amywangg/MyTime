@@ -57,8 +57,8 @@ api.interceptors.response.use(
           }
         })
         .catch((err) => {
-          localStorage.removeItem("student-access-token");
-          localStorage.removeItem("student-refresh-token");
+          localStorage.removeItem("org-access-token");
+          localStorage.removeItem("org-refresh-token");
           TokenService.setUser(null);
         });
     }

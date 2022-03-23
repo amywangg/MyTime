@@ -13,8 +13,11 @@ app.use(
   cors({
     origin: [
       "https://mytime-student.herokuapp.com",
+      "http://mytime-student.herokuapp.com",
       "https://mytime-school.herokuapp.com",
-      "https://mytime-org.herokuapp.com",
+      "http://mytime-school.herokuapp.com",
+      "http://mytime-org.herokuapp.com/",
+      "https://mytime-org.herokuapp.com/",
     ],
     credentials: true,
   })
