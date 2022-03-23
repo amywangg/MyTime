@@ -64,7 +64,7 @@ function Orgs({ tab, orgs, updateOrgSchool }) {
       ? orgs.filter((org) => org.status === "")
       : orgs.filter((org) => org.status === "rejected");
   return (
-    <div className="bg-white rounded-xl flex flex-col p-2 w-full flex-grow pt-8 overflow-auto">
+    <div className="bg-white rounded-xl flex flex-col p-2 w-full flex-grow pt-8 overflow-auto min-h-0">
       {filteredOrgs.length !== 0 ? (
         filteredOrgs.map((org, i) => (
           <Listing
