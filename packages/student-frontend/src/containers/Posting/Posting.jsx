@@ -252,7 +252,11 @@ function Posting({ complete }) {
                       <div
                         key={time.id}
                         className={`${
-                          time.selected ? "bg-nav shadow-lg" : "bg-ghost"
+                          time?.student_status?.status === "rejected"
+                            ? "bg-red-300"
+                            : time.selected
+                            ? "bg-nav shadow-lg"
+                            : "bg-ghost"
                         }  ${
                           update !== null && "hover:cursor-pointer"
                         } py-2 px-1`}
